@@ -3,5 +3,45 @@
 @tailwind utilities;
 
 html, body {
-  @apply bg-defaultBg text-defaultText;
+  @apply flex flex-col m-0 p-0 bg-defaultBg text-defaultText
+}
+
+h1 {
+    @apply text-2xl font-bold my-[min(40px,6vw)];
+}
+
+h2 {
+    @apply text-xl font-bold mt-10 mb-5;
+}
+
+h3 {
+    @apply text-base font-bold mt-10 mb-1;
+}
+
+p {
+    @apply my-10;
+}
+
+hr {
+    @apply my-10;
+}
+
+label {
+    @apply mt-[min(40px,8vw)] mb-2 font-bold text-sm;
+}
+
+input {
+    @apply bg-inputBg rounded p-2 font-bold text-sm;
+}
+
+textarea {
+    @apply bg-inputBg p-2 text-sm rounded;
+}
+
+a {
+    @apply text-blue-800;
+}
+
+button {
+    @apply bg-inputBg rounded px-4 py-2 font-bold text-sm text-defaultText;
 }

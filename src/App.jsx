@@ -1,7 +1,8 @@
 import './App.css'
+import DndForm from './components/DndForm'
 
 export default function App() {
-  return <h1 className="text-3xl font-bold underline text-defaultText">
-      Hello world!
-    </h1>
+    return <div className="flex flex-col">
+        <DndForm />
+    </div>
 }
