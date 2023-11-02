@@ -14,7 +14,6 @@ li {
     margin: 0px auto 50px;
     padding: 5%;
     border: 2px solid var(--bran-colors-edge);
-    background-color: var(--bran-colors-bran-doc);
     color: var(--bran-colors-font-primary); 
     display: flex;
     flex-direction: column;
@@ -89,14 +88,11 @@ li {
     padding: 10px;
     font-size: 14px;
     margin: 30px auto 0px auto;
-    background-color: var(--bran-colors-brand-secondary-50);
-    color: var(--bran-colors-brand-secondary-10);
-    /* background-color: var(--bran-colors-font-primary);
-    color: var(--bran-colors-brand-primary-100); */
+    @apply bg-accent-300 text-accentText border-2 rounded border-gray-700;
 }
 .bqe-quiz-start:hover {
     cursor: pointer;
-    background-color: var(--bran-colors-brand-secondary-60);
+    @apply bg-accent-500 text-accentText;
 }
 
 .bqe-show-score {

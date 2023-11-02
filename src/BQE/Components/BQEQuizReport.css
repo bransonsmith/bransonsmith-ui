@@ -117,22 +117,17 @@
     height: 30px;
     color: #3353ab;
     text-decoration: underline;
-    background-color: inherit;
     font-size: 12px;
     font-weight: normal;
-    box-shadow: none;
-    /* box-shadow: 0px 2px 3px #66666666; */
-    /* border: 2px double #fff; */
     letter-spacing: .75px;
-    border: none;
-    /* border-bottom: 2px double #a7a7a7; */
+    background-color: inherit;
+    @apply  text-defaultText text-center p-4;
 }
 .bqe-submit-score:hover {
     cursor: pointer;
     /* font-weight: bold; */
     /* letter-spacing: 0.25px; */
-    background-color: inherit;
-    background-color: bg-accent-400;
+    @apply text-defaultText font-bold;
 }
 
 .bqe-score-form {
@@ -148,6 +143,7 @@
     width: min(60%, 300px);
     padding: 6px;
     margin:  10px auto 10px 0px; 
+    margin: auto;
 }
 
 .bqe-submit-score-form-submit {
@@ -157,12 +153,12 @@
     padding: 5px 9px;
     color: #eee;
     margin: auto;
-    background-color: var(--bran-colors-brand-secondary-50);
     /* height: fit-content; */
+    @apply bg-accent-300 text-accentText p-4;
 }
 .bqe-submit-score-form-submit:hover {
     cursor: pointer;
-    background-color: var(--bran-colors-brand-secondary-60);
+    @apply bg-accent-600 text-accentText;
 }
 
 .bqe-score-board {
