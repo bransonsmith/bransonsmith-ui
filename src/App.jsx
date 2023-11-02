@@ -4,10 +4,7 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsConfig from './aws-exports';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import ThemeToggle from './components/ThemeToggle';
-
 import DndForm from './components/DndForm'
-import SecondaryHeader from './components/SecondaryHeader';
 import MobileNavMenu from './components/MobileNavMenu';
 import AppFooter from './components/AppFooter';
 import AppHeader from './components/AppHeader';
