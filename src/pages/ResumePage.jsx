@@ -1,5 +1,4 @@
-import saaBadge from '../Assets/Resume/Badge-Credly-SAA.png';
-import cpBadge from '../Assets/Resume/Badge-Credly-CP.png';
+import saaBadge from '../Assets/Badge-Credly-SAA.png';
 
 export default function ResumePage(props) {
 
