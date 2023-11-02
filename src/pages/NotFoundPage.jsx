@@ -1,5 +1,5 @@
 
-import searchLizard from '../Assets/wondering-lizard-transparent.png'
+import searchLizard from '../assets/wondering-lizard-transparent.png'
 
 export default function NotFoundPage() {
     return  <>

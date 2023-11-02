@@ -1,4 +1,4 @@
-import bsdev from '../Assets/BS_Dev_logo.png'
+import bsdev from '../assets/BS_Dev_logo.png'
 
 export default function AppHeader(props) {
 

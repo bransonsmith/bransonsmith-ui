@@ -1,5 +1,5 @@
-import bsdevlogo from '../Assets/BS_Dev_logo.png'
-import bsdevhero from '../Assets/BS_DEV_hero-transparent.png'
+import bsdevlogo from '../assets/BS_Dev_logo.png'
+import bsdevhero from '../assets/BS_DEV_hero-transparent.png'
 
 export default function HomePage() {
 
