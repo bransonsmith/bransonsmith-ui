@@ -39,6 +39,10 @@ textarea {
     @apply bg-inputBg p-2 text-sm rounded;
 }
 
+select {
+    @apply bg-inputBg rounded p-2 font-bold text-sm;
+}
+
 a {
     @apply text-accent-300 font-bold;
 }

@@ -18,7 +18,7 @@
     margin: auto;
 }
 .collapased-nav-menu:hover {
-    background-color: var(--bran-colors-background-primary);
+    background-color: bg-accent-400;
     transform: scale(105%);
 }
 

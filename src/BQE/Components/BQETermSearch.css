@@ -1,0 +1,25 @@
+.bqe-term-search {
+    display: flex;
+    flex-direction: column;
+}
+
+.bqe-search-text {
+    width: min(80%, 400px);
+    padding: 6px;
+    margin:  10px auto; 
+}
+
+.bqe-search-submit {
+    width: calc(min(80%, 400px) + 16px);
+    border: 3px solid #040407;
+    padding: 10px;
+    font-size: 14px;
+    color: #eee;
+    margin: auto;
+    background-color: #040407;
+}
+.bqe-search-submit:hover {
+    cursor: pointer;
+    background-color: #000004;
+    border-color: #418dff;
+}

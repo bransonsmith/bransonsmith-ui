@@ -7,7 +7,7 @@ export default function HomePage() {
         
         <div className="flex flex-row w-full my-5 mb-10 flex-wrap">
             <img src={bsdevlogo} alt='logo' className='m-auto my-5 w-[120px] h-[120px] rounded-full border-2 border-gray-800'/>
-            <div className='flex flex-col m-8 m-auto'>
+            <div className='flex flex-col m-auto'>
                 <h1 className="m-auto ml-0 mb-0">Branson Smith</h1>
                 <h2 className="m-auto">Full Stack Software and Cloud Engineer</h2>
             </div>

@@ -1,0 +1,31 @@
+.bqe-question-and-answer {
+    display: flex;
+    flex-direction: column;
+}
+
+.bqe-guess-instructions {
+    font-size: 13px;
+    width: fit-content;
+    margin: auto;
+    color: var(--bran-colors-font-secondary);
+}
+
+.bqe-term {
+    font-weight: bold;
+    margin: 20px auto auto;
+    width: fit-content;
+    font-size: 24px;
+    color: var(--bran-colors-font-primary);
+    border-bottom: 2px solid var(--bran-colors-brand-primary-40);
+}
+
+.bqe-verse-qa-submit {
+    width: calc(min(50%, 200px) + 16px);
+    border: 3px solid #040407;
+    padding: 10px;
+    font-size: 14px;
+    margin: 30px 0px 0px auto;
+}
+.bqe-verse-qa-submit:hover {
+    cursor: pointer;
+}

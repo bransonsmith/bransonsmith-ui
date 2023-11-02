@@ -1,0 +1,85 @@
+
+.bqe-mem-pre-answer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    max-width: 100%;
+}
+
+.bqe-mem-instructions {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto auto 20px auto;
+}
+
+.bqe-select {
+    width: min(80%, 200px);
+    margin: auto;
+}
+
+.bqe-option {
+    width: 100%;
+    margin: auto;
+}
+
+
+.bqe-mem-check-answer {
+    width: min(98%, 600px);
+    margin: 20px auto;
+}
+
+.bqe-diff {
+    width: min(98%, 600px);
+    margin: auto;
+}
+
+.bqe-input {
+    width: min(98%, 600px);
+    margin: auto;
+    height: 100px;
+}
+
+.bqe-mem-verse {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: var(--bran-colors-font-secondary);
+}
+
+.actual {
+    /* font-weight: bold; */
+    font-size: 15px;
+    color: var(--bran-colors-font-actual);
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 20px;
+}
+
+.user-guess {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    font-weight: normal;
+    color: #555;
+}
+
+.correct-guess {
+    color: #10342c;
+    background-color: #18be9771;
+}
+.wrong-guess {
+    color: #762b39;
+    background-color: #762b3911;
+}
+
+.min-width {
+    width: fit-content;
+}
+
+.bqe-mem-footer {
+    margin: 150px auto 50px;
+    width: min(98%, 600px);
+}
+/* 
+.lower-it {
+    position: absolute;
+    bottom: 50px;
+} */

@@ -1,0 +1,72 @@
+.bqe-page {
+    display: flex;
+    flex-direction: column;
+    max-width: min(100%, 600px);
+    margin: auto;
+    padding-bottom: 100px;
+}
+
+.bp-item {
+    margin: 10px auto;
+}
+
+.loading {
+    background-color: #45afff22;
+    color: #2c80c0;
+    margin: 10px auto;
+    height: 24px;
+    width: 70px;
+    font-size: 13px;
+}
+.loading-spacer { 
+    background-color: #00000000;
+    margin: 0px auto;
+    padding: auto 8px;
+    height: 14px;
+}
+.dot-flashing {
+    position: relative;
+    margin: 5px auto;
+    width: 4px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: #2c80c0;
+    color: #2c80c0;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+  }
+  .dot-flashing::before, .dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+  }
+  .dot-flashing::before {
+    left: -10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: #69b3ec;
+    color: #5fa9e2;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+  }
+  .dot-flashing::after {
+    left: 10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 5px;
+    background-color: #1e3445;
+    color: #214764;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+  }
+  
+  @keyframes dot-flashing {
+    0% {
+      background-color: #2c80c0;
+    }
+    50%, 100% {
+      background-color: rgba(152, 128, 255, 0.2);
+    }
+  }

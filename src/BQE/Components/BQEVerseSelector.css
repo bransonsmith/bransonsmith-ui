@@ -1,0 +1,54 @@
+.bqe-verse-selector {
+    display: flex;
+    flex-direction: column;
+}
+
+.bqe-verse-display {
+    margin: 20px auto;
+}
+
+.bqe-labeled-select {
+    width: fit-content;
+    margin: 10px;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+    border: 2px solid #888;
+}
+
+.bp-input {
+    width: 20%;
+}
+
+.bp-label {
+    width: fit-content;
+    margin: auto auto auto 1px;
+}
+
+.books {
+    width: 150px;
+}
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin: 20px auto;
+}
+
+.bqe-verse-selector-submit {
+    border: 3px solid #040407;
+    padding: 10px;
+    font-size: 14px;
+    color: #eee;
+    margin: auto;
+    width: 200px;
+    background-color: #040407;
+}
+.bqe-verse-selector-submit:hover {
+    cursor: pointer;
+    background-color: #000004;
+    border-color: #418dff;
+}

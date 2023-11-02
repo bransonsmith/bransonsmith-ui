@@ -1,0 +1,240 @@
+.bqe-quiz-report {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.bqe-quiz-report-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.bqe-quiz-date {
+    font-size: 10px;
+}
+
+.bqe-quiz-report-questions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.bqe-quiz-report-question {
+    display: flex;
+    flex-direction: row;
+    width: min(98%, 600px);
+    margin: 4px auto;
+}
+
+.bqe-q-header-row {
+    width: min(98%, 600px);
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--bran-colors-edge);
+    margin-bottom: 5px;
+}
+
+.bqe-q-header  {
+    display: flex;
+    flex-direction: row;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.bqe-q-col {
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.bqe-q-col-text {
+    width: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.bqe-score-highlight {
+    color: #1f52b8;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.bqe-q-n {
+    width: 5%;
+    display: flex;
+    font-size: 11px;
+}
+
+.bqe-q-q {
+    width: 25%;
+    display: flex;
+}
+
+.bqe-q-a {
+    width: 25%;
+    display: flex;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.bqe-q-p {
+    width: 25%;
+    display: flex;
+}
+
+.bqe-q-s {
+    width: 20%;
+    display: flex;
+}
+
+.bqe-quiz-report-total-row {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin: 40px 8% 0px auto; 
+    font-size: 20px;
+}
+
+.bqe-quiz-report-total-label {
+    margin: 0px 10px;
+}
+
+.bqe-quiz-report-total-score {
+    font-weight: bold;
+}
+
+.bqe-quiz-report-footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.bqe-submit-score {
+    margin: 0px 0px 20px auto;
+    width: min(90%, 300px);
+    height: 30px;
+    color: #3353ab;
+    text-decoration: underline;
+    background-color: inherit;
+    font-size: 12px;
+    font-weight: normal;
+    box-shadow: none;
+    /* box-shadow: 0px 2px 3px #66666666; */
+    /* border: 2px double #fff; */
+    letter-spacing: .75px;
+    border: none;
+    /* border-bottom: 2px double #a7a7a7; */
+}
+.bqe-submit-score:hover {
+    cursor: pointer;
+    /* font-weight: bold; */
+    /* letter-spacing: 0.25px; */
+    background-color: inherit;
+    background-color: bg-accent-400;
+}
+
+.bqe-score-form {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-top: 15px;
+}
+
+
+.bqe-submit-score-form-text {
+    width: min(60%, 300px);
+    padding: 6px;
+    margin:  10px auto 10px 0px; 
+}
+
+.bqe-submit-score-form-submit {
+    /* width: calc(min(2%, 200px) + 16px); */
+    border: 3px solid var(--bran-colors-edge);
+    font-size: 14px;
+    padding: 5px 9px;
+    color: #eee;
+    margin: auto;
+    background-color: var(--bran-colors-brand-secondary-50);
+    /* height: fit-content; */
+}
+.bqe-submit-score-form-submit:hover {
+    cursor: pointer;
+    background-color: var(--bran-colors-brand-secondary-60);
+}
+
+.bqe-score-board {
+    border: 1px solid var(--bran-colors-edge);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 15px;
+    padding: 20px 10px 30px;
+    min-height: 380px;
+}
+.leaderboard-placeholder {
+    display: flex;
+    flex-direction: column;
+    padding: 100px;
+    min-height: 380px;
+}
+.bqe-score-board-title {
+    width: fit-content;
+    margin: 10px auto;
+    font-size: 20px;
+    color: var(--bran-colors-font-primary);
+    font-weight: bold;
+}
+.flexed {
+    display: flex;
+}
+
+.bqe-score-board-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.bqe-score-board-header {
+    display: flex;
+}
+.bqe-score-board-header-text {
+    width: fit-content;
+    margin: auto;
+    font-size: 11px;
+    color: var(--bran-colors-font-secondary);
+}
+
+.bqe-score-board-col {
+    display: flex;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--bran-colors-font-primary);
+    margin: 4px 0px;
+}
+
+.bqe-score-board-col-text {
+    width: fit-content;
+    margin: auto;
+}
+
+.bsb-i {
+    width: 10%;
+    font-weight: normal;
+    font-size: 10px;
+}
+
+.bsb-n {
+    width: 30%;
+}
+
+.bsb-s {
+    width: 30%;
+}
+
+.bsb-d {
+    width: 30%;
+    font-weight: normal;
+}

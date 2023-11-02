@@ -12,6 +12,7 @@ import DefaultPageLayout from './components/DefaultPageLayout'
 
 import ContactPage from './pages/ContactPage'
 import HomePage from './pages/HomePage'
+import BQERandomQuizPage from './BQE/Pages/BQERandomQuizPage'
 import NotFoundPage from './pages/NotFoundPage'
 import PrivacyPage from './pages/PrivacyPage'
 import ResumePage from './pages/ResumePage'
@@ -46,6 +47,7 @@ export default function App() {
   const pages = [
     { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
     { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
+    { target: '/BQE', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: true, showInFooter: true },
     { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },
     { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
     { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },

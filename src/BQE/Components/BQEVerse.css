@@ -1,0 +1,44 @@
+.bqe-verse {
+    min-height: 100px;
+    height: fit-content;
+    background-color: #99999922;
+    border: 2px solid #ccccccee;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.bqe-verse-text {
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+    font-size: 14px;
+}
+
+.bqe-verse-reference {
+    height: fit-content;
+    width: fit-content;
+    margin: 10px 10px 15px auto;
+    text-align: right;
+    font-size: 14px;
+}
+
+.esv-copyright {
+    cursor: pointer;
+    max-width: 100%;
+}
+.esv-copyright:hover {
+    cursor: pointer;
+}
+
+.esv-copyright-title {
+    font-size: 10px;
+    text-decoration: underline;
+    text-align: right;
+}
+
+.esv-copyright-text {
+    font-size: 10px;
+    margin-top: 15px;
+    max-width: 100%;
+}
