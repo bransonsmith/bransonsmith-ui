@@ -23,7 +23,7 @@ export default function MarkdownTextArea(props) {
                     <textarea className="w-full min-h-[336px] max-h-[80vh]" rows="16" value={props.text} onChange={(e) => props.setText(e.target.value)}/>
                 </div> :
                 <div
-                    className="markdown-preview bg-inputBg p-2 text-sm rounded min-h-[336px] max-h-[80vh]"
+                    className="markdown-preview bg-inputBg p-2 text-sm rounded min-h-[336px] max-h-[80vh] overflow-y-scroll"
                     dangerouslySetInnerHTML={getMarkdownText()}
                 />
             }

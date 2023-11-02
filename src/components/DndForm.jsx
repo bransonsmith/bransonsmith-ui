@@ -6,7 +6,7 @@ export default function DndForm() {
     const [summary, setSummary] = useState('');
     const [displayMarkdown, setDisplayMarkdown] = useState(false)
 
-    return (<div className="max-w-screen-sm m-auto p-[min(48px,4vw)] bg-contentBg">
+    return (<div className="max-w-screen-md m-auto p-[min(48px,4vw)] bg-contentBg">
         <div id="session-form" className="w-full flex flex-col ">
           <h1>Dnd Session Summary</h1>
           <div className="w-full flex flex-row flex-wrap">

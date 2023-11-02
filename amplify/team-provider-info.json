@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bransonsmithui-dev-214947-authRole",
+      "UnauthRoleArn": "arn:aws:iam::126557138539:role/amplify-bransonsmithui-dev-214947-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::126557138539:role/amplify-bransonsmithui-dev-214947-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-bransonsmithui-dev-214947-deployment",
+      "UnauthRoleName": "amplify-bransonsmithui-dev-214947-unauthRole",
+      "StackName": "amplify-bransonsmithui-dev-214947",
+      "StackId": "arn:aws:cloudformation:us-east-2:126557138539:stack/amplify-bransonsmithui-dev-214947/4ff39b70-7861-11ee-aafa-022e2089d305",
+      "AmplifyAppId": "d3c05cf7pwcyzz"
+    },
+    "categories": {
+      "auth": {
+        "bransonsmithui8829d4d4": {}
+      }
+    }
+  }
+}

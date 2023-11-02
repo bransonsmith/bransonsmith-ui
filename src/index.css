@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 html, body {
-  @apply flex flex-col m-0 p-0 bg-defaultBg text-defaultText
+  @apply flex flex-col m-0 p-0 bg-defaultBg text-defaultText;
+  font-family: 'BlinkMacSystemFont', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 h1 {
@@ -15,11 +16,11 @@ h2 {
 }
 
 h3 {
-    @apply text-base font-bold mt-10 mb-1;
+    @apply text-base font-bold mt-5 mb-1;
 }
 
 p {
-    @apply my-10;
+    @apply mt-[min(1rem,1vw)] mb-[min(.75rem,1vw)] px-5;
 }
 
 hr {
@@ -39,9 +40,14 @@ textarea {
 }
 
 a {
-    @apply text-blue-800;
+    @apply text-accent-300 font-bold;
 }
 
 button {
     @apply bg-inputBg rounded px-4 py-2 font-bold text-sm text-defaultText;
+}
+
+li {
+    list-style: circle;
+    @apply text-sm my-1;
 }
