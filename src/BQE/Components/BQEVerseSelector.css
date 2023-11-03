@@ -31,7 +31,6 @@ select {
     width: 150px;
 }
 
-
 .row {
     display: flex;
     flex-direction: row;
