@@ -6,6 +6,7 @@ import { getSearchResult, getVerse } from '../Services/EsvApiService';
 import { getBestScoreInfo } from '../Services/BQEScoreRandomVerseAnswer';
 import BQEVerse from '../Components/BQEVerse';
 import BQEQuizReport from '../Components/BQEQuizReport';
+import { Helmet } from 'react-helmet';
 
 export default function BQERandomQuizPage(props) {
 
@@ -56,11 +57,9 @@ export default function BQERandomQuizPage(props) {
 
     async function getNextQuestionTerm() {
         return setCurrentQuestion(await getRandomTerm())
-        // return setCurrentQuestion('created')
     }
 
     async function getCurrentScore(answer) {
-        // const correctAnswers = await getReferencesForTerm(currentQuestion)
         const searchRes = (await getSearchResult(currentQuestion))
 
         const correctAnswers = searchRes.data.results.map(r => {
@@ -102,14 +101,11 @@ export default function BQERandomQuizPage(props) {
         setPossibleAnswerCounts(possibleCounts)
 
         setCurrentQuestionBestAnswer(bestAnswer)
-        // console.log(currentQuestionBestAnswer)
         handleVerseClick(bestAnswer)
         setLastQuestionScore(bestScore)
         setLastScoreInfo(bestScoreInfo)
         return bestScore
     }
-
-    
 
     function setTotalScore() {
         return setScore(questionScores.reduce((sum, s) => { return sum + s}, 0));
@@ -180,11 +176,16 @@ export default function BQERandomQuizPage(props) {
         setQuizState(QUIZ_STATES.POS)
     }
 
-    return <div className="bqe-random-quiz-page">
-
-
-
+    return <>
+        <Helmet>
+            <title>BQE - Bible Quiz Extraordinaire | Branson Smith</title>
+            <meta name="description" content="BQE. Bible Quiz Extraordinaire is Bible Trivia Quiz Game to test how well you know the word! Random Bible Quiz. Random Quiz. BQE" />
+            <link rel="canonical" href={`https://www.bransonsmith.dev/BQE`} />
+        </Helmet>
+        <h1 className="m-0 text-xs p-0 text-[#555]">BQE Bible Quiz Extraordinaire!</h1>
+        <h2 className="m-0 text-xs p-0 text-[#444]">Random Quiz</h2>
         <div className='bqe-quiz-meta-section'>
+            
             { quizState !== QUIZ_STATES.PRE && quizState !== QUIZ_STATES.POS
             ? <span><div className='bqe-quiz-meta-question'>Question {currentQuestionNumber} of {questionCount}</div>
             <div className='bqe-quiz-meta-score'>Total Score: {score}</div></span>
@@ -198,18 +199,7 @@ export default function BQERandomQuizPage(props) {
                 <div className='bqe-quiz-instructions'>
                     For each term, guess a Bible verse that the term appears in. All text is ESV.
                 </div>
-                {/* <div className='bqe-quiz-score'>
-                    <div className='bqe-quiz-score-label'>Correct Book =</div> 
-                    <div className='bqe-quiz-score-number'>1 Point</div>
-                </div>
-                <div className='bqe-quiz-score'>
-                    <div className='bqe-quiz-score-label'>Correct Chapter =</div> 
-                    <div className='bqe-quiz-score-number'>5 Points (6 total)</div>
-                </div>
-                <div className='bqe-quiz-score'>
-                    <div className='bqe-quiz-score-label'>Correct Verse =</div> 
-                    <div className='bqe-quiz-score-number'>25 Points (31 total)</div>
-                </div> */}
+
                 <button className="bqe-quiz-start" onClick={startQuiz}>Start Quiz</button>
             </div>
             : <span>
@@ -290,5 +280,5 @@ export default function BQERandomQuizPage(props) {
             </span>
             }
         </div>
-    </div>
+    </>
 }

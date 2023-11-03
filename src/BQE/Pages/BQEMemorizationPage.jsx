@@ -31,28 +31,16 @@ export default function BQEMemorizationPage() {
 
     async function checkAnswer() {
         setLoading(true)
-        // tryCache()
-
-        // if (actualVerse == '') {
-            const result = await getVerse(verseBook, verseChapter, verseVerse)
-            if (result.error) {
-                // setEsvVerseError(serviceResp.message)
-                setActualVerse('')
-            }
-            else {
-                // setEsvVerseError(null)
-                const actual = result.data.passages[0].replace('(ESV)', '').trim()
-                setActualVerse(actual)
-                // setLastSearch({book: verseBook, chapter: verseChapter, verse: verseVerse})
-                // var currentCache = verseCache
-                // currentCache[verseBook + ' ' + verseChapter + ':' + verseVerse] = actualVerse
-                // setVerseCache(currentCache)
-            }
-        // }
-
+        const result = await getVerse(verseBook, verseChapter, verseVerse)
+        if (result.error) {
+            setActualVerse('')
+        }
+        else {
+            const actual = result.data.passages[0].replace('(ESV)', '').trim()
+            setActualVerse(actual)
+        }
         setShowDiff(true)
         setLoading(false)
-
     }
 
     return <div className="bran-page">
@@ -66,11 +54,6 @@ export default function BQEMemorizationPage() {
                         <div className="dot-flashing"/>
                     </div>
                     : <div className='bqe-diff'>
-                        {/* <div className='bqe-mem-verse actual'>{actualVerse + ' (ESV)'}</div> */}
-                        {/* {userInput == actualVerse
-                        ? <div className='bqe-mem-verse user-guess correct-guess'>{userInput}</div>
-                        : <div className='bqe-mem-verse user-guess wrong-guess'>{userInput}</div>
-                        } */}
                         <div className='bqe-mem-verse'>Differences (your guess is on the bottom)</div>
                         
                         <ReactDiffViewer style={{'border': 'none'}} showDiffOnly={false} oldValue={actualVerse} newValue={userInput} splitView={false} hideLineNumbers={true}/>
@@ -88,10 +71,7 @@ export default function BQEMemorizationPage() {
                 <div  className='bqe-mem-instructions'> 
                     Pick a verse, then try to type it exactly. (ESV)
                 </div>
-                {/* <select className='bqe-select min-width' value={bibleVersion} onChange={(event) => setBibleVersion(event.target.value)}>
-                    <option className='bqe-option'>ESV</option>
-                    <option className='bqe-option'>NLT</option>
-                </select> */}
+
                 <BQEVerseSelector 
                     verseBook={verseBook}
                     verseChapter={verseChapter}

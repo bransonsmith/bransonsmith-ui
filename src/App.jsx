@@ -18,6 +18,8 @@ import PrivacyPage from './pages/PrivacyPage'
 import ResumePage from './pages/ResumePage'
 import TermsPage from './pages/TermsPage'
 
+import { Helmet } from 'react-helmet';
+
 Amplify.configure(awsConfig);
 
 export default function App() {
@@ -57,6 +59,10 @@ export default function App() {
 
     return (
     <div className="App">
+    <Helmet>
+        <meta name="description" content="branson smith, branson smith software engineer, branson smith's work, web developer, resume, home of BQE" />
+        <link rel="canonical" href={`https://www.bransonsmith.dev/`} />
+    </Helmet>
 
       <AppHeader pages={pages.filter(page => page.showInHeader)} />
       <MobileNavMenu navItems={pages.filter(p => p.showInHeader)}/>
