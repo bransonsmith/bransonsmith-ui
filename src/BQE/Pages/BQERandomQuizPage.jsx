@@ -192,7 +192,7 @@ export default function BQERandomQuizPage(props) {
             }
         </div>
 
-        <div className='bqe-question-container'>
+        <div className='bqe-question-container p-0'>
             { quizState === QUIZ_STATES.PRE
             ? <div className='bqe-pre-quiz'>
                 <div className='bqe-quiz-instructions'>
@@ -253,7 +253,7 @@ export default function BQERandomQuizPage(props) {
                             <div className='bqe-restart-score'>Total Score: {score}</div>
                             <button className='bqe-next-question-restart' onClick={finishQuiz}>Finish Quiz</button>
                         </div>
-                        : <button className='mt-8 ml-auto px-7 py-4 w-fit h-fit rounded bg-accent-400 text-gray-800 border-2 border-gray-800 hover:bg-accent-500' onClick={nextQuestion}>Next Question</button>
+                        : <button className='mt-8 ml-auto px-7 py-4 w-fit h-fit rounded bg-contentBg text-defaultText border-2 border-accent-300 hover:bg-accent-600' onClick={nextQuestion}>Next Question</button>
                         }
 
                         <div className='bqe-correct-heading'>Correct Answers ({currentQuestionCorrectAnswers.length})</div>

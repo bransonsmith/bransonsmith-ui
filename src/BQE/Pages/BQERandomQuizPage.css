@@ -88,11 +88,11 @@ li {
     padding: 10px;
     font-size: 14px;
     margin: 30px auto 0px auto;
-    @apply bg-accent-300 text-accentText border-2 rounded border-gray-700;
+    @apply bg-contentBg text-defaultText border-2 rounded border-accent-300 shadow-lg shadow-black text-lg;
 }
 .bqe-quiz-start:hover {
     cursor: pointer;
-    @apply bg-accent-500 text-accentText;
+    @apply bg-accent-500 text-accentText shadow-xl shadow-black text-lg;
 }
 
 .bqe-show-score {
