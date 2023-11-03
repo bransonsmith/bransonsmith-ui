@@ -100,25 +100,27 @@ export default function BQEQuizReport(props) {
                     </div>
                 </div>
             })}
+            
+            <div className='bqe-quiz-report-total-row border-2 border-accent-500 rounded p-5'>
+                <div className='bqe-quiz-report-total-label'>Total Score:</div>
+                <div className='bqe-quiz-report-total-score '>{props.scores.reduce((s, c) => {return s + c}, 0)}</div>
+            </div>
         </div>
         <div className='bqe-quiz-report-footer'>
 
-            <div className='bqe-quiz-report-total-row'>
-                <div className='bqe-quiz-report-total-label'>Total Score</div>
-                <div className='bqe-quiz-report-total-score'>{props.scores.reduce((s, c) => {return s + c}, 0)}</div>
-            </div>
 
             { showScoreForm
             ? <span> { loading
                 ? <div className='dot-flashing'></div>
                 :<div className='bqe-score-form'>
                     <input placeholder="name" className="bqe-submit-score-form-text" id="search-form" type="text" onChange={(event) => setScoreName(event.target.value)}/>
-                    {/* <input className='bqe-score-form-name' placeholder='name' value={scoreName} onChange={}/>   */}
                     <button className='bqe-submit-score-form-submit' onClick={uploadAScore}>Submit Score</button>
                 </div>
             }</span> 
             : <span className='flexed'> { !loading && !submittedScore && props.scores.reduce((s, c) => {return s + c}, 0) > 0
-                ? <button className='bqe-submit-score' onClick={() => setShowScoreForm(true)}>Submit Score To Public Leaderboard</button>
+                ? <div className='bqe-submit-score' onClick={() => setShowScoreForm(true)}>
+                    <span className="m-auto">Submit Score To Public Leaderboard</span>
+                </div>
                 : <span/>
             }
             </span>
@@ -142,7 +144,7 @@ export default function BQEQuizReport(props) {
                     </div>
                 })}
             </div>
-            :<span/>
+            :<><label>Loading Leaderboard...</label><div className='dot-flashing'></div></>
             }
 
             {message

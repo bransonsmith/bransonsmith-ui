@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    @apply  border-2 border-gray-700 rounded py-8;
 }
 
 .bqe-quiz-report-question {
@@ -112,23 +113,12 @@
 }
 
 .bqe-submit-score {
-    margin: 0px 0px 20px auto;
-    width: min(90%, 300px);
-    height: 30px;
-    color: #3353ab;
-    text-decoration: underline;
-    font-size: 12px;
-    font-weight: normal;
-    letter-spacing: .75px;
-    background-color: inherit;
-    @apply  text-defaultText text-center p-4;
+    @apply  text-defaultText text-center px-4 py-2 text-sm my-4 bg-contentBg rounded border-gray-700 border-2 w-fit h-fit shadow-md shadow-black mr-0 ml-auto;
 }
 .bqe-submit-score:hover {
     cursor: pointer;
-    /* font-weight: bold; */
-    /* letter-spacing: 0.25px; */
-    @apply text-defaultText font-bold;
-}
+    @apply text-defaultText shadow-xl shadow-black bg-gray-950;
+} 
 
 .bqe-score-form {
     display: flex;
@@ -147,28 +137,22 @@
 }
 
 .bqe-submit-score-form-submit {
-    /* width: calc(min(2%, 200px) + 16px); */
-    border: 3px solid var(--bran-colors-edge);
-    font-size: 14px;
-    padding: 5px 9px;
-    color: #eee;
     margin: auto;
-    /* height: fit-content; */
-    @apply bg-accent-300 text-accentText p-4;
+    @apply bg-contentBg text-defaultText border-2 border-gray-700 px-4 py-2 shadow-md shadow-black;
 }
 .bqe-submit-score-form-submit:hover {
     cursor: pointer;
-    @apply bg-accent-600 text-accentText;
+    @apply bg-accent-950 shadow-lg shadow-black;
 }
 
 .bqe-score-board {
-    border: 1px solid var(--bran-colors-edge);
     display: flex;
     flex-direction: column;
     width: 100%;
     margin-top: 15px;
     padding: 20px 10px 30px;
     min-height: 380px;
+    @apply  border-2 border-gray-700 rounded;
 }
 .leaderboard-placeholder {
     display: flex;
