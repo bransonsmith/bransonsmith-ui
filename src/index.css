@@ -55,3 +55,35 @@ li {
     list-style: circle;
     @apply text-sm my-1;
 }
+
+.church-lunch-box {
+    background-image: url('./assets/churchLunch.png');
+    background-size: 120%;
+    background-position: top;
+    background-repeat: no-repeat;
+    @apply border-2 rounded-lg border-gray-700;
+}
+.church-lunch-box:hover {
+    background-size: 180%;
+}
+
+.smoke-box {
+    background-image: url('./assets/smoke.png');
+    background-size: 120%;
+    background-position: top;
+    background-repeat: no-repeat;
+    @apply border-2 rounded-lg border-gray-700;
+}
+.smoke-box:hover {
+    background-size: 150%;
+    background-position: center;
+}
+
+.baseball-box {
+    background-image: url('./assets/baseball.png');
+    background-size: 100%;
+    @apply border-2 rounded-lg border-gray-700;
+}
+.baseball-box:hover {
+    background-size: 130%;
+}
