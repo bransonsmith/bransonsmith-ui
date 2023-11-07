@@ -11,6 +11,7 @@ import AppHeader from './components/AppHeader';
 import DefaultPageLayout from './components/DefaultPageLayout'
 
 import ContactPage from './pages/ContactPage'
+import ProjectsPage from './pages/ProjectsPage'
 import HomePage from './pages/HomePage'
 import BQERandomQuizPage from './BQE/Pages/BQERandomQuizPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -50,6 +51,7 @@ export default function App() {
     { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
     { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
     { target: '/BQE', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: true, showInFooter: true },
+    { target: '/projects', label: 'Projects', element: <ProjectsPage />, showInHeader: true, showInFooter: true },
     { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },
     { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
     { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
