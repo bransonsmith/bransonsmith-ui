@@ -60,6 +60,16 @@ export default function App() {
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]
 
+  const morePages = [
+    // { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
+    // { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
+    // { target: '/BQE', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: true, showInFooter: true },
+    // { target: '/projects', label: 'Projects', element: <ProjectsPage />, showInHeader: true, showInFooter: true },
+    // { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },
+    // { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
+    // { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
+  ]
+
     return (
     <div className="App">
     <Helmet>
@@ -67,8 +77,8 @@ export default function App() {
         <link rel="canonical" href={`https://www.bransonsmith.dev/`} />
     </Helmet>
 
-      <AppHeader pages={pages.filter(page => page.showInHeader)} />
-      <MobileNavMenu navItems={pages.filter(p => p.showInHeader)}/>
+      <AppHeader pages={pages.filter(page => page.showInHeader)} morePages={morePages}/>
+      <MobileNavMenu navItems={pages.filter(p => p.showInHeader)} morePages={morePages}/>
       
       <div className='app-body min-h-[80vh]'>
         <Router>

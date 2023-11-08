@@ -48,16 +48,18 @@ li {
 
 .bqe-quiz-meta-question {
     width: fit-content;
-    margin: 0px auto;
+    margin: 0px auto 0px 0px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
+    @apply text-gray-600;
 }
 
 .bqe-quiz-meta-score {
     width: fit-content;
-    margin: 0px auto;
+    margin: 0px auto 0px 0px;;
     text-align: center;
-    font-size: 26px;
+    font-size: 18px;
+    @apply text-gray-600;
 }
 
 .bqe-quiz-score {
