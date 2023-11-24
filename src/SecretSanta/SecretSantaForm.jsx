@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function SecretSantaForm(props) {
-
+    window.scrollTo(0, 0);
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [autoSaving, setAutoSaving] = useState(false)
 
@@ -10,6 +10,15 @@ export default function SecretSantaForm(props) {
         setFormValue('done', true)
         await props.updateDynamo();
         props.back()
+        window.scrollTo(0, 0);
+    };
+
+
+    const undone = async (e) => {
+        setFormValue('done', false)
+        await props.updateDynamo();
+        props.back()
+        window.scrollTo(0, 0);
     };
 
     function setFormValue(key, value) {
@@ -79,7 +88,7 @@ export default function SecretSantaForm(props) {
             <br/>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="hobbies">Hobbies:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="hobbies">Hobbies/Activities:</label>
                 <input
                     className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
@@ -160,8 +169,8 @@ export default function SecretSantaForm(props) {
                     onBlur={handleFieldSwitch}
                 ></textarea>
             </div>
-
-            <button type="submit" className="bg-red-600 text-white text-xl border-4 border-red-600 my-10    ">Submit</button>
+            { props.data[props.name]['data']['done'] && <div className="mt-10 border-2 border-gray-700 text-gray-300 px-4 py-2 rounded w-fit" onClick={() => undone()}>Don't mark me as done yet</div> }
+            <button type="submit" className="bg-red-600 text-white text-xl border-4 border-red-600 my-10">Submit</button>
       </form>
         
     </div>

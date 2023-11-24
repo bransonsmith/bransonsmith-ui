@@ -47,12 +47,23 @@ export default function SecretSantaPage() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [showForm])
+
     function choosePerson(person, personName) {
         setSelectedPerson(person)
         setSelectedPersonName(personName)
         setShowForm(true)
     }
     function unselectPerson() {
+        setSelectedPerson(null)
+        setSelectedPersonName(null)
+        setShowForm(false)
+    }
+
+    async function comeBackLater() {
+        await updateDynamoData()
         setSelectedPerson(null)
         setSelectedPersonName(null)
         setShowForm(false)
@@ -93,7 +104,10 @@ export default function SecretSantaPage() {
     return <div className="text-white">
         <h1 className="border-b-2 border-red-500 text-3xl text-green-500" onClick={() => unselectPerson()}>Secret Santa 2023</h1>
         { showForm && selectedPerson
-        ? <button className="border-2 border-defaultText fixed bottom-2" onClick={() => unselectPerson()}>Back to all people</button>
+        ? <div className="w-full flex flex-row">
+            <button className="border-2 border-black rounded-sm shadow-lg shadow-black py-3 fixed bottom-2 m-auto left-4" onClick={() => unselectPerson()}>Back to all people</button>
+            <button className="border-2 border-black rounded-sm shadow-lg shadow-black py-3 fixed bottom-2 m-auto left-48 w-fit" onClick={() => comeBackLater()}>Save for later</button>
+        </div>
         : <></>
         }
         { !showForm 
