@@ -9,6 +9,7 @@ export default function SecretSantaForm(props) {
         e.preventDefault();
         setFormValue('done', true)
         await props.updateDynamo();
+        props.back()
     };
 
     function setFormValue(key, value) {
@@ -32,24 +33,13 @@ export default function SecretSantaForm(props) {
             { autoSaving && <div className="fixed bottom-2 right-2 text-sm text-gray-400">saving...</div>}
 
             <div className="flex flex-row w-full mr-auto">
-                <div className="text-green-700 font-bold text-3xl border-b-2 border-red-700 w-fit px-1 mr-auto ml-0 pl-0">{props.name}</div>
+                <div className="text-white font-bold text-2xl border-b-2 border-red-700 w-fit px-1 mr-auto ml-0 pl-0 my-6">{props.name}</div>
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="email">Email:</label>
-                <input className="w-full mt-1 mb-2" 
-                    type="email"
-                    id="email"
-                    value={props.data[props.name]['data']['email'] || ''}
-                    onChange={(e) => setFormValue('email', e.target.value)}
-                    onBlur={handleFieldSwitch}
-                />
-            </div>
-
-            <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="favoriteStores">Favorite Stores:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteStores">Favorite Stores:</label>
                 <input
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="favoriteStores"
                     value={props.data[props.name]['data']['favoriteStores'] || ''}
@@ -59,9 +49,9 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="favoriteRestaurants">Favorite Restaurants:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteRestaurants">Favorite Restaurants:</label>
                 <input
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="favoriteRestaurants"
                     value={props.data[props.name]['data']['favoriteRestaurants'] || ''}
@@ -72,9 +62,9 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="favoriteFoods">Favorite Foods/Snacks:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteFoods">Favorite Foods/Snacks:</label>
                 <input
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="favoriteFoods"
                     value={props.data[props.name]['data']['favoriteFoods'] || ''}
@@ -84,10 +74,14 @@ export default function SecretSantaForm(props) {
                 />
             </div>
 
+            <br/>
+            <br/>
+            <br/>
+
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="hobbies">Hobbies:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="hobbies">Hobbies:</label>
                 <input
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
                     id="hobbies"
                     value={props.data[props.name]['data']['hobbies'] || ''}
@@ -97,23 +91,11 @@ export default function SecretSantaForm(props) {
                 />
             </div>
 
-            <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="allergies">Allergies/Dislikes:</label>
-                <input
-                    className="w-full mt-1 mb-2"
-                    type="text"
-                    id="allergies"
-                    value={props.data[props.name]['data']['allergies'] || ''}
-                    onChange={(e) => setFormValue('allergies', e.target.value)}
-                    onBlur={handleFieldSwitch}
-                    
-                />
-            </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="favoriteBooksMoviesTVShows">Favorite Books/Movies/TV Shows:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteBooksMoviesTVShows">Books, Movies, TV Shows:</label>
                 <input
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
                     id="favoriteBooksMoviesTVShows"
                     value={props.data[props.name]['data']['favoriteBooksMoviesTVShows'] || ''}
@@ -124,9 +106,9 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="smells">Favorite Smells, Soaps, Lotions, etc.:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="smells">Smells, Feels, Lotions, etc.:</label>
                 <input
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
                     id="smells"
                     value={props.data[props.name]['data']['smells'] || ''}
@@ -136,10 +118,27 @@ export default function SecretSantaForm(props) {
                 />
             </div>
 
+            <br/>
+            <br/>
+            <br/>
+
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="links">Links to wishlists (e.g. Amazon Wishlist or products you like):</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="allergies">Allergies/Dislikes:</label>
+                <input
+                    className="w-full mt-1 mb-2 border-2 border-green-600"
+                    type="text"
+                    id="allergies"
+                    value={props.data[props.name]['data']['allergies'] || ''}
+                    onChange={(e) => setFormValue('allergies', e.target.value)}
+                    onBlur={handleFieldSwitch}
+                    
+                />
+            </div>
+
+            <div className="flex flex-col w-full mr-auto">
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="links">Links to wishlists (e.g. Amazon Wishlist or products you like):</label>
                 <textarea
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="links"
                     value={props.data[props.name]['data']['links'] || ''}
@@ -151,9 +150,9 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="notes">Other Notes:</label>
+                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="notes">Other Notes:</label>
                 <textarea
-                    className="w-full mt-1 mb-2"
+                    className="w-full mt-1 mb-2 border-2 border-green-600"
                     id="notes"
                     rows="4"
                     value={props.data[props.name]['data']['notes'] || ''}
@@ -162,7 +161,7 @@ export default function SecretSantaForm(props) {
                 ></textarea>
             </div>
 
-            <button type="submit" className="bg-contentBg border-2 border-accent-300">Submit</button>
+            <button type="submit" className="bg-red-600 text-white text-xl border-4 border-red-600 my-10    ">Submit</button>
       </form>
         
     </div>

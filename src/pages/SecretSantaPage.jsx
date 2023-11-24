@@ -83,29 +83,37 @@ export default function SecretSantaPage() {
         console.log('update dynamo')
     }
 
-    return <div>
-        <h1>Secret Santa 2023</h1>
+    const oddBorder = '#cc2222';
+    const evenBorder = '#22cc22';
+    function getBorder(i) {
+        if (i % 2 === 0) return evenBorder;
+        return oddBorder;
+    }
+
+    return <div className="text-white">
+        <h1 className="border-b-2 border-red-500 text-3xl text-green-500" onClick={() => unselectPerson()}>Secret Santa 2023</h1>
         { showForm && selectedPerson
         ? <button className="border-2 border-defaultText fixed bottom-2" onClick={() => unselectPerson()}>Back to all people</button>
         : <></>
         }
-
-
         { !showForm 
         ? <div> 
-            <h3>Who are you filling out preferences for? </h3>
+            <h3 className="my-4 mb-5">Who are you filling out preferences for?</h3>
+            <p className="text-sm text-gray-500 my-2 p-0">Click on a name set secret santa preferences. <br/> Once everyone is done, matches will get sent out.</p>
             <ul>
-                {Object.keys(data).map((personName, i) => {
-                    return <li key={i} className="flex flex-row py-2 px-4 w-64 rounded shadow-black bg-contentBg border-2 border-gray-800" onClick={() => choosePerson(data[personName], personName)}>
+                {Object.keys(data).sort().map((personName, i) => {
+                    return <li key={i} style={{borderColor: getBorder(i) }} className="flex flex-row py-2 px-4 w-64 rounded shadow-black bg-contentBg border-2 font-bold" onClick={() => choosePerson(data[personName], personName)}>
                         <div>{personName}</div>
-                        { data[personName] && data[personName]['done'] && <div className="text-gray-400 text-sm ml-3">(done)</div>}
+                        { data[personName] && data[personName]['data'] && data[personName]['data']['done'] && 
+                            <div className="text-gray-400 text-sm ml-3">(done)</div>
+                        }
                     </li>
                 })}
             </ul>
         </div>
         : <></>}
 
-        { showForm && selectedPerson && <SecretSantaForm name={selectedPersonName} data={data} updateDynamo={updateDynamoData} updateData={updateData} /> }
+        { showForm && selectedPerson && <SecretSantaForm name={selectedPersonName} data={data} updateDynamo={updateDynamoData} updateData={updateData} back={unselectPerson}/> }
     </div>
 
 }
