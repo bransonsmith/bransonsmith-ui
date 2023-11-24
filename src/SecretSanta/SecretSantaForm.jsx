@@ -129,7 +129,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="smells"
-                    value={props.data[props.name]['data']['favoriteBooksMoviesTVShows'] || ''}
+                    value={props.data[props.name]['data']['smells'] || ''}
                     onChange={(e) => setFormValue('smells', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
