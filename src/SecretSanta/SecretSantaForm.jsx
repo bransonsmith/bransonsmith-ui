@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export default function SecretSantaForm(props) {
-    window.scrollTo(0, 0);
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [autoSaving, setAutoSaving] = useState(false)
 
@@ -10,7 +9,6 @@ export default function SecretSantaForm(props) {
         setFormValue('done', true)
         await props.updateDynamo();
         props.back()
-        window.scrollTo(0, 0);
     };
 
 
@@ -18,7 +16,6 @@ export default function SecretSantaForm(props) {
         setFormValue('done', false)
         await props.updateDynamo();
         props.back()
-        window.scrollTo(0, 0);
     };
 
     function setFormValue(key, value) {
