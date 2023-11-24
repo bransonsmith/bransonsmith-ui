@@ -58,6 +58,12 @@ export default function SecretSantaPage() {
         setShowForm(false)
     }
 
+    function updateData(personName, personKey, personValue) {
+        const updatedData = {...data}
+        updatedData[personName]['data'][personKey] = personValue
+        setData(updatedData)
+    }
+
     async function updateDynamoData() {
         const forDynamo = JSON.stringify(data);
         try {
@@ -74,6 +80,7 @@ export default function SecretSantaPage() {
         } catch (error) {
             console.error('Error updating data:', error.message);
         }
+        console.log('update dynamo')
     }
 
     return <div>
@@ -98,7 +105,7 @@ export default function SecretSantaPage() {
         </div>
         : <></>}
 
-        { showForm && selectedPerson && <SecretSantaForm name={selectedPersonName} data={selectedPerson.data} updateDynamo={updateDynamoData} /> }
+        { showForm && selectedPerson && <SecretSantaForm name={selectedPersonName} data={data} updateDynamo={updateDynamoData} updateData={updateData} /> }
     </div>
 
 }

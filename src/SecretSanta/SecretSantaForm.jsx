@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export default function SecretSantaForm(props) {
 
-    const [personFormData, setPersonFormData] = useState(props.data)
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [autoSaving, setAutoSaving] = useState(false)
 
@@ -10,19 +9,16 @@ export default function SecretSantaForm(props) {
         e.preventDefault();
         setFormValue('done', true)
         await props.updateDynamo();
-        console.log(personFormData);
     };
 
     function setFormValue(key, value) {
-        var clonedData = personFormData;
-        clonedData[key] = value
-        setPersonFormData(clonedData)
+        props.updateData(props.name, key, value);
     }
 
     const handleFieldSwitch = async () => {
         const now = Date.now();
         const timeSinceLastUpdate = now - lastUpdate;
-        if (timeSinceLastUpdate > 30000) {
+        if (timeSinceLastUpdate > 10000) {
             setAutoSaving(true)
             await props.updateDynamo();
             setLastUpdate(now);
@@ -44,7 +40,7 @@ export default function SecretSantaForm(props) {
                 <input className="w-full mt-1 mb-2" 
                     type="email"
                     id="email"
-                    value={personFormData.email}
+                    value={props.data[props.name]['data']['email'] || ''}
                     onChange={(e) => setFormValue('email', e.target.value)}
                     onBlur={handleFieldSwitch}
                 />
@@ -56,7 +52,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="favoriteStores"
-                    value={personFormData.favoriteStores}
+                    value={props.data[props.name]['data']['favoriteStores'] || ''}
                     onChange={(e) => setFormValue('favoriteStores', e.target.value)}
                     onBlur={handleFieldSwitch}
                 />
@@ -68,7 +64,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="favoriteRestaurants"
-                    value={personFormData.favoriteRestaurants}
+                    value={props.data[props.name]['data']['favoriteRestaurants'] || ''}
                     onChange={(e) => setFormValue('favoriteRestaurants', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
@@ -76,12 +72,12 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="favoriteFoods">Favorite Foods:</label>
+                <label className="w-full mr-auto mt-3 mb-1" htmlFor="favoriteFoods">Favorite Foods/Snacks:</label>
                 <input
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="favoriteFoods"
-                    value={personFormData.favoriteFoods}
+                    value={props.data[props.name]['data']['favoriteFoods'] || ''}
                     onChange={(e) => setFormValue('favoriteFoods', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
@@ -94,21 +90,8 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="hobbies"
-                    value={personFormData.hobbies}
+                    value={props.data[props.name]['data']['hobbies'] || ''}
                     onChange={(e) => setFormValue('hobbies', e.target.value)}
-                    onBlur={handleFieldSwitch}
-                    
-                />
-            </div>
-
-            <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1" htmlFor="snacks">Favorite Snacks:</label>
-                <input
-                    className="w-full mt-1 mb-2"
-                    type="text"
-                    id="snacks"
-                    value={personFormData.snacks}
-                    onChange={(e) => setFormValue('snacks', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
                 />
@@ -120,7 +103,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="allergies"
-                    value={personFormData.allergies}
+                    value={props.data[props.name]['data']['allergies'] || ''}
                     onChange={(e) => setFormValue('allergies', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
@@ -133,7 +116,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="favoriteBooksMoviesTVShows"
-                    value={personFormData.favoriteBooksMoviesTVShows}
+                    value={props.data[props.name]['data']['favoriteBooksMoviesTVShows'] || ''}
                     onChange={(e) => setFormValue('favoriteBooksMoviesTVShows', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
@@ -146,7 +129,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="smells"
-                    value={personFormData.favoriteBooksMoviesTVShows}
+                    value={props.data[props.name]['data']['favoriteBooksMoviesTVShows'] || ''}
                     onChange={(e) => setFormValue('smells', e.target.value)}
                     onBlur={handleFieldSwitch}
                     
@@ -159,7 +142,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     type="text"
                     id="links"
-                    value={personFormData.links}
+                    value={props.data[props.name]['data']['links'] || ''}
                     rows="4"
                     onChange={(e) => setFormValue('links', e.target.value)}
                     onBlur={handleFieldSwitch}
@@ -173,7 +156,7 @@ export default function SecretSantaForm(props) {
                     className="w-full mt-1 mb-2"
                     id="notes"
                     rows="4"
-                    value={personFormData.notes}
+                    value={props.data[props.name]['data']['notes'] || ''}
                     onChange={(e) => setFormValue('notes', e.target.value)}
                     onBlur={handleFieldSwitch}
                 ></textarea>
