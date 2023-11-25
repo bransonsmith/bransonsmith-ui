@@ -46,10 +46,10 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteStores">Favorite Stores:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="favoriteStores">Favorite Stores:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-green-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-green-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="favoriteStores"
                     value={props.data[props.name]['data']['favoriteStores'] || ''}
                     onChange={(e) => setFormValue('favoriteStores', e.target.value)}
@@ -58,10 +58,10 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteRestaurants">Favorite Restaurants:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="favoriteRestaurants">Favorite Restaurants:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-green-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-green-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="favoriteRestaurants"
                     value={props.data[props.name]['data']['favoriteRestaurants'] || ''}
                     onChange={(e) => setFormValue('favoriteRestaurants', e.target.value)}
@@ -71,10 +71,10 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteFoods">Favorite Foods/Snacks:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="favoriteFoods">Favorite Foods/Snacks:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-green-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-green-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="favoriteFoods"
                     value={props.data[props.name]['data']['favoriteFoods'] || ''}
                     onChange={(e) => setFormValue('favoriteFoods', e.target.value)}
@@ -88,10 +88,10 @@ export default function SecretSantaForm(props) {
             <br/>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="hobbies">Hobbies/Activities:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="hobbies">Hobbies/Activities:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-red-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-red-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="hobbies"
                     value={props.data[props.name]['data']['hobbies'] || ''}
                     onChange={(e) => setFormValue('hobbies', e.target.value)}
@@ -102,10 +102,10 @@ export default function SecretSantaForm(props) {
 
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteBooksMoviesTVShows">Books, Movies, TV Shows:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="favoriteBooksMoviesTVShows">Books, Movies, TV Shows:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-red-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-red-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="favoriteBooksMoviesTVShows"
                     value={props.data[props.name]['data']['favoriteBooksMoviesTVShows'] || ''}
                     onChange={(e) => setFormValue('favoriteBooksMoviesTVShows', e.target.value)}
@@ -115,10 +115,10 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="smells">Smells, Feels, Lotions, etc.:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="smells">Smells, Feels, Lotions, etc.:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-red-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-red-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="smells"
                     value={props.data[props.name]['data']['smells'] || ''}
                     onChange={(e) => setFormValue('smells', e.target.value)}
@@ -132,10 +132,10 @@ export default function SecretSantaForm(props) {
             <br/>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="allergies">Allergies/Dislikes:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="allergies">Allergies/Dislikes:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-green-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-green-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="allergies"
                     value={props.data[props.name]['data']['allergies'] || ''}
                     onChange={(e) => setFormValue('allergies', e.target.value)}
@@ -145,10 +145,10 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="links">Links to wishlists (e.g. Amazon Wishlist or products you like):</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="links">Links to wishlists or products you like:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-green-600"
-                    type="text"
+                    className="w-[96%] mt-1 mb-2 border-2 border-green-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
+                    rows="4"
                     id="links"
                     value={props.data[props.name]['data']['links'] || ''}
                     rows="4"
@@ -159,9 +159,9 @@ export default function SecretSantaForm(props) {
             </div>
 
             <div className="flex flex-col w-full mr-auto">
-                <label className="w-full mr-auto mt-3 mb-1 " htmlFor="notes">Other Notes:</label>
+                <label className="w-[96%] mx-auto mt-3 mb-1 " htmlFor="notes">Other Notes:</label>
                 <textarea
-                    className="w-full mt-1 mb-2 border-2 border-green-600"
+                    className="w-[96%] mt-1 mb-2 border-2 border-green-600 text-[16px] font-normal h-auto mx-auto overflow-y-hidden"
                     id="notes"
                     rows="4"
                     value={props.data[props.name]['data']['notes'] || ''}
