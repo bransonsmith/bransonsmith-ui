@@ -2,7 +2,8 @@ import { useState } from "react";
 
 export default function SecretSantaForm(props) {
     const [lastUpdate, setLastUpdate] = useState(Date.now());
-    const [autoSaving, setAutoSaving] = useState(false)
+    const [autoSaving, setAutoSaving] = useState(false);
+    const [changed, setChanged]= useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,16 +21,18 @@ export default function SecretSantaForm(props) {
 
     function setFormValue(key, value) {
         props.updateData(props.name, key, value);
+        setChanged(true);
     }
 
     const handleFieldSwitch = async () => {
         const now = Date.now();
         const timeSinceLastUpdate = now - lastUpdate;
-        if (timeSinceLastUpdate > 10000) {
+        if (changed && timeSinceLastUpdate > 10000) {
             setAutoSaving(true)
             await props.updateDynamo();
             setLastUpdate(now);
             setAutoSaving(false)
+            setChanged(false);
         }
     };
 
