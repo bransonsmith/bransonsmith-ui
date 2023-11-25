@@ -4,6 +4,7 @@ import SecretSantaForm from "../SecretSanta/SecretSantaForm";
 export default function SecretSantaPage() {
 
     const [showForm, setShowForm] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [selectedPersonName, setSelectedPersonName] = useState(null);
     const [data, setData] = useState
@@ -188,6 +189,7 @@ export default function SecretSantaPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true)
                 const response = await fetch(lambdaUrl);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -198,15 +200,15 @@ export default function SecretSantaPage() {
                     newData[personObj["PersonName"]] = JSON.parse(personObj["questionData"])
                 }
                 setData(newData)
+                setLoading(false)
             } catch (error) {
+                setLoading(false)
                 console.error('Error fetching data:', error.message);
             }
         };
 
         fetchData();
     }, []);
-
-
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -272,6 +274,7 @@ export default function SecretSantaPage() {
 
     return <div className="text-white">
         <h1 className="border-b-2 border-red-500 text-3xl text-green-500" onClick={() => unselectPerson()}>Secret Santa 2023</h1>
+        { loading && <div className="text-green-700">Loading most recent data...</div> }
         { showForm && selectedPerson
         ? <div className="w-full flex flex-row">
             <button className="border-2 border-black rounded-sm shadow-lg shadow-black py-3 fixed bottom-2 m-auto left-4" onClick={() => unselectPerson()}>Back to all people</button>

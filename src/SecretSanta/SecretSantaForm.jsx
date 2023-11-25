@@ -44,7 +44,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteStores">Favorite Stores:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="favoriteStores"
@@ -56,7 +56,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteRestaurants">Favorite Restaurants:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="favoriteRestaurants"
@@ -69,7 +69,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteFoods">Favorite Foods/Snacks:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="favoriteFoods"
@@ -86,7 +86,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="hobbies">Hobbies/Activities:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
                     id="hobbies"
@@ -100,7 +100,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="favoriteBooksMoviesTVShows">Books, Movies, TV Shows:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
                     id="favoriteBooksMoviesTVShows"
@@ -113,7 +113,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="smells">Smells, Feels, Lotions, etc.:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-red-600"
                     type="text"
                     id="smells"
@@ -130,7 +130,7 @@ export default function SecretSantaForm(props) {
 
             <div className="flex flex-col w-full mr-auto">
                 <label className="w-full mr-auto mt-3 mb-1 " htmlFor="allergies">Allergies/Dislikes:</label>
-                <input
+                <textarea
                     className="w-full mt-1 mb-2 border-2 border-green-600"
                     type="text"
                     id="allergies"
