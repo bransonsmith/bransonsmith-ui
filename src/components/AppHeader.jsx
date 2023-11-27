@@ -1,5 +1,6 @@
 import bsdev from '../assets/BS_Dev_logo.png'
 import { useState } from 'react'
+import { UserNav } from './AuthComponents'
 
 export default function AppHeader(props) {
 
@@ -33,7 +34,7 @@ export default function AppHeader(props) {
             }
           </div>
           }
-          
+          <div className="absolute right-2 top-5"><UserNav /></div>
         </nav>
 
       </header>
