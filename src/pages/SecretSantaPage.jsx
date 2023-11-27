@@ -91,7 +91,7 @@ export default function SecretSantaPage() {
         </div>
         : <></>}
 
-        { showForm && selectedPerson && <SecretSantaForm name={selectedPersonName} data={data} updateDynamo={updateDynamoData} updateData={updateData} back={unselectPerson}/> }
+        { showForm && selectedPerson && <SecretSantaForm name={selectedPersonName} data={data} updateData={updateData} back={unselectPerson}/> }
     </div>
 
 }
