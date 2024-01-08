@@ -16,6 +16,7 @@ import PrivacyPage from './pages/PrivacyPage'
 import ResumePage from './pages/ResumePage'
 import TermsPage from './pages/TermsPage'
 import DndQuests from './pages/DndQuests'
+import PodcastPage from './pages/PodcastPage'
 
 import { Helmet } from 'react-helmet';
 import SecretSantaForm from './SecretSanta/SecretSantaForm';
@@ -33,7 +34,8 @@ export default function App() {
     { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },
     { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
     { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
-    { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: true, showInFooter: true },
+    { target: '/podcast', label: 'Podcast', element: <PodcastPage />, showInHeader: true, showInFooter: true },
+    { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: false, showInFooter: false },
     { target: '/quests', label: 'Quests', element: <DndQuests />, showInHeader: false, showInFooter: false },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
