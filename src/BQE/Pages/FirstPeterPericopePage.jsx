@@ -75,9 +75,25 @@ export default function FirstPeterPericopePage() {
         return `${correct} of ${wordBank.length} | ${(correct/wordBank.length*100).toFixed(2)}%`
     }
 
+    function moveUp(index) {
+        if (index > 0) {
+            const newWordBank = [...wordBank];
+            [newWordBank[index], newWordBank[index - 1]] = [newWordBank[index - 1], newWordBank[index]];
+            setWordBank(newWordBank);
+        }
+    }
+
+    function moveDown(index) {
+        if (index < wordBank.length - 1) {
+            const newWordBank = [...wordBank];
+            [newWordBank[index], newWordBank[index + 1]] = [newWordBank[index + 1], newWordBank[index]];
+            setWordBank(newWordBank);
+        }
+    }
+
     return <div className="flex flex-col w-full">
         <h2>1 Peter </h2>
-        <p>Sort the following section titles from the book of 1 Peter as given by the ESV.
+        <p>Sort (pc users can drag and drop) the following section titles from the book of 1 Peter as given by the ESV.
             <br/>This isn't a test of ESV knowledge, as much as a general check on the order of topics in 1 Peter!
         </p>
 
@@ -116,17 +132,22 @@ export default function FirstPeterPericopePage() {
             {wordBank &&
                 <div className="flex flex-col w-full my-4">
                     {wordBank.map((item, index) => (
-                        <div 
-                            key={index} 
-                            draggable 
-                            onDragStart={(e) => handleDragStart(e, item, index)}
-                            onDragOver={(e) => handleDragOver(e, index)}
-                            onDragLeave={handleDragLeave}
-                            onDrop={() => handleDrop(index)}
-                            className={`mx-auto my-0 py-2 px-4 rounded-md border-x-4 border-y-2 ${dragOverIndex === index ? 'border-slate-300 relative top-1 left-1' : 'border-slate-700'} w-10/12 cursor-grab`}
-                        >
-                            {item.Title}
-                        </div>
+                        <div className="flex flex-row w-full">
+                        
+                            <div className="cursor-pointer border-2 border-slate-400 rounded-xl bg-slate-600 w-8 h-8 mr-1 my-auto text-center" onClick={() => moveUp(index)}>^</div>
+                            <div className="cursor-pointer border-2 border-slate-400 rounded-xl bg-slate-600 w-8 h-8 mr-1 my-auto text-center" onClick={() => moveDown(index)}>v</div>
+                                <div 
+                                    key={index} 
+                                    draggable 
+                                    onDragStart={(e) => handleDragStart(e, item, index)}
+                                    onDragOver={(e) => handleDragOver(e, index)}
+                                    onDragLeave={handleDragLeave}
+                                    onDrop={() => handleDrop(index)}
+                                    className={`mx-auto my-0 py-2 px-4 rounded-md border-x-4 border-y-2 ${dragOverIndex === index ? 'border-slate-300 relative top-1 left-1' : 'border-slate-700'} w-10/12 cursor-grab`}
+                                >
+                                    {item.Title}
+                                </div>
+                        </div>  
                     ))}
                 </div>
             }
