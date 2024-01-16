@@ -32,8 +32,8 @@ export default function BQETermSearch(props) {
     
     return <div className='bqe-term-search'>
         
-        <input placeholder="search for term" className="bqe-search-text" id="search-form" type="text" onChange={(event) => setSearchForm(event.target.value)}/>
-        <button className="bqe-search-submit" onClick={getESVSearchResult}> Search </button>
+        <input placeholder="search for term" className="bqe-search-text border-2 border-slate-700 px-4 py-2" id="search-form" type="text" onChange={(event) => setSearchForm(event.target.value)}/>
+        <button className="bqe-search-submit border-2 border-slate-700" onClick={getESVSearchResult}> Search </button>
         
         {esvSearchError
         ? <div>

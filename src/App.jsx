@@ -10,6 +10,7 @@ import ContactPage from './pages/ContactPage'
 import SecretSantaPage from './pages/SecretSantaPage'
 import ProjectsPage from './pages/ProjectsPage'
 import HomePage from './pages/HomePage'
+import BQEPage from './BQE/Pages/BQEPage'
 import BQERandomQuizPage from './BQE/Pages/BQERandomQuizPage'
 import NotFoundPage from './pages/NotFoundPage'
 import PrivacyPage from './pages/PrivacyPage'
@@ -29,7 +30,7 @@ export default function App() {
   const pages = [
     { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
     { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
-    { target: '/BQE', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: true, showInFooter: true },
+    { target: '/BQE', label: 'BQE', element: <BQEPage />, showInHeader: true, showInFooter: true },
     { target: '/BQE/quiz', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: false, showInFooter: false },
     { target: '/projects', label: 'Projects', element: <ProjectsPage />, showInHeader: true, showInFooter: true },
     { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },

@@ -93,8 +93,8 @@ export default function FirstPeterPericopePage() {
 
     return <div className="flex flex-col w-full">
         <h2>1 Peter </h2>
-        <p>Sort (pc users can drag and drop) the following section titles from the book of 1 Peter as given by the ESV.
-            <br/>This isn't a test of ESV knowledge, as much as a general check on the order of topics in 1 Peter!
+        <p>Sort the following section titles from the book of 1 Peter (ESV).
+            <br/> (pc users can drag and drop, mobile users use the up and down buttons to move items)
         </p>
 
         {submitted
