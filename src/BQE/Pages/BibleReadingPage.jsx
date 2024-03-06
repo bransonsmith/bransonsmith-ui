@@ -31,6 +31,8 @@ export default function BibleReadingPage() {
         setChapter(chapterSelectorValue);
 
         setParagraphs([])
+        setShowBookChapterSelectionForm(false)
+        window.scrollTo(0, 0)
         setNumberOfChaptersInBook(BibleData.passage_data.find(b => b['name'] == bookSelectorValue).chapters)
         setFirstChapter(chapterSelectorValue)
         setLastFetchedChapter(0)
@@ -39,8 +41,6 @@ export default function BibleReadingPage() {
         setParagraphs(chapterContent)
         setLastFetchedChapter(chapterSelectorValue)
         setReachedEndOfCurrentChapter(false)
-        setShowBookChapterSelectionForm(false)
-        window.scrollTo(0, 0)
     }
 
     async function getChapterParagraphs(bookName, chapterNumber) {
