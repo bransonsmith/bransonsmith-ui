@@ -18,6 +18,7 @@ import ResumePage from './pages/ResumePage'
 import TermsPage from './pages/TermsPage'
 import DndQuests from './pages/DndQuests'
 import PodcastPage from './pages/PodcastPage'
+import BibleReadingPage from './BQE/Pages/BibleReadingPage'
 import FirstPeterPericopePage from './BQE/Pages/FirstPeterPericopePage'
 
 import { Helmet } from 'react-helmet';
@@ -40,6 +41,7 @@ export default function App() {
     { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: false, showInFooter: false },
     { target: '/quests', label: 'Quests', element: <DndQuests />, showInHeader: false, showInFooter: false },
     { target: '/peter', label: '1 Peter Pericopes', element: <FirstPeterPericopePage />, showInHeader: false, showInFooter: false },
+    { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]

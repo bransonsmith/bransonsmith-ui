@@ -5,6 +5,16 @@ export async function getVerse(verseBook, verseChapter, verseVerse) {
     return await esvGet(url, `Got esv verse: ${verseBook} ${verseChapter}:${verseVerse}`)
 } 
 
+export async function getChapter(verseBook, verseChapter) {
+    let url = `https://u4fn3burgi.execute-api.us-east-1.amazonaws.com/Prod/chapter?book=${verseBook}&chapter=${verseChapter}`
+    return await esvGet(url, `Got esv chapter: ${verseBook} ${verseChapter}`)
+}
+
+export async function getBook(verseBook) {
+    let url = `https://u4fn3burgi.execute-api.us-east-1.amazonaws.com/Prod/book?book=${verseBook}`
+    return await esvGet(url, `Got esv book: ${verseBook}`)
+}
+
 export async function getSearchResult(searchForm) {
 
     let url = `https://u4fn3burgi.execute-api.us-east-1.amazonaws.com/Prod/search?search=${searchForm}`

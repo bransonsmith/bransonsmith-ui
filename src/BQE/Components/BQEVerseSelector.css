@@ -16,6 +16,7 @@ select {
     padding: 5px;
     font-size: 14px;
     border: 2px solid #888;
+    cursor: pointer;
 }
 
 .bp-input {
