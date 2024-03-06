@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getChapter } from "../Services/EsvApiService";
 import { BibleData } from "../Data/BQEData"
 import BQEBookChapterSelector  from "../Components/BQEBookChapterSelector"
+import { Helmet } from 'react-helmet';
 
 export default function BibleReadingPage() {
     const ref = useRef();
@@ -91,6 +92,11 @@ export default function BibleReadingPage() {
       }, [ref, ref.current]);
 
     return <div>
+        <Helmet>
+            <title>Extended Bible Reading | Branson Smith</title>
+            <meta name="description" content="Read large portions of the Bible continuously with this esv bible viewer." />
+            <link rel="canonical" href={`https://www.bransonsmith.dev/biblereading`} />
+        </Helmet>
         <div className='w-full max-w-[100%] sticky top-0 text-shadow bg-defaultBg py-2 px-8 rounded-md '>
             {showBookChapterSelectionForm 
                 ? <div className="cursor-pointer">
