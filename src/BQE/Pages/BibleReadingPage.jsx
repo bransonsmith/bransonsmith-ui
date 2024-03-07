@@ -8,7 +8,9 @@ export default function BibleReadingPage() {
     const ref = useRef();
     const paragraphRefs = useRef([]);
 
-    const [tvMode, setTvMode] = useState(false);
+    const contrastModes = ['PHONE', 'BRIGHT', 'BRIGHT_XL']
+
+    const [contrastMode, setContrastMode] = useState(contrastModes[0]);
     const [reachedEndOfCurrentChapter, setReachedEndOfCurrentChapter] = useState(true);
     const [showBookChapterSelectionForm, setShowBookChapterSelectionForm] = useState(true)
 
@@ -91,6 +93,13 @@ export default function BibleReadingPage() {
         return () => { if (ref.current) { observer.unobserve(ref.current); } };
       }, [ref, ref.current]);
 
+    function nextContrastMode() {
+        let currentIndex = contrastModes.indexOf(contrastMode)
+        let nextIndex = currentIndex + 1
+        if (nextIndex > contrastModes.length - 1) { nextIndex = 0 }
+        setContrastMode(contrastModes[nextIndex])
+    }
+
     return <div>
         <Helmet>
             <title>Extended Bible Reading | Branson Smith</title>
@@ -102,7 +111,7 @@ export default function BibleReadingPage() {
                 ? <div className="cursor-pointer">
                     <div className="flex flex-row w-full">
                         <div className="text-accent-300 font-bold" onClick={() => setShowBookChapterSelectionForm(false)}> [hide] </div>
-                        <div className="text-stone-600 cursor-pointer ml-auto mr-10" onClick={() => setTvMode(!tvMode)}> [Contrast] </div>
+                        <div className="text-stone-600 cursor-pointer ml-auto mr-10" onClick={nextContrastMode}> [Contrast] </div>
                     </div>
                     <div className="flex flex-row max-w-[100%] flex-wrap">
                         <BQEBookChapterSelector verseBook={bookSelectorValue} verseChapter={chapterSelectorValue} setVerseBook={handleBookChange} setVerseChapter={handleChapterChange}/>
@@ -116,7 +125,7 @@ export default function BibleReadingPage() {
                     <div className=" cursor-pointer font-bold text-accent-300" onClick={() => setShowBookChapterSelectionForm(true)}> 
                         [select book/chapter]
                     </div>
-                    <div className="text-stone-600 cursor-pointer ml-auto mr-10" onClick={() => setTvMode(!tvMode)}> [Contrast] </div>
+                    <div className="text-stone-600 cursor-pointer ml-auto mr-10" onClick={nextContrastMode}> [Contrast] </div>
                 </div>
             }
             { book.length > 0 && chapter > 0 &&
@@ -130,19 +139,27 @@ export default function BibleReadingPage() {
             }
         </div>
         { book.length > 0 && chapter > 0 &&
-            <div className="w-[100%] max-w-[500px] m-auto p-0">
-                <div className="text-lg font-serif leading-8 text-justify">
+            <div className="w-[100%] m-auto mt-8 p-0">
+                <div className="text-lg font-serif text-justify flex flex-col w-[100%]">
                     {paragraphs.map((paragraph, index) => {
                         return <span id={`${paragraph.book}-${paragraph.chapter}-${index}`} 
-                        key={`${paragraph.book}-${paragraph.chapter}-${index}`}>{ tvMode 
-                        ? <p className="p-0 text-stone-200 font-sans font-bold text-lg" 
-                            >
-                            &nbsp;{paragraph.content}
-                        </p>
-                        :<p className="p-0 text-stone-500 font-sans font-monospace">
-                                &nbsp;&nbsp; {paragraph.content}
-                        </p>
-                        }</span>
+                            key={`${paragraph.book}-${paragraph.chapter}-${index}`}>
+                            { contrastMode == 'PHONE' &&
+                                <p className="p-0 m-auto mt-1 max-w-[500px] text-stone-500 font-sans font-monospace leading-8">
+                                    &nbsp;&nbsp; {paragraph.content}
+                                </p>
+                            }
+                            { contrastMode == 'BRIGHT' &&
+                                <p className="p-0 m-auto mt-2 max-w-[500px] text-stone-300 font-sans font-bold text-xl leading-8">
+                                    &nbsp;{paragraph.content}
+                                </p>
+                            }
+                            { contrastMode == 'BRIGHT_XL' &&
+                                <p className="p-0 m-auto mt-4 max-w-[700px] text-stone-300 font-sans font-bold text-2xl leading-10">
+                                    &nbsp;{paragraph.content}
+                                </p>
+                            }
+                        </span>
                             
                     })}
                 </div>
