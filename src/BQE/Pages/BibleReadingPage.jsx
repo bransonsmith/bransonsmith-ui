@@ -106,7 +106,7 @@ export default function BibleReadingPage() {
             <meta name="description" content="Read large portions of the Bible continuously with this esv bible viewer." />
             <link rel="canonical" href={`https://www.bransonsmith.dev/biblereading`} />
         </Helmet>
-        <div className='w-full max-w-[100%] sticky top-0 text-shadow bg-defaultBg py-2 px-8 rounded-md '>
+        <div className='w-full max-w-[100%] sticky top-0 text-shadow shadow-md bg-defaultBg py-2 px-8 rounded-md '>
             {showBookChapterSelectionForm 
                 ? <div className="cursor-pointer">
                     <div className="flex flex-row w-full">
