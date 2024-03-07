@@ -8,7 +8,7 @@ export default function BibleReadingPage() {
     const ref = useRef();
     const paragraphRefs = useRef([]);
 
-    const [centeredIndex, setCenteredIndex] = useState(null);
+    const [tvMode, setTvMode] = useState(false);
     const [reachedEndOfCurrentChapter, setReachedEndOfCurrentChapter] = useState(true);
     const [showBookChapterSelectionForm, setShowBookChapterSelectionForm] = useState(true)
 
@@ -100,7 +100,10 @@ export default function BibleReadingPage() {
         <div className='w-full max-w-[100%] sticky top-0 text-shadow bg-defaultBg py-2 px-8 rounded-md '>
             {showBookChapterSelectionForm 
                 ? <div className="cursor-pointer">
-                    <div className="text-accent-300 font-bold" onClick={() => setShowBookChapterSelectionForm(false)}> [hide] </div>
+                    <div className="flex flex-row w-full">
+                        <div className="text-accent-300 font-bold" onClick={() => setShowBookChapterSelectionForm(false)}> [hide] </div>
+                        <div className="text-stone-600 cursor-pointer ml-auto mr-10" onClick={() => setTvMode(!tvMode)}> [Contrast] </div>
+                    </div>
                     <div className="flex flex-row max-w-[100%] flex-wrap">
                         <BQEBookChapterSelector verseBook={bookSelectorValue} verseChapter={chapterSelectorValue} setVerseBook={handleBookChange} setVerseChapter={handleChapterChange}/>
                         <button className="bg-contentBg border-2 border-gray-700 px-5 py-2 h-fit m-auto hover:text-gray-100 hover:shadow-lg" onClick={SubmitBookChapterSelection}>
@@ -108,8 +111,12 @@ export default function BibleReadingPage() {
                         </button>
                     </div>
                 </div>
-                : <div className=" cursor-pointer font-bold text-accent-300" onClick={() => setShowBookChapterSelectionForm(true)}> 
-                    [select book/chapter]
+                : 
+                <div className="flex flex-row w-full">
+                    <div className=" cursor-pointer font-bold text-accent-300" onClick={() => setShowBookChapterSelectionForm(true)}> 
+                        [select book/chapter]
+                    </div>
+                    <div className="text-stone-600 cursor-pointer ml-auto mr-10" onClick={() => setTvMode(!tvMode)}> [Contrast] </div>
                 </div>
             }
             { book.length > 0 && chapter > 0 &&
@@ -126,7 +133,17 @@ export default function BibleReadingPage() {
             <div className="w-[100%] max-w-[500px] m-auto p-0">
                 <div className="text-lg font-serif leading-8 text-justify">
                     {paragraphs.map((paragraph, index) => {
-                        return <p className="p-0 text-stone-500" id={`${paragraph.book}-${paragraph.chapter}-${index}`} key={`${paragraph.book}-${paragraph.chapter}-${index}`}>&nbsp;&nbsp;&nbsp;&nbsp; {paragraph.content}</p>
+                        return <span id={`${paragraph.book}-${paragraph.chapter}-${index}`} 
+                        key={`${paragraph.book}-${paragraph.chapter}-${index}`}>{ tvMode 
+                        ? <p className="p-0 text-stone-200 font-sans font-bold text-lg" 
+                            >
+                            &nbsp;{paragraph.content}
+                        </p>
+                        :<p className="p-0 text-stone-500 font-sans font-monospace">
+                                &nbsp;&nbsp; {paragraph.content}
+                        </p>
+                        }</span>
+                            
                     })}
                 </div>
                 <div ref={ref}></div>
