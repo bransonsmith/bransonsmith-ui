@@ -8,12 +8,13 @@ export default function SecretSantaForm(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setFormValue('done', true)
+        await props.updateDynamo();
         props.back()
     };
 
-
     const undone = async (e) => {
         setFormValue('done', false)
+        await props.updateDynamo();
         props.back()
     };
 
@@ -29,6 +30,7 @@ export default function SecretSantaForm(props) {
             setAutoSaving(true)
             setLastUpdate(now);
             setAutoSaving(false)
+            await props.updateDynamo();
             setChanged(false);
         }
     };
@@ -166,6 +168,8 @@ export default function SecretSantaForm(props) {
                     onBlur={handleFieldSwitch}
                 ></textarea>
             </div>
+            { props.data[props.name]['data']['done'] && props.data[props.name]['data']['done'] === true && <div className="mt-10 border-2 border-gray-700 text-gray-300 px-4 py-2 rounded w-fit" onClick={() => undone()}>Don't mark me as done yet</div> }
+            <button type="submit" className="bg-red-600 text-white text-xl border-4 border-red-600 my-10">Submit</button>
       </form>
         
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import './MobileNavMenu.css'
-import { UserNav } from './AuthComponents'
+// import { UserNav } from './AuthComponents'
 
 export default function MobileNavMenu(props) {
 
@@ -13,7 +13,7 @@ export default function MobileNavMenu(props) {
 
             <div className="ml-auto mr-0 px-5 pl-10 py-3 text-lg font-bold hover:text-accent-300" onClick={() => setExpanded(!expanded)}>X</div>
             
-            <UserNav />
+            {/* <UserNav /> */}
 
             {props.navItems.map(ni => {
                 return <a className="w-full pl-5 py-4 border-t-2 border-gray-800 hover:text-accent-200" href={ni.target} key={ni.label}>{ni.label}</a>

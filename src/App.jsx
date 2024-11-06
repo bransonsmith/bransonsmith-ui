@@ -6,8 +6,10 @@ import AppFooter from './components/AppFooter';
 import AppHeader from './components/AppHeader';
 import DefaultPageLayout from './components/DefaultPageLayout'
 
+// import BudgetPage from './pages/BudgetPage'
 import ContactPage from './pages/ContactPage'
 import SecretSantaPage from './pages/SecretSantaPage'
+import GiftList2024 from './pages/GiftList2024'
 import ProjectsPage from './pages/ProjectsPage'
 import HomePage from './pages/HomePage'
 import BQEPage from './BQE/Pages/BQEPage'
@@ -18,6 +20,7 @@ import ResumePage from './pages/ResumePage'
 import TermsPage from './pages/TermsPage'
 import DndQuests from './pages/DndQuests'
 import PodcastPage from './pages/PodcastPage'
+// import TokenExchangePage from './pages/TokenExchangePage';
 import BibleReadingPage from './BQE/Pages/BibleReadingPage'
 import BibleReadingManualPage from './BQE/Pages/BibleReadingManualPage'
 import FirstPeterPericopePage from './BQE/Pages/FirstPeterPericopePage'
@@ -32,6 +35,7 @@ export default function App() {
   const pages = [
     { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
     { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
+    // { target: '/budget', label: 'Budget', element: <BudgetPage />, showInHeader: false, showInFooter: false },
     { target: '/BQE', label: 'BQE', element: <BQEPage />, showInHeader: true, showInFooter: true },
     { target: '/BQE/quiz', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: false, showInFooter: false },
     { target: '/projects', label: 'Projects', element: <ProjectsPage />, showInHeader: true, showInFooter: true },
@@ -39,7 +43,8 @@ export default function App() {
     { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
     { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '/podcast', label: 'Podcast', element: <PodcastPage />, showInHeader: true, showInFooter: true },
-    { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: false, showInFooter: false },
+    // { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: false, showInFooter: false },
+    { target: '/santa', label: 'Christmas Lists', element: <GiftList2024 />, showInHeader: true, showInFooter: true },
     { target: '/quests', label: 'Quests', element: <DndQuests />, showInHeader: false, showInFooter: false },
     { target: '/peter', label: '1 Peter Pericopes', element: <FirstPeterPericopePage />, showInHeader: false, showInFooter: false },
     { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
@@ -71,9 +76,11 @@ export default function App() {
       <div className='app-body min-h-[80vh]'>
         <Router>
           <Routes>
-          {pages.map((page) => {
-            return <Route key={page.target} path={page.target} element={<DefaultPageLayout>{page.element}</DefaultPageLayout>} />
-          })}
+            {/* <Route path="/login-api" element={<TokenExchangePage />} />
+            {pages.map((page) => {
+              return <Route key={page.target} path={page.target} element={<DefaultPageLayout>{page.element}</DefaultPageLayout>} />
+            })}
+            <Route path={'/budget'} element={<BudgetPage />}></Route> */}
             <Route path={'/santa/:name'} element={<SecretSantaForm />}></Route>
           </Routes>
         </Router>

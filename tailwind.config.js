@@ -6,7 +6,9 @@ export default {
             colors: {
                 defaultBg: '#1a1d22',
                 contentBg: '#00000033',
+                popUpBg: '#080811',
                 inputBg: '#2b2e33',
+                inputHoverBg: '#107d69',
                 defaultText: '#cdddcd',
                 accent: {
                     950: '#000c09',
@@ -19,6 +21,18 @@ export default {
                     300: '#10c696',
                     200: '#a6ddce',
                     100: '#d8f3eb'
+                },
+                error: {
+                    950: '#4a0529',
+                    900: '#660529',
+                    800: '#800529',
+                    700: '#990529',
+                    600: '#a40529',
+                    500: '#af0529',
+                    400: '#b30529',
+                    300: '#cc0529',
+                    200: '#e60529',
+                    100: '#ff0529'
                 },
                 accentText: '#000c09',
             }

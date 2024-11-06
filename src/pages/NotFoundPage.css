@@ -1,0 +1,24 @@
+
+.text-container {
+    border: 1px solid red;
+    margin: 50px;
+    display: flex;
+    flex-direction: row;
+    font-size: 60px;
+    flex-wrap: wrap;
+}
+
+/* media query, make it a col at 450px */
+/* @media (max-width: 450px) {
+    .text-container {
+        flex-direction: column;
+        border: 1px solid yellow;
+    }
+} */
+
+.centered {
+    margin: auto;
+    border: 1px solid blue;
+    /* never break the line */
+    white-space: nowrap;
+}

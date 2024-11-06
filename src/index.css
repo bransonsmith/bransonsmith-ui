@@ -51,8 +51,12 @@ button {
     @apply bg-inputBg rounded px-4 py-2 font-bold text-sm text-defaultText;
 }
 
+button:hover {
+    @apply bg-inputHoverBg;
+}
+
 li {
-    list-style: circle;
+    list-style: none;
     @apply text-sm my-1;
 }
 
