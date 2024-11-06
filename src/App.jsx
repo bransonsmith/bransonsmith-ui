@@ -42,7 +42,7 @@ export default function App() {
     { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },
     { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
     { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
-    { target: '/podcast', label: 'Podcast', element: <PodcastPage />, showInHeader: true, showInFooter: true },
+    { target: '/podcast', label: 'Podcast', element: <PodcastPage />, showInHeader: false, showInFooter: false },
     // { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: false, showInFooter: false },
     { target: '/santa', label: 'Christmas Lists', element: <GiftList2024 />, showInHeader: true, showInFooter: true },
     { target: '/quests', label: 'Quests', element: <DndQuests />, showInHeader: false, showInFooter: false },
@@ -76,11 +76,11 @@ export default function App() {
       <div className='app-body min-h-[80vh]'>
         <Router>
           <Routes>
-            {/* <Route path="/login-api" element={<TokenExchangePage />} />
+            {/* <Route path="/login-api" element={<TokenExchangePage />} /> */}
             {pages.map((page) => {
               return <Route key={page.target} path={page.target} element={<DefaultPageLayout>{page.element}</DefaultPageLayout>} />
             })}
-            <Route path={'/budget'} element={<BudgetPage />}></Route> */}
+            {/* <Route path={'/budget'} element={<BudgetPage />}></Route> */}
             <Route path={'/santa/:name'} element={<SecretSantaForm />}></Route>
           </Routes>
         </Router>
