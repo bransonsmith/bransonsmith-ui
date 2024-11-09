@@ -174,11 +174,11 @@ const GiftListEntry = ({ giftList, i, handleSelection }) => {
         className="flex cursor-pointer hover:bg-green-900 flex-row py-2 px-4 w-[100%] my-2 rounded shadow-black bg-contentBg border-2 font-bold" 
         onClick={() => { handleSelection(giftList.id); }}
     >
-        <div className="w-1/3 text-lg">{giftList.name}</div>
-        <div className="flex flex-row w-1/3 text-gray-400 my-auto">
-            <div className="mx-2 my-auto">{'|'}</div>
-            <div className="w-1/2 mt-1">{giftList.collection}</div>
+        <div className="w-1/2 text-lg my-auto">{giftList.name}</div>
+        <div className="flex flex-col w-1/2"> 
+
+            <div className="text-gray-400 text-sm ml-auto mr-1 my-auto">({giftList.status})</div>
+
         </div>
-        <div className="text-gray-400 text-sm ml-auto mr-2 my-auto">({giftList.status})</div>
     </li>
 }
