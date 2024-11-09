@@ -41,6 +41,7 @@ export default function GiftList2024() {
 
     const handleSelection = (id) => {
         setSelectedGiftListId(id);
+        setShowForm(true)
     };
     const selectedGiftList = giftLists.find((gl) => gl.id === selectedGiftListId);
 
@@ -133,22 +134,51 @@ export default function GiftList2024() {
         { !loading && !showForm && <div> 
             <h3 className="my-4 mb-5">Who are you shopping for?</h3>
             <p className="text-sm text-gray-500 my-2 p-0">Click on your name to edit your gift preferences. Click on someone else to view theirs.</p>
-            <ul>
-                {giftLists.sort((a, b) => a.name.localeCompare(b.name)).map((giftList, i) => {
-                    return <li key={i} 
-                        style={{ borderColor: i % 2 === 0 ? '#22cc22' : '#cc2222' }} 
-                        className="flex cursor-pointer hover:bg-green-900 flex-row py-2 px-4 w-[100%] my-2 rounded shadow-black bg-contentBg border-2 font-bold" 
-                        onClick={() => { handleSelection(giftList.id); setShowForm(true); }}
-                    >
-                        <div className="w-1/3 text-lg">{giftList.name}</div>
-                        <div className="flex flex-row w-1/3 text-gray-400 my-auto">
-                            <div className="mx-2 my-auto">{'|'}</div>
-                            <div className="w-1/2 mt-1">{giftList.collection}</div>
-                        </div>
-                        <div className="text-gray-400 text-sm ml-auto mr-2 my-auto">({giftList.status})</div>
-                    </li>
-                })}
-            </ul>
+            <GiftListsDisplay giftLists={giftLists} handleSelection={handleSelection} />
         </div>}
     </div>
+}
+
+const GiftListsDisplay = ({ giftLists, handleSelection }) => {
+
+    const groupedGiftLists = giftLists.reduce((acc, giftList) => {
+        const { collection } = giftList;
+        if (!acc[collection]) acc[collection] = [];
+        acc[collection].push(giftList);
+        return acc;
+    }, {});
+
+    return (
+        <div>
+            {Object.keys(groupedGiftLists).sort().map((collection, idx) => (
+                <details key={idx} className="p-6 border-2 border-gray-700 rounded-md m-3 font-bold text-xl">
+                    <summary>{collection}</summary>
+                    {groupedGiftLists[collection]
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((giftList, i) => (
+                            <GiftListEntry
+                                key={`${collection}-${i}`}
+                                giftList={giftList}
+                                handleSelection={handleSelection}
+                            />
+                        ))}
+                </details>
+            ))}
+        </div>
+    );
+};
+
+const GiftListEntry = ({ giftList, i, handleSelection }) => {
+    return <li key={i} 
+        style={{ borderColor: i % 2 === 0 ? '#22cc22' : '#cc2222' }} 
+        className="flex cursor-pointer hover:bg-green-900 flex-row py-2 px-4 w-[100%] my-2 rounded shadow-black bg-contentBg border-2 font-bold" 
+        onClick={() => { handleSelection(giftList.id); }}
+    >
+        <div className="w-1/3 text-lg">{giftList.name}</div>
+        <div className="flex flex-row w-1/3 text-gray-400 my-auto">
+            <div className="mx-2 my-auto">{'|'}</div>
+            <div className="w-1/2 mt-1">{giftList.collection}</div>
+        </div>
+        <div className="text-gray-400 text-sm ml-auto mr-2 my-auto">({giftList.status})</div>
+    </li>
 }
