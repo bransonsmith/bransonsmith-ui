@@ -18,7 +18,7 @@ function InputNames({teamList, setTeamList}) {
             <button onClick={handleNames} className="mr-auto p-2 w-36 my-10 rounded">Submit</button>
             <div>
                 <h3>Name List:</h3>
-                <ul>
+                <ul className="name-list grid grid-cols-6">
                 {teamList.map((name, index) => (
                     <li key={index}>{name}</li>
                 ))}
@@ -45,7 +45,7 @@ export default function GingerbreadCompetitionPage() {
             <h1 className="title">Gingerbread Competition</h1>
                 <div className="description">
                     <InputNames teamList={teamList} setTeamList={setTeamList} />
-                    <button onClick={resetNameList} className="mr-auto p-2 w-36 my-10 rounded bg-red-500 text-white" >Reset Name</button>
+                    <button onClick={resetNameList} className="mr-auto p-2 w-36 my-10 rounded bg-red-400 text-white" >Reset Name</button>
                     <TeamSelector names={teamList}/>
                 </div>
             
