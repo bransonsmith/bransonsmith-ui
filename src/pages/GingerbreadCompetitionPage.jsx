@@ -9,7 +9,8 @@ export default function GingerbreadCompetitionPage() {
             <title> Gingerbread Competition</title>
             </Helmet>
             <h1 className="title">Gingerbread Competition</h1>
-            <div className="description">
+                <div className="description">
+                    INPUT NAMES +
                     <TeamSelector />
                 </div>
         </div>

@@ -1,4 +1,4 @@
-export const style = [
+let style = [
     "Mid - Century Modern",
     "Contemporary",
     "Colonial",
@@ -6,3 +6,5 @@ export const style = [
     "Farmhouse",
     "Ranch Style"
 ]
+
+export default style;

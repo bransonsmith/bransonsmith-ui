@@ -1,5 +1,27 @@
 import { useState } from "react";
 import TeamPage from "./TeamsPage";
+import { names } from "../Data/Names";
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+// create random teams from names
+// Add space between names
+function createTeams(names, teamCount) {
+    const shuffledNames = [...names];
+    shuffleArray(shuffledNames);
+    const teams = [];
+    for (let i = 0; i < teamCount; i++) {
+        //console.log(shuffledNames.slice(i * names.length / teamCount, (i + 1) * names.length / teamCount))
+        teams.push(shuffledNames.slice(i * names.length / teamCount, (i + 1) * names.length / teamCount));
+    }
+    return teams;
+  }
+
 
 function TeamSelector() {
     const [teamCount, setTeamCount] = useState(0); // State to store selected number of teams
@@ -8,7 +30,7 @@ function TeamSelector() {
 
   const handleTeamSelect = (e) => {
       const value = Number(e.target.value);
-      console.log(e)
+      //console.log(e)
       setTeamCount(value); // Update team count when a button is clicked
       setSelected(value);
       setAvailableNumbers([value]);
@@ -19,6 +41,8 @@ function TeamSelector() {
       setAvailableNumbers([4, 5, 6]);
   };
 
+
+    
   const renderTeams = () => {
     if (teamCount === 0) return null; // No teams selected yet
 
@@ -27,7 +51,7 @@ function TeamSelector() {
         {Array.from({ length: teamCount }).map((_, index) => (
           <div key={index} className="team-card">
                 <h2>Team {index + 1}</h2>
-                <TeamPage value={index + 1} />
+                <TeamPage names={createTeams(names, teamCount)[index]} />
             {/* Add additional team card details here */}
           </div>
         ))}
@@ -47,7 +71,7 @@ function TeamSelector() {
             onClick={handleTeamSelect}
             disabled={selected === num}
                 className={`flex-row fill-row breath bg-contentBg text-defaultText border-2 rounded border-accent-300 shadow-lg shadow-black text-lg" 
-                ${selected === num ? "bg-gray-400" : ""}`}
+                ${selected === num ? "bg-red-400 border-white" : ""}`}
           >
             <span className="flex-col breath">{num}</span>
           </button>
@@ -55,7 +79,7 @@ function TeamSelector() {
           </div>
           {teamCount > 0 && (
             <button
-                className="flex-row fill-row breath bg-contentBg text-defaultText border-2 rounded border-accent-300 shadow-lg shadow-black text-lg"
+                className="flex-row fill-row breath bg-contentBg text-defaultText border-2 rounded border-accent-300 shadow-lg shadow-black text-sm"
                 onClick={resetSelction}>
             Reset
             </button>
