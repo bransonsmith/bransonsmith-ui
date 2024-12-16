@@ -1,4 +1,4 @@
-let style = [
+export let style = [
     "Mid - Century Modern",
     "Contemporary",
     "Colonial",
@@ -6,5 +6,3 @@ let style = [
     "Farmhouse",
     "Ranch Style"
 ]
-
-export default style;
