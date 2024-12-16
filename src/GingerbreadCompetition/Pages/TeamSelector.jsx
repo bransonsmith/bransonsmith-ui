@@ -2,28 +2,32 @@ import { useState } from "react";
 import TeamPage from "./TeamsPage";
 import { names } from "../Data/Names";
 
+
+//create a spot to input names for teams
+
 function shuffleArray(array) {
+
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
+  
+    return array;
   }
 
-// create random teams from names
-// Add space between names
 function createTeams(names, teamCount) {
-    const shuffledNames = [...names];
-    shuffleArray(shuffledNames);
-    const teams = [];
-    for (let i = 0; i < teamCount; i++) {
-        //console.log(shuffledNames.slice(i * names.length / teamCount, (i + 1) * names.length / teamCount))
-        teams.push(shuffledNames.slice(i * names.length / teamCount, (i + 1) * names.length / teamCount));
-    }
+    if (teamCount <= 0 || teamCount > names.length) { throw new Error("Invalid team count, Check to see if the team count is between 1 and the number of names"); }
+    const shuffledNames = shuffleArray([...names]);
+    const teams = Array.from({ length: teamCount }, () => []);
+    shuffledNames.forEach((name, index) => {
+        const teamIndex = index % teamCount;
+        teams[teamIndex].push(name);
+    })
     return teams;
   }
 
 
-function TeamSelector() {
+function TeamSelector({ names }) {
     const [teamCount, setTeamCount] = useState(0); // State to store selected number of teams
     const [selected, setSelected] = useState(null);
     const [availableNumbers, setAvailableNumbers] = useState([4, 5, 6]);
@@ -45,16 +49,15 @@ function TeamSelector() {
     
   const renderTeams = () => {
     if (teamCount === 0) return null; // No teams selected yet
-
+    const teams = createTeams(names, teamCount);
     return (
-      <div className="team-grid">
-        {Array.from({ length: teamCount }).map((_, index) => (
-          <div key={index} className="team-card">
-                <h2>Team {index + 1}</h2>
-                <TeamPage names={createTeams(names, teamCount)[index]} />
-            {/* Add additional team card details here */}
-          </div>
-        ))}
+        <div className="team-grid">
+            {teams.map((team, index) => (
+                <div key={index} className="team-card">
+                    <h2>Team {index + 1}</h2>
+                    <TeamPage names={team} />
+                </div>
+            ))}
       </div>
     );
   };
