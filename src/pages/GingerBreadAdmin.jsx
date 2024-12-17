@@ -39,7 +39,6 @@ export default function GingerBreadAdmin() {
     }, [toastMessage]);
 
     useEffect(() => {
-        console.log('reload')
         async function getDynamoItems(tableName, itemSetterFunction) {
             try {
                 const response = await fetch(`${functionBaseUrl}?table=${tableName}`);
