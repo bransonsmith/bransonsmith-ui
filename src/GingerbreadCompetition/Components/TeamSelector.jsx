@@ -82,7 +82,7 @@ function TeamSelector({ names }) {
   
     return (
         <div>
-        <h3>Teams of:</h3>
+        <h3>Total Teams:</h3>
             <div className="flex-row bp-item grid gap-2 grid-cols-3">
                 {availableNumbers.map((num) => (
             <button
