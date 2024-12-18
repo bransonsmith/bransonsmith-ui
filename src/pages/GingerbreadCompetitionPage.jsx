@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import TeamSelector from "../GingerbreadCompetition/Pages/TeamSelector";
+import TeamSelector from "../GingerbreadCompetition/Components/TeamSelector";
 import { useState } from 'react';
 
 function InputNames({teamList, setTeamList}) {
@@ -36,7 +36,7 @@ export default function GingerbreadCompetitionPage() {
     }
 
 
-    const [teamList, setTeamList] = useState([]);
+    const [teamList, setTeamList] = useState(["a","b","c","e","d"]);
         return (
             <div className="GingerbreadCompetitionPage">
             <Helmet>
