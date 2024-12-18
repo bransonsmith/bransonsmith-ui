@@ -9,6 +9,7 @@ import DefaultPageLayout from './components/DefaultPageLayout'
 // import BudgetPage from './pages/BudgetPage'
 import ContactPage from './pages/ContactPage'
 import SecretSantaPage from './pages/SecretSantaPage'
+import GingerbreadCompetitionPage from './pages/GingerbreadCompetitionPage'
 import GiftList2024 from './pages/GiftList2024'
 import ProjectsPage from './pages/ProjectsPage'
 import HomePage from './pages/HomePage'
@@ -52,6 +53,7 @@ export default function App() {
     { target: '/group3724', label: 'Group 3-7-2024', element: <BibleReadingManualPage />, showInHeader: false, showInFooter: true },
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
+    { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: true, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]
 
