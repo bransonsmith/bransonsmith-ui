@@ -11,7 +11,6 @@ import ContactPage from './pages/ContactPage'
 import SecretSantaPage from './pages/SecretSantaPage'
 import GingerbreadCompetitionPage from './pages/GingerbreadCompetitionPage'
 import GiftList2024 from './pages/GiftList2024'
-import GingerbreadCompetitionPage from './pages/GingerbreadCompetitionPage'
 import ProjectsPage from './pages/ProjectsPage'
 import HomePage from './pages/HomePage'
 import BQEPage from './BQE/Pages/BQEPage'
@@ -39,7 +38,7 @@ export default function App() {
   const pages = [
     { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
     { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
-    { target: '/budget', label: 'Budget', element: <BudgetPage />, showInHeader: false, showInFooter: false },
+    // { target: '/budget', label: 'Budget', element: <BudgetPage />, showInHeader: false, showInFooter: false },
     { target: '/BQE', label: 'BQE', element: <BQEPage />, showInHeader: true, showInFooter: true },
     { target: '/BQE/quiz', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: false, showInFooter: false },
     { target: '/projects', label: 'Projects', element: <ProjectsPage />, showInHeader: true, showInFooter: true },
