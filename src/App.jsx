@@ -56,7 +56,6 @@ export default function App() {
     { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: true, showInFooter: false },
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
-    { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: true, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]
 
