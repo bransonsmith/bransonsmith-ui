@@ -1,5 +1,4 @@
-const functionBaseUrl = 'YOUR_FUNCTION_BASE_URL'; // Replace with your actual base URL
-
+const functionBaseUrl = 'https://q2555xh4l7ppkwldozgnavh3ce0aweeq.lambda-url.us-east-1.on.aws/';
 async function getAll(tableName) {
     try {
         const response = await fetch(`${functionBaseUrl}?table=${tableName}`);
