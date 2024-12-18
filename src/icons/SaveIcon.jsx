@@ -12,5 +12,5 @@ const SaveIcon = ({ width = "24", height = "24", color = "currentColor" }) => {
       </svg>
     );
   };
-
+  
   export default SaveIcon;
