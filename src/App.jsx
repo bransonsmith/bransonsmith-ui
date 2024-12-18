@@ -11,11 +11,13 @@ import ContactPage from './pages/ContactPage'
 import SecretSantaPage from './pages/SecretSantaPage'
 import GingerbreadCompetitionPage from './pages/GingerbreadCompetitionPage'
 import GiftList2024 from './pages/GiftList2024'
+import GingerbreadCompetitionPage from './pages/GingerbreadCompetitionPage'
 import ProjectsPage from './pages/ProjectsPage'
 import HomePage from './pages/HomePage'
 import BQEPage from './BQE/Pages/BQEPage'
 import BQERandomQuizPage from './BQE/Pages/BQERandomQuizPage'
 import NotFoundPage from './pages/NotFoundPage'
+import PokerPage from './pages/PokerPage'
 import PrivacyPage from './pages/PrivacyPage'
 import ResumePage from './pages/ResumePage'
 import TermsPage from './pages/TermsPage'
@@ -37,7 +39,7 @@ export default function App() {
   const pages = [
     { target: '/resume', label: 'Resume', element: <ResumePage />, showInHeader: true, showInFooter: true },
     { target: '/contact', label: 'Contact', element: <ContactPage />, showInHeader: true, showInFooter: true },
-    // { target: '/budget', label: 'Budget', element: <BudgetPage />, showInHeader: false, showInFooter: false },
+    { target: '/budget', label: 'Budget', element: <BudgetPage />, showInHeader: false, showInFooter: false },
     { target: '/BQE', label: 'BQE', element: <BQEPage />, showInHeader: true, showInFooter: true },
     { target: '/BQE/quiz', label: 'BQE', element: <BQERandomQuizPage />, showInHeader: false, showInFooter: false },
     { target: '/projects', label: 'Projects', element: <ProjectsPage />, showInHeader: true, showInFooter: true },
@@ -51,6 +53,8 @@ export default function App() {
     { target: '/peter', label: '1 Peter Pericopes', element: <FirstPeterPericopePage />, showInHeader: false, showInFooter: false },
     { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
     { target: '/group3724', label: 'Group 3-7-2024', element: <BibleReadingManualPage />, showInHeader: false, showInFooter: true },
+    { target: '/poker', label: 'Poker', element: <PokerPage />, showInHeader: false, showInFooter: false },
+    { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: true, showInFooter: false },
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: true, showInFooter: false },

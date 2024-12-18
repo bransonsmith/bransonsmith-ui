@@ -35,6 +35,10 @@ export default {
                     100: '#ff0529'
                 },
                 accentText: '#000c09',
+                pokerCard: '#c4c4d4',
+                pokerBack: '#14141d',
+                pokerRed: '#8e3224',
+                pokerBlack: '#0e0505'
             }
         },
     },
