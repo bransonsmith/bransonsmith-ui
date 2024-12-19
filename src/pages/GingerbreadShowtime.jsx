@@ -15,6 +15,7 @@ export default function Gingerbreadshowtime() {
     const [message, setMessage] = useState(null);
     const [numTeams, setNumTeams] = useState(4);
 
+    
 // Big Picture Flow
 // Only 1 GB_showtime object ever exists. id = 1.
 // Reset Button | "Set Up" | all GB_Names set to participating: true, given colors, saved in GB_showtime object.
@@ -32,18 +33,20 @@ export default function Gingerbreadshowtime() {
                 return
             }
             setShowtime(response.data[0]);
+            // console.log(response.data[0]);
             setAllPeople(response.data[0].participants);
             setLoading(false);
         }).catch((error) => {
             console.error('Error:', error);
             setLoading(false);
         });
+
     }, []);
 
     const assignTeams = async () => {
         var colors = [
-            { name: 'Red',      primary: '#45131b', secondary: '#4b0a10' },
-            { name: 'Green',    primary: '#0e2e0e', secondary: '#005404' },
+            { name: 'Red',      primary: '#45131b', secondary: '#8b0a10' },
+            { name: 'Green',    primary: '#0e2e0e', secondary: '#006404' },
             { name: 'Gold',     primary: '#edb76b', secondary: '#f7d89c' },
             { name: 'Silver',   primary: '#babab3', secondary: '#d7d7c3' },
             { name: 'Blue',     primary: '#3e9cfa', secondary: '#91beeb' },
@@ -54,14 +57,31 @@ export default function Gingerbreadshowtime() {
         const participants = allPeople.filter(person => person.participating);
         const shuffledParticipants = participants.sort(() => Math.random() - 0.5);
         const teams = [];
+
+        const shuffledStyles = showtime.styles.sort(() => Math.random() - 0.5);
+        const shuffledVantages = showtime.vantages.sort(() => Math.random() - 0.5);
+        const shuffledItems = showtime.items.sort(() => Math.random() - 0.5);
+        const shuffledFeatures = showtime.features.sort(() => Math.random() - 0.5);
+
         for (let i = 0; i < numTeams; i++) {
+
+            const styleIndex = i % showtime.styles.length;
+            const vantageIndex = i % showtime.vantages.length;
+            const itemIndex = i % showtime.items.length;
+            const featureIndex = i % showtime.features.length;
+
             const team = {
                 id: i,
                 members: [],
                 colorName: colors[i].name,
                 colorPrimary: colors[i].primary,
                 colorSecondary: colors[i].secondary,
-                vantages: [],
+                challenges: [
+                    { showAtMinute: 0,  type: 'Style', name: shuffledStyles[styleIndex].name },
+                    { showAtMinute: 25, type: '(dis?)Advantage', name: shuffledVantages[vantageIndex].name },
+                    { showAtMinute: 40, type: 'Item', name: shuffledItems[itemIndex].name },
+                    { showAtMinute: 55, type: 'Feature', name: shuffledFeatures[featureIndex].name }
+                ],
                 notes: []
             }
             teams.push(team);
@@ -78,6 +98,7 @@ export default function Gingerbreadshowtime() {
             teams: teams,
             competitionState: competitionStates[1]
         }
+        // console.log(newShowtimeObject);
         ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
             setShowtime(newShowtimeObject);
         }).catch((error) => {
@@ -86,34 +107,54 @@ export default function Gingerbreadshowtime() {
     }
 
     const resetCompetition = async () => {
-        ObjectService.getAll('GB_Names').then((response) => {
-            const participatingPeople = response.data.map(person => {
-                return { 
-                    ...person, 
-                    participating: true, 
-                    background: getRandomChristmasGradient(),
-                    team: null
-                };
-            });
-            setAllPeople(participatingPeople);
-            var newShowtimeObject = {
-                id: '1',
-                teams: [],
-                startTime: null,
-                participants: participatingPeople,
-                competitionState: competitionStates[0]
-            }
-            setShowtime(newShowtimeObject);
-            ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
-                setLoading(false);
-            }).catch((error) => {
-                console.error('Error:', error);
-                setLoading(false);
-            });
-        }).catch((error) => {
-            console.error('Error:', error);
-            setLoading(false);
-        });
+        
+        ObjectService.getAll('GB_Categories').then((categoriesResponse) => {
+        ObjectService.getAll('GB_Features').then((featuresResponse) => {
+        ObjectService.getAll('GB_Items').then((itemsResponse) => {
+        ObjectService.getAll('GB_Vantages').then((vantagesResponse) => {
+        ObjectService.getAll('GB_Styles').then((stylesResponse) => {
+            ObjectService.getAll('GB_Names').then((namesResponse) => {
+                const participatingPeople = namesResponse.data.map(person => {
+                    return { 
+                        ...person, 
+                        participating: true, 
+                        background: getRandomChristmasGradient(),
+                        team: null
+                    };
+                });
+                setAllPeople(participatingPeople);
+                var newShowtimeObject = {
+                    id: '1',
+                    teams: [],
+                    startTime: null,
+                    participants: participatingPeople,
+                    competitionState: competitionStates[0],
+                    categories: categoriesResponse.data,
+                    features: featuresResponse.data,
+                    items: itemsResponse.data,
+                    vantages: vantagesResponse.data,
+                    styles: stylesResponse.data,
+                    ballots: [],
+                    showChallenges: {
+                        'Style': true,
+                        '(dis?)Advantage': false,
+                        'Item': false,
+                        'Feature': false,
+                    }
+                }
+                setShowtime(newShowtimeObject);
+                ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+                    setLoading(false);
+                }).catch((error) => {
+                    console.error('Error:', error);
+                    setLoading(false);
+                });
+            }).catch((error) => { console.error('Error:', error); setLoading(false); });
+        }).catch((error) => { console.error('Error:', error); setLoading(false);})
+        }).catch((error) => { console.error('Error:', error); setLoading(false);})
+        }).catch((error) => { console.error('Error:', error); setLoading(false);})
+        }).catch((error) => { console.error('Error:', error); setLoading(false);})
+        }).catch((error) => { console.error('Error:', error); setLoading(false);})
 
     }
 
@@ -174,7 +215,7 @@ export default function Gingerbreadshowtime() {
             <span>
             { showtime && showtime.teams &&
                 <span>
-                    <TeamsList teams={showtime.teams} />
+                    <TeamsList teams={showtime.teams} showtime={showtime} />
 
                     <button className="mt-8 mr-auto" onClick={() => {}}>Start!</button>
                 </span>

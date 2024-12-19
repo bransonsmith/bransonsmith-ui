@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import ObjectService from '../GingerbreadCompetition/Services/ObjectService';
 import ParticipantList from '../GingerbreadCompetition/Components/ParticipantList';
 import TeamsList from '../GingerbreadCompetition/Components/TeamsList';
+// import BallotComponent from '../GingerbreadCompetition/Components/BallotComponent';
+
 
 export default function GingerbreadCompetitionPage() {
 
@@ -40,11 +42,14 @@ export default function GingerbreadCompetitionPage() {
                     <ParticipantList people={showtime.participants} toggleParticipation={() => {}} /> 
                 }
                 { showtime && showtime.participants && showtime.competitionState === 'Ready to Start' &&
-                    <TeamsList teams={showtime.teams} />
+                    <TeamsList teams={showtime.teams} showtime={showtime} />
                 }
                 { 
                     message && <p>{message}</p>
                 }
+                {/* { showtime &&
+                    <BallotComponent showtime={showtime}/>
+                } */}
             </div>
         </div>
     )

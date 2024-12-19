@@ -11,6 +11,7 @@ export default function GingerBreadAdmin() {
         {name: "Names", tableName: "GB_Names"},
         {name: "Items", tableName: "GB_Items"},
         {name: "Features", tableName: "GB_Features"},
+        {name: "Categories", tableName: "GB_Categories"},
     ];
 
     const [selectedItemType, setSelectedItemType] = useState(null);
@@ -22,6 +23,7 @@ export default function GingerBreadAdmin() {
     const [names, setNames] = useState(null);
     const [items, setItems] = useState(null);
     const [features, setFeatures] = useState(null);
+    const [categories, setCategories] = useState(null);
 
     const [newItemName, setNewItemName] = useState("");
 
@@ -66,15 +68,16 @@ export default function GingerBreadAdmin() {
         getDynamoItems("GB_Names", setNames);
         getDynamoItems("GB_Items", setItems);
         getDynamoItems("GB_Features", setFeatures);
+        getDynamoItems("GB_Categories", setCategories);
 
     }, []);
 
     useEffect(() => {
-        if (styles !== null && vantages !== null && names !== null && items !== null && features !== null) {
+        if (styles !== null && vantages !== null && names !== null && items !== null && features !== null && categories !== null) {
     
             handleItemTypeSelection(itemTypes[0]);
         }
-    }, [styles, vantages, names, items, features]);
+    }, [styles, vantages, names, items, features, categories]);
 
     const handleItemTypeSelection = (itemType) => {
         setSelectedItemType(itemType);
@@ -84,6 +87,7 @@ export default function GingerBreadAdmin() {
             case "Names": setSelectedItems(names); break;
             case "Items": setSelectedItems(items); break;
             case "Features": setSelectedItems(features); break
+            case "Categories": setSelectedItems(categories); break
             default: break;
         }
         if (selectedItems) {
@@ -105,10 +109,11 @@ export default function GingerBreadAdmin() {
                 setSelectedItems(responseBody);
                 switch (tableName) {
                     case "GB_Styles": setStyles(selectedItems); setToastMessage({message: `Refreshed styles.`}); break;
-                    case "GB_Vantages": setVantages(selectedItems); setToastMessage({message: `Refreshed styles.`}); break;
-                    case "GB_Names": setNames(selectedItems); setToastMessage({message: `Refreshed styles.`}); break;
-                    case "GB_Items": setItems(selectedItems); setToastMessage({message: `Refreshed styles.`}); break;
-                    case "GB_Features": setFeatures(selectedItems);  setToastMessage({message: `Refreshed styles.`}); break;
+                    case "GB_Vantages": setVantages(selectedItems); setToastMessage({message: `Refreshed vantages.`}); break;
+                    case "GB_Names": setNames(selectedItems); setToastMessage({message: `Refreshed names.`}); break;
+                    case "GB_Items": setItems(selectedItems); setToastMessage({message: `Refreshed items.`}); break;
+                    case "GB_Features": setFeatures(selectedItems);  setToastMessage({message: `Refreshed features.`}); break;
+                    case "GB_Categories": setCategories(selectedItems);  setToastMessage({message: `Refreshed categories.`}); break;
                     default: break;
                 }
                 setNewItemName("");
@@ -155,6 +160,7 @@ export default function GingerBreadAdmin() {
                         case "GB_Names": setNames(selectedItems); setToastMessage({message: `${newItem.name} name created.`}); break;
                         case "GB_Items": setItems(selectedItems); setToastMessage({message: `${newItem.name} item created.`}); break;
                         case "GB_Features": setFeatures(selectedItems); setToastMessage({message: `${newItem.name} feature created.`}); break;
+                        case "GB_Categories": setCategories(selectedItems); setToastMessage({message: `${newItem.name} category created.`}); break;
                         default: break;
                     }
                     setNewItemName("");
@@ -199,6 +205,7 @@ export default function GingerBreadAdmin() {
                         case "GB_Names": setNames(selectedItems); setToastMessage({message: `${item.name} name updated.`}); break;
                         case "GB_Items": setItems(selectedItems); setToastMessage({message: `${item.name} item updated.`}); break;
                         case "GB_Features": setFeatures(selectedItems); setToastMessage({message: `${item.name} feature updated.`}); break;
+                        case "GB_Categories": setCategories(selectedItems); setToastMessage({message: `${item.name} category updated.`}); break;
                         default: break;
                     }
                 }
@@ -240,6 +247,7 @@ export default function GingerBreadAdmin() {
                         case "GB_Names": setNames(updatedItems); setToastMessage({message: `${item.name} name deleted.`}); break;
                         case "GB_Items": setItems(updatedItems); setToastMessage({message: `${item.name} item deleted.`}); break;
                         case "GB_Features": setFeatures(updatedItems); setToastMessage({message: `${item.name} feature deleted.`}); break;
+                        case "GB_Categories": setCategories(updatedItems); setToastMessage({message: `${item.name} category deleted.`}); break;
                         default: break;
                     }
                 }
@@ -290,7 +298,6 @@ export default function GingerBreadAdmin() {
                 }
             </span>}
         </div>
-    
 
         { toastMessage &&
             <span className="w-11/12 fixed bottom-4 ml-1 cursor-pointer" onClick={() => setToastMessage(null)}>

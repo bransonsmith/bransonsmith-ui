@@ -16,12 +16,12 @@ export default function TransactionImportEntry(props) {
         setLoading(true);
         try {
             transaction.amount = parseFloat(transaction.amount);
-            console.log('Attempting to import transaction: ', transaction);
+            // console.log('Attempting to import transaction: ', transaction);
             const response = await makeRequestToApi('api/Transaction/import', 'POST', transaction);
             if (response.status === 200) {
                 setStatus("IMPORTED");
                 setImportResponse('');
-                console.log('Transaction imported: ', response);
+                // console.log('Transaction imported: ', response);
             }
             else if (response.status === 400) {
                 setStatus("ERROR");

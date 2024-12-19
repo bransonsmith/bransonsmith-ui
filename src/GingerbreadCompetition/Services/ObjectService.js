@@ -40,6 +40,7 @@ async function update(tableName, updatedItem) {
             },
             body: JSON.stringify(updatedItem)
         });
+        // console.log(JSON.stringify(updatedItem))
         const data = await response.json();
         if (!response.ok) {
             return error(response.status, `Failed to update ${tableName}. ${response.status}. ${data.message}`);

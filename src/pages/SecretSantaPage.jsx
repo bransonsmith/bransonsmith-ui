@@ -76,8 +76,8 @@ export default function SecretSantaPage() {
     }, [showForm])
 
     async function updateDynamoData() {
-        console.log('updating data...')
-        console.log(selectedPersonName)
+        // console.log('updating data...')
+        // console.log(selectedPersonName)
         const forDynamo = JSON.stringify(data);
         try {
             const response = await fetch(lambdaUrl, {
