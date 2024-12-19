@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ObjectService from '../GingerbreadCompetition/Services/ObjectService';
 import ParticipantList from '../GingerbreadCompetition/Components/ParticipantList';
 import TeamsList from '../GingerbreadCompetition/Components/TeamsList';
-// import BallotComponent from '../GingerbreadCompetition/Components/BallotComponent';
+import VotingResults from '../GingerbreadCompetition/Components/VotingResults';
 
 
 export default function GingerbreadCompetitionPage() {
@@ -29,6 +29,10 @@ export default function GingerbreadCompetitionPage() {
         });
     }, []);
 
+    const navigateToBallotPage = () => {
+        window.location.href = '/gbballot';
+    }
+
     return (
         <div className="GingerbreadCompetitionPage">
         <Helmet>
@@ -38,21 +42,48 @@ export default function GingerbreadCompetitionPage() {
             <div className="description">
                 {/* <InputNames teamList={teamList} setTeamList={setTeamList} /> */}
                 {/* <TeamSelector names={teamList}/> */}
+                {showtime && showtime.competitionState &&
+                    <h2>Phase: {showtime.competitionState}</h2>
+                }
+                {showtime && showtime.competitionState === 'Set Up' &&
+                    <h4 className="mb-4">Hang tight, and make sure you're on the list! If not, tell Aughtney, Preston, or Branson.</h4>
+                }
+                {showtime && showtime.competitionState === 'Ready to Start' &&
+                    <h4 className="mb-4">Teams have been assigned! Listen to Aughtney/Preston for instructions</h4>
+                }
+                {showtime && showtime.competitionState === 'In Progress' &&
+                    <h4 className="mb-4">Get building!</h4>
+                }
+                {showtime && showtime.competitionState === 'Building Complete' &&
+                    <h4 className="mb-4">Building has completed! Voting will start soon!</h4>
+                }
+
                 { showtime && showtime.participants && showtime.competitionState === 'Set Up' &&
                     <ParticipantList people={showtime.participants} toggleParticipation={() => {}} /> 
                 }
-                { showtime && showtime.participants && showtime.competitionState === 'Ready to Start' &&
+
+                { showtime && showtime.participants && showtime.competitionState === 'Voting is Open' &&
+                    <button className="w-full bg-red-950 text-green-900 text-lg border-2 border-green-700 my-5" onClick={navigateToBallotPage}>Click here to cast your votes!</button>
+                }
+
+                { showtime && showtime.participants && showtime.competitionState === 'Voting Complete' &&
+                    <div className="text-gray-500">Voting has completed. The results are in. Waiting for competition organizer to share...</div>
+                }
+
+                { showtime && showtime.participants && showtime.competitionState === 'Voting Published' &&
+                    <div>
+                        <VotingResults />
+                    </div>
+                }
+
+                { showtime && showtime.teams && showtime.competitionState !== 'Voting is Open' && showtime.competitionState !== 'Voting Complete' &&
                     <TeamsList teams={showtime.teams} showtime={showtime} />
                 }
-                { showtime && showtime.participants && showtime.competitionState === 'In Progress' &&
-                    <TeamsList teams={showtime.teams} showtime={showtime} />
-                }
+
                 { 
                     message && <p>{message}</p>
                 }
-                {/* { showtime &&
-                    <BallotComponent showtime={showtime}/>
-                } */}
+                
             </div>
         </div>
     )

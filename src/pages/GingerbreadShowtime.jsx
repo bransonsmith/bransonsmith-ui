@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import ObjectService from '../GingerbreadCompetition/Services/ObjectService';
 import ParticipantList from '../GingerbreadCompetition/Components/ParticipantList';
 import TeamsList from '../GingerbreadCompetition/Components/TeamsList';
+import VotingResults from '../GingerbreadCompetition/Components/VotingResults';
 
 export default function Gingerbreadshowtime() {
 
     const competitionStates = [
-        'Set Up', 'Ready to Start', 
-        'In Progress', 'Complete', 'Ready to Vote', 'Voting Complete'
+        'Set Up', 'Ready to Start', 'In Progress', 'Building Complete', 'Voting is Open', 'Voting Complete', 'Voting Published'
     ] 
     const [allPeople, setAllPeople] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,7 +15,6 @@ export default function Gingerbreadshowtime() {
     const [message, setMessage] = useState(null);
     const [numTeams, setNumTeams] = useState(4);
 
-    
     useEffect(() => {
         ObjectService.getAll('GB_Showtime').then((response) => {
             if (!response.data || response.data.length === 0) {
@@ -35,11 +34,59 @@ export default function Gingerbreadshowtime() {
 
     }, []);
 
+    const publishResults = async () => {
+        const newShowtimeObject = {
+            ...showtime,
+            competitionState: 'Voting Published'
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    const closeVoting = async () => { 
+        const newShowtimeObject = {
+            ...showtime,
+            competitionState: 'Voting Complete'
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    const openUpVoting = async () => {
+        const newShowtimeObject = {
+            ...showtime,
+            competitionState: 'Voting is Open'
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+    const completeCompetition = async () => {
+        const newShowtimeObject = {
+            ...showtime,
+            competitionState: 'Building Complete'
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
     const startCompetition = async () => {
         const newShowtimeObject = {
             ...showtime,
             startTime: new Date().toISOString(),
-            competitionState: competitionStates[2]
+            competitionState: 'In Progress'
         }
         ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
             setShowtime(newShowtimeObject);
@@ -83,7 +130,7 @@ export default function Gingerbreadshowtime() {
                 colorPrimary: colors[i].primary,
                 colorSecondary: colors[i].secondary,
                 challenges: [
-                    { showAtMinute: 10,  type: 'Style', name: shuffledStyles[styleIndex].name },
+                    { showAtMinute: 10, type: 'Style', name: shuffledStyles[styleIndex].name },
                     { showAtMinute: 25, type: '(dis?)Advantage', name: shuffledVantages[vantageIndex].name },
                     { showAtMinute: 40, type: 'Item', name: shuffledItems[itemIndex].name },
                     { showAtMinute: 55, type: 'Feature', name: shuffledFeatures[featureIndex].name }
@@ -207,45 +254,67 @@ export default function Gingerbreadshowtime() {
 
     }
 
+    const manualOverrideCompetitionState = async (newState) => {
+        const newShowtimeObject = {
+            ...showtime,
+            competitionState: newState
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
     return (
         <div className="w-full flex flex-col">
             <div className="w-full flex flex-row">
                 <h1>Gingerbread showtime</h1>
                 <button className="bg-pokerRed h-fit w-fit ml-auto my-auto" onClick={resetCompetition}>Reset</button>
             </div>
-            <h2>{ (showtime && showtime.competitionState) ? showtime.competitionState : 'Set Up'}</h2>
+            <h2>Phase: { (showtime && showtime.competitionState) ? showtime.competitionState : 'Set Up'}</h2>
             { !showtime || !showtime.competitionState || showtime.competitionState === 'Set Up' && (
 
                 <span>
-                { showtime && showtime.participants &&
-                    <span>
-                        <ParticipantList people={allPeople} toggleParticipation={toggleParticipation} manageable={true} />
-                        
-                        <div className="flex flex-col w-full items-center">
+                    <div className="text-sm">Make sure everyone is on this list. To add, edit, remove people, go to <a href="/gbadmin">/gbadmin</a>.</div>
+                    <div className="text-sm">  Then hit the "reset" button at the top of this page, to pull in the latest data.</div>
+                    <div className="text-sm ">   Finally, let participants know to refresh their page to see updated list of names.</div>
+
+                    <div className="w-full flex flex-row gap-2 mb-5">                            
+                        <div className="flex flex-col w-5/12 items-center mr-auto">
                             <label className="mr-auto">Number of Teams</label>
                             <input className="mr-auto" type="number" value={numTeams} onChange={(e) => setNumTeams(e.target.value)} />
                         </div>
+                        <button className="mt-8 ml-auto border-2 border-defaultText text-white w-1/3" onClick={assignTeams}>Assign Teams</button>
+                    </div>
 
-                        <button className="mt-8 mr-auto" onClick={assignTeams}>Assign Teams</button>
-                    </span>
-                }
-                    
+                    <span className="mt-4">
+                    { showtime && showtime.participants &&
+                        <span>
+                            <ParticipantList people={allPeople} toggleParticipation={toggleParticipation} manageable={true} />
+
+                        </span>
+                    }
+                        </span>
                 </span>
 
             )}
 
             { showtime && showtime.competitionState === 'Ready to Start' && (
 
-            <span>
-            { showtime && showtime.teams &&
-                <span>
-                    <TeamsList teams={showtime.teams} showtime={showtime} />
-
-                    <button className="mt-8 mr-auto bg-green-900 m-auto py-4 px-8" onClick={startCompetition}>Start!</button>
-                </span>
-            }
+            <div className="w-full flex flex-col">
                 
-            </span>
+                <div className="w-full flex flex-row mb-4 gap-2">
+                    <div className="text-sm">Teams have been assigned! Tell people to refresh their page to see them. Click the green button to start!</div>
+                    <button className="mt-0 ml-auto mr-0 border-2 border-defaultText bg-green-900 m-auto py-4 px-8" onClick={startCompetition}>Start!</button>
+                </div>
+                { showtime && showtime.teams &&
+                    <span>
+                        <TeamsList teams={showtime.teams} showtime={showtime} />
+                    </span>
+                }
+                
+            </div>
 
             )}
 
@@ -253,8 +322,15 @@ export default function Gingerbreadshowtime() {
 
             <span>
                 {showtime && showtime.showChallenges && 
-                <div className="flex flex-col w-full my-6">
-                    <div>Display Challenges: </div>
+                <div className="flex flex-col w-full mb-6">
+
+                    <div className="flex flex-row w-full gap-2 mb-6">
+                        <div className="text-sm">Competition is in Progress! Reveal challenges with checks below. When it's time to stop building hit the big yellow button!</div>
+                        <button className="ml-auto mr-0 bg-yellow-300 text-red-900 border-2 border-red-950" onClick={completeCompetition}>Complete Competition!</button>
+                    </div>
+
+                    <div className="text-lg">Display Challenges: </div>
+                    <div className="text-sm text-gray-500">Click these boxes to hide/reveal challenges for the teams. If the box is checked, they can refresh their page to see that challenge.</div>
                     {Object.keys(showtime.showChallenges).map((key) => (
                         <span key={key}>
                             <input type="checkbox" className="bg-contentBg" checked={showtime.showChallenges[key]} onChange={() => {updateShowChallenge(key)}} />
@@ -268,8 +344,6 @@ export default function Gingerbreadshowtime() {
                 { showtime && showtime.teams &&
                     <span>
                         <TeamsList teams={showtime.teams} showtime={showtime} />
-
-                        <button className="mt-8 mr-auto" onClick={() => {}}>Start!</button>
                     </span>
                 }
                 
@@ -277,7 +351,96 @@ export default function Gingerbreadshowtime() {
 
             )}
 
+            { showtime && showtime.competitionState === 'Building Complete' && (
+
+                <span>
+                    <div className="flex flex-row w-full gap-2 mb-6">
+                        <div className="text-sm w-7/12">No more building. Take a deep breath. Explain how voting works, then hit the big blue button to open up the ballot box!</div>
+                        <button className="ml-auto mr-0 bg-blue-300 text-neutral-100 border-2 border-neutral-300 w-1/3" onClick={openUpVoting}>Open up Voting!</button>
+                    </div>
+                    <div className="text-sm text-gray-500 mb-4">Participants will be able to vote by clicking a button on the Gingerbread Competition page. They will have to refresh their page once you open up voting!</div>
+                    { showtime && showtime.teams &&
+                        <span>
+                            <TeamsList teams={showtime.teams} showtime={showtime} />
+                        </span>
+                    }
+                    
+                </span>
+    
+            )}
+
+            { showtime && showtime.competitionState === 'Voting is Open' && (
+
+                <span>
+                    <div className="flex flex-row w-full gap-2 mb-6">
+                        <div className="text-sm w-7/12 text-gray-500">Participants can access a ballot at <a href="/gbballot">/gbballot</a> by clicking a button on the Gingerbread Competition page. They will have to refresh their page once you open up voting! When everyone has voted, click the big black button to close voting and see results!</div>
+                        <button className="ml-auto mr-0 bg-black text-neutral-500 border-2 border-neutral-700 w-1/3" onClick={closeVoting}>Close Voting</button>
+                    </div>
+                    { showtime && showtime.teams &&
+                        <span>
+                            <TeamsList teams={showtime.teams} showtime={showtime} />
+                        </span>
+                    }
+                    
+                </span>
+    
+            )}
+
+            { showtime && showtime.competitionState === 'Voting Complete' && (
+
+                <span>
+                    <div>The results are in...</div>
+                    <div className="flex flex-row w-full gap-2 mb-6">
+                        <div className="text-sm w-7/12 text-gray-500">Only you can see the results for now! You have immense power in this moment. Use it to build tension. Announce as you wish! Then when you're done, publish all results to all participants by clicking the pink button.</div>
+                        <button className="ml-auto mr-0 bg-pink-800 text-pink-100 border-2 border-pink-500 w-1/3" onClick={publishResults}>Publish Voting Results</button>
+                    </div>
+
+                   <VotingResults />
+                    { showtime && showtime.teams &&
+                        <span>
+                            <TeamsList teams={showtime.teams} showtime={showtime} />
+                        </span>
+                    }
+                    
+                </span>
+    
+            )}
+
+            { showtime && showtime.competitionState === 'Voting Published' && (
+
+                <span>
+                    <div>Everyone can now refresh their page to see all results.</div>
+
+                   <VotingResults />
+                    { showtime && showtime.teams &&
+                        <span>
+                            <TeamsList teams={showtime.teams} showtime={showtime} />
+                        </span>
+                    }
+                    
+                </span>
+    
+            )}
+
             { message && <p>{message}</p> }
+
+
+            <div className="flex w-full flex-col border-t-2 border-gray-600 mt-64">
+
+                <div className="flex flex-row w-full gap-2 text-sm text-gray-600">
+                    Use this to go back in time in case of emergency.
+                    It's not really tested... but should be fine...
+                </div>
+
+                <label>Manually Set Competition State (use with caution)</label>
+                <select className="w-full" value={showtime && showtime.competitionState || ''} onChange={(e) => {
+                    manualOverrideCompetitionState(e.target.value);
+                }}>
+                    {competitionStates.map((state) => (
+                        <option key={state} value={state}>{state}</option>
+                    ))}
+                </select>
+            </div>
         </div>
     );
 }

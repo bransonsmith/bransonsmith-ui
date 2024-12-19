@@ -23,6 +23,7 @@ import TermsPage from './pages/TermsPage'
 import DndQuests from './pages/DndQuests'
 import PodcastPage from './pages/PodcastPage'
 import GingerBreadAdmin from './pages/GingerBreadAdmin'
+import GbBallotPage from './pages/GbBallotPage'
 import GingerbreadShowtime from './pages/GingerbreadShowtime'
 // import TokenExchangePage from './pages/TokenExchangePage';
 import BibleReadingPage from './BQE/Pages/BibleReadingPage'
@@ -57,6 +58,7 @@ export default function App() {
     { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: true, showInFooter: false },
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/gbshow', label: 'GB Showtime', element: <GingerbreadShowtime />, showInHeader: false, showInFooter: false },
+    { target: '/gbballot', label: 'GB Ballot', element: <GbBallotPage />, showInHeader: false, showInFooter: false },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]
