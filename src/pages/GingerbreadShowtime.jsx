@@ -16,14 +16,6 @@ export default function Gingerbreadshowtime() {
     const [numTeams, setNumTeams] = useState(4);
 
     
-// Big Picture Flow
-// Only 1 GB_showtime object ever exists. id = 1.
-// Reset Button | "Set Up" | all GB_Names set to participating: true, given colors, saved in GB_showtime object.
-//                           participant.team set to null. showtime.teams list = []. showtime.startTime = null.
-// In set up phase, participants can be toggled, and number of teams is specified.
-// Assign Teams Button | "Assign Teams" | showtime.teams list is populated with team objects.
-//                          participant.team is set to team object.
-// Start Button | "Ready to Start" | showtime.startTime is set to current time.
     useEffect(() => {
         ObjectService.getAll('GB_Showtime').then((response) => {
             if (!response.data || response.data.length === 0) {
