@@ -9,7 +9,6 @@ export default function Gingerbreadshowtime() {
         'Set Up', 'Ready to Start', 
         'In Progress', 'Complete', 'Ready to Vote', 'Voting Complete'
     ] 
-    const [competitionState, setCompetitionState] = useState(competitionStates[0]);
     const [allPeople, setAllPeople] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showtime, setShowtime] = useState(null);
@@ -80,7 +79,6 @@ export default function Gingerbreadshowtime() {
             competitionState: competitionStates[1]
         }
         ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
-            setCompetitionState(competitionStates[1]);
             setShowtime(newShowtimeObject);
         }).catch((error) => {
             console.error('Error:', error);
@@ -89,7 +87,6 @@ export default function Gingerbreadshowtime() {
 
     const resetCompetition = async () => {
         ObjectService.getAll('GB_Names').then((response) => {
-            setCompetitionState(competitionStates[0]);
             const participatingPeople = response.data.map(person => {
                 return { 
                     ...person, 
@@ -151,8 +148,8 @@ export default function Gingerbreadshowtime() {
                 <h1>Gingerbread showtime</h1>
                 <button className="bg-pokerRed h-fit w-fit ml-auto my-auto" onClick={resetCompetition}>Reset</button>
             </div>
-            <h2>{competitionState}</h2>
-            { competitionState === 'Set Up' && (
+            <h2>{ (showtime && showtime.competitionState) ? showtime.competitionState : 'Set Up'}</h2>
+            { !showtime || !showtime.competitionState || showtime.competitionState === 'Set Up' && (
 
                 <span>
                 { showtime && showtime.participants &&
@@ -172,7 +169,7 @@ export default function Gingerbreadshowtime() {
 
             )}
 
-            { competitionState === 'Ready to Start' && (
+            { showtime && showtime.competitionState === 'Ready to Start' && (
 
             <span>
             { showtime && showtime.teams &&
