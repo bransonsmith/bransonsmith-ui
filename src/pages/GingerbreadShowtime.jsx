@@ -43,6 +43,20 @@ export default function Gingerbreadshowtime() {
 
     }, []);
 
+    const startCompetition = async () => {
+        const newShowtimeObject = {
+            ...showtime,
+            startTime: new Date().toISOString(),
+            competitionState: competitionStates[2]
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+            window.scrollTo(0, 0);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
     const assignTeams = async () => {
         var colors = [
             { name: 'Red',      primary: '#45131b', secondary: '#8b0a10' },
@@ -183,6 +197,24 @@ export default function Gingerbreadshowtime() {
         return `linear-gradient(45deg, ${randomChristmasColor()}, ${randomChristmasColor()})`;
     }
 
+    const updateShowChallenge = async (challengeType) => {
+        
+        const newShowChallenges = {
+            ...showtime.showChallenges,
+            [challengeType]: !showtime.showChallenges[challengeType]
+        }
+        const newShowtimeObject = {
+            ...showtime,
+            showChallenges: newShowChallenges
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+
+    }
+
     return (
         <div className="w-full flex flex-col">
             <div className="w-full flex flex-row">
@@ -217,13 +249,42 @@ export default function Gingerbreadshowtime() {
                 <span>
                     <TeamsList teams={showtime.teams} showtime={showtime} />
 
-                    <button className="mt-8 mr-auto" onClick={() => {}}>Start!</button>
+                    <button className="mt-8 mr-auto bg-green-900 m-auto py-4 px-8" onClick={startCompetition}>Start!</button>
                 </span>
             }
                 
             </span>
 
             )}
+
+            { showtime && showtime.competitionState === 'In Progress' && (
+
+            <span>
+                {showtime && showtime.showChallenges && 
+                <div className="flex flex-col w-full my-6">
+                    <div>Display Challenges: </div>
+                    {Object.keys(showtime.showChallenges).map((key) => (
+                        <span key={key}>
+                            <input type="checkbox" className="bg-contentBg" checked={showtime.showChallenges[key]} onChange={() => {updateShowChallenge(key)}} />
+                            <label className="mx-2 font-bold text-lg">{key}</label>
+                        </span>
+                    ))}
+
+                </div>
+                }
+
+                { showtime && showtime.teams &&
+                    <span>
+                        <TeamsList teams={showtime.teams} showtime={showtime} />
+
+                        <button className="mt-8 mr-auto" onClick={() => {}}>Start!</button>
+                    </span>
+                }
+                
+            </span>
+
+            )}
+
             { message && <p>{message}</p> }
         </div>
     );

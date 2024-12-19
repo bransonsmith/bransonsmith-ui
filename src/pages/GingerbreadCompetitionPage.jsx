@@ -44,6 +44,9 @@ export default function GingerbreadCompetitionPage() {
                 { showtime && showtime.participants && showtime.competitionState === 'Ready to Start' &&
                     <TeamsList teams={showtime.teams} showtime={showtime} />
                 }
+                { showtime && showtime.participants && showtime.competitionState === 'In Progress' &&
+                    <TeamsList teams={showtime.teams} showtime={showtime} />
+                }
                 { 
                     message && <p>{message}</p>
                 }

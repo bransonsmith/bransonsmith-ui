@@ -22,8 +22,8 @@ function createTeams(names, teamCount) {
         
     }
     if (teamCount <= 0 || teamCount > names.length) {
-        console.log(teamCount)
-        console.log(names.length)
+        // console.log(teamCount)
+        // console.log(names.length)
         return (
             <div>
                 <p>Invalid number of teams selected.</p>

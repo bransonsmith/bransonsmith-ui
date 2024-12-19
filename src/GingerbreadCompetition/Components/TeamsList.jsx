@@ -24,7 +24,7 @@ const TeamsList = ({ teams, showtime }) => {
     return (
         <div className="w-full flex flex-col gap-4">
             {teams.map((team) => (
-                <div key={team.id} className="border-2 p-4 rounded-md pt-0" style={{ borderColor: team.colorPrimary }}>
+                <div key={team.id} className="border-2 p-4 rounded-md pt-2" style={{ borderColor: team.colorPrimary }}>
                     <h1 className="font-bold mb-2 mt-0 [text-shadow:_0px_0px_1px_rgb(0_0_0)]" 
                         style={{ color: team.colorSecondary, letterSpacing: "1px" }}
                         >{team.colorName} Team
