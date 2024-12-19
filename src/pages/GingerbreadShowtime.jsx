@@ -77,7 +77,7 @@ export default function Gingerbreadshowtime() {
                 colorPrimary: colors[i].primary,
                 colorSecondary: colors[i].secondary,
                 challenges: [
-                    { showAtMinute: 0,  type: 'Style', name: shuffledStyles[styleIndex].name },
+                    { showAtMinute: 10,  type: 'Style', name: shuffledStyles[styleIndex].name },
                     { showAtMinute: 25, type: '(dis?)Advantage', name: shuffledVantages[vantageIndex].name },
                     { showAtMinute: 40, type: 'Item', name: shuffledItems[itemIndex].name },
                     { showAtMinute: 55, type: 'Feature', name: shuffledFeatures[featureIndex].name }
@@ -136,7 +136,7 @@ export default function Gingerbreadshowtime() {
                     styles: stylesResponse.data,
                     ballots: [],
                     showChallenges: {
-                        'Style': true,
+                        'Style': false,
                         '(dis?)Advantage': false,
                         'Item': false,
                         'Feature': false,
