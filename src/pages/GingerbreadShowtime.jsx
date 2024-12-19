@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ObjectService from '../GingerbreadCompetition/Services/ObjectService';
 import ParticipantList from '../GingerbreadCompetition/Components/ParticipantList';
+import TeamsList from '../GingerbreadCompetition/Components/TeamsList';
 
 export default function Gingerbreadshowtime() {
 
@@ -13,6 +14,7 @@ export default function Gingerbreadshowtime() {
     const [loading, setLoading] = useState(true);
     const [showtime, setShowtime] = useState(null);
     const [message, setMessage] = useState(null);
+    const [numTeams, setNumTeams] = useState(4);
 
 // Big Picture Flow
 // Only 1 GB_showtime object ever exists. id = 1.
@@ -40,11 +42,56 @@ export default function Gingerbreadshowtime() {
     }, []);
 
     const assignTeams = async () => {
+        console.log('assigning teams');
+        var colors = [
+            { name: 'Red',      primary: '#45131b', secondary: '#5b0a10' },
+            { name: 'Green',    primary: '#0e2e0e', secondary: '#004404' },
+            { name: 'Gold',     primary: '#edb76b', secondary: '#f7d89c' },
+            { name: 'Silver',   primary: '#babab3', secondary: '#d0d0c0' },
+            { name: 'Blue',     primary: '#3e9cfa', secondary: '#91beeb' },
+            { name: 'Orange',   primary: '#B42D1A', secondary: '#de5440' },
+            { name: 'Brown',    primary: '#422116', secondary: '#592f21' },
+            { name: 'Purple',   primary: '#3b1a47', secondary: '#5a3780' },
+        ]
+        const participants = allPeople.filter(person => person.participating);
+        const shuffledParticipants = participants.sort(() => Math.random() - 0.5);
+        const teams = [];
+        for (let i = 0; i < numTeams; i++) {
+            const team = {
+                id: i,
+                members: [],
+                colorName: colors[i].name,
+                colorPrimary: colors[i].primary,
+                colorSecondary: colors[i].secondary,
+                vantages: [],
+                notes: []
+            }
+            teams.push(team);
+        }
+        shuffledParticipants.forEach((person, index) => {
+            const teamIndex = index % numTeams;
+            const team = teams[teamIndex];
+            person.team = team.id;
+            team.members.push(person);
+        });
+        console.log(teams)
 
+        const newShowtimeObject = {
+            ...showtime,
+            teams: teams,
+            competitionState: competitionStates[1]
+        }
+        ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
+            setCompetitionState(competitionStates[1]);
+            setShowtime(newShowtimeObject);
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     const resetCompetition = async () => {
         ObjectService.getAll('GB_Names').then((response) => {
+            setCompetitionState(competitionStates[0]);
             const participatingPeople = response.data.map(person => {
                 return { 
                     ...person, 
@@ -58,7 +105,8 @@ export default function Gingerbreadshowtime() {
                 id: '1',
                 teams: [],
                 startTime: null,
-                participants: allPeople
+                participants: participatingPeople,
+                competitionState: competitionStates[0]
             }
             setShowtime(newShowtimeObject);
             ObjectService.update('GB_Showtime', newShowtimeObject).then((response) => {
@@ -105,15 +153,39 @@ export default function Gingerbreadshowtime() {
                 <h1>Gingerbread showtime</h1>
                 <button className="bg-pokerRed h-fit w-fit ml-auto my-auto" onClick={resetCompetition}>Reset</button>
             </div>
-            <h3>{competitionState}</h3>
+            <h2>{competitionState}</h2>
             { competitionState === 'Set Up' && (
 
-                <span>{ showtime && showtime.participants &&
+                <span>
+                { showtime && showtime.participants &&
                     <span>
                         <ParticipantList people={allPeople} toggleParticipation={toggleParticipation} manageable={true} />
-                        <button onClick={assignTeams}>Assign Teams</button>
+                        
+                        <div className="flex flex-col w-full items-center">
+                            <label className="mr-auto">Number of Teams</label>
+                            <input className="mr-auto" type="number" value={numTeams} onChange={(e) => setNumTeams(e.target.value)} />
+                        </div>
+
+                        <button className="mt-8 mr-auto" onClick={assignTeams}>Assign Teams</button>
                     </span>
-                }</span>
+                }
+                    
+                </span>
+
+            )}
+
+            { competitionState === 'Ready to Start' && (
+
+            <span>
+            { showtime && showtime.teams &&
+                <span>
+                    <TeamsList teams={showtime.teams} />
+
+                    <button className="mt-8 mr-auto" onClick={() => {}}>Start!</button>
+                </span>
+            }
+                
+            </span>
 
             )}
             { message && <p>{message}</p> }

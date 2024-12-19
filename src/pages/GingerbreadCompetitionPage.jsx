@@ -3,6 +3,7 @@ import TeamSelector from "../GingerbreadCompetition/Components/TeamSelector";
 import { useEffect, useState } from 'react';
 import ObjectService from '../GingerbreadCompetition/Services/ObjectService';
 import ParticipantList from '../GingerbreadCompetition/Components/ParticipantList';
+import TeamsList from '../GingerbreadCompetition/Components/TeamsList';
 
 export default function GingerbreadCompetitionPage() {
 
@@ -35,8 +36,11 @@ export default function GingerbreadCompetitionPage() {
             <div className="description">
                 {/* <InputNames teamList={teamList} setTeamList={setTeamList} /> */}
                 {/* <TeamSelector names={teamList}/> */}
-                { showtime && showtime.participants &&
+                { showtime && showtime.participants && showtime.competitionState === 'Set Up' &&
                     <ParticipantList people={showtime.participants} toggleParticipation={() => {}} /> 
+                }
+                { showtime && showtime.participants && showtime.competitionState === 'Ready to Start' &&
+                    <TeamsList teams={showtime.teams} />
                 }
                 { 
                     message && <p>{message}</p>
