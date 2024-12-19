@@ -21,7 +21,7 @@ const ParticipantList = ({ people, toggleParticipation, manageable }) => {
                 </div>
                 <div className="flex flex-row flex-wrap gap-2 mt-2">
                     
-                    {people.filter(person => manageable || person.participating).map((person) => (
+                    {people.filter(person => manageable || person.participating).sort((a, b) => a.name.localeCompare(b.name)).map((person) => (
                         <span key={person.id}>
                             {person.participating ? (
                                 <div
