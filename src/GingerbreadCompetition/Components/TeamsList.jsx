@@ -13,7 +13,7 @@ const TeamsList = ({ teams }) => {
                             <div
                                 key={member.id}
                                 className="py-1 px-1 rounded border-2 border-neutral-400 font-bold [text-shadow:_0px_0px_5px_rgb(5_5_5)]"
-                                style={{ background: `linear-gradient(to right, ${team.colorPrimary}, ${team.colorSecondary})` }}
+                                style={{ background: `linear-gradient(45deg, ${team.colorPrimary}, ${team.colorSecondary})` }}
                             >
                                 <p>{member.name}</p>
                             </div>

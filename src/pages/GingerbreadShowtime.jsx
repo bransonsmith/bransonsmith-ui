@@ -42,12 +42,11 @@ export default function Gingerbreadshowtime() {
     }, []);
 
     const assignTeams = async () => {
-        console.log('assigning teams');
         var colors = [
-            { name: 'Red',      primary: '#45131b', secondary: '#5b0a10' },
-            { name: 'Green',    primary: '#0e2e0e', secondary: '#004404' },
+            { name: 'Red',      primary: '#45131b', secondary: '#4b0a10' },
+            { name: 'Green',    primary: '#0e2e0e', secondary: '#005404' },
             { name: 'Gold',     primary: '#edb76b', secondary: '#f7d89c' },
-            { name: 'Silver',   primary: '#babab3', secondary: '#d0d0c0' },
+            { name: 'Silver',   primary: '#babab3', secondary: '#d7d7c3' },
             { name: 'Blue',     primary: '#3e9cfa', secondary: '#91beeb' },
             { name: 'Orange',   primary: '#B42D1A', secondary: '#de5440' },
             { name: 'Brown',    primary: '#422116', secondary: '#592f21' },
@@ -74,7 +73,6 @@ export default function Gingerbreadshowtime() {
             person.team = team.id;
             team.members.push(person);
         });
-        console.log(teams)
 
         const newShowtimeObject = {
             ...showtime,

@@ -13,7 +13,14 @@ const ParticipantList = ({ people, toggleParticipation, manageable }) => {
                 }
             </div>
             {!isCollapsed && (
+            <span>
+                <div>
+                    {manageable &&
+                        <div className="text-neutral-500"> tap a name to toggle participation </div>
+                    }
+                </div>
                 <div className="flex flex-row flex-wrap gap-2 mt-2">
+                    
                     {people.filter(person => manageable || person.participating).map((person) => (
                         <span key={person.id}>
                             {person.participating ? (
@@ -37,7 +44,7 @@ const ParticipantList = ({ people, toggleParticipation, manageable }) => {
                         </span>
                     ))}
                 </div>
-            )}
+            </span>)}
         </div>
     );
 };
