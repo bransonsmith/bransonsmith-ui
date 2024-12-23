@@ -33,6 +33,30 @@ const valueMap = {
     '13': ['13', 'k', 'king', 'cowboys']
 };
 
+const valueNameMap = {
+    '1': 'Ace',
+    '2': 'Two',
+    '3': 'Three',
+    '4': 'Four',
+    '5': 'Five',
+    '6': 'Six',
+    '7': 'Seven',
+    '8': 'Eight',
+    '9': 'Nine',
+    '10': 'Ten',
+    '11': 'Jack',
+    '12': 'Queen',
+    '13': 'King',
+    '14': 'Ace',
+};
+
+const suitNameMap = {
+    's': 'Spades',
+    'h': 'Hearts',
+    'd': 'Diamonds',
+    'c': 'Clubs'
+};
+
 export default function CardPicker({ onCardPicked, onClose }) {
     const [search, setSearch] = useState('');
 
@@ -40,9 +64,12 @@ export default function CardPicker({ onCardPicked, onClose }) {
         const lowerSearch = search.toLowerCase();
         if (!lowerSearch) return allCards;
         return allCards.filter(card => {
+            if (!card.suit || !card.value) return false;
             const suitMatches = suitMap[card.suit].some(s => lowerSearch.includes(s));
             const valueMatches = valueMap[card.value].some(v => lowerSearch.includes(v));
-            return suitMatches || valueMatches;
+            const name = `${valueNameMap[card.value]} of ${suitNameMap[card.suit]}`;
+            const nameMatches = name.toLowerCase().includes(lowerSearch);
+            return suitMatches || valueMatches || nameMatches;
         });
     };
 

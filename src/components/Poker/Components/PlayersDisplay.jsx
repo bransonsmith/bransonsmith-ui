@@ -21,6 +21,11 @@ export default function PlayersDisplay({gameState, setGameState}) {
 
     return <details open className="flex flex-col w-full my-5 m-auto">
         <summary className="text-sm font-bold mb-2">Players</summary>
+        <div className="text-sm text-gray-500 mb-2">
+            Add the players "relevant" to the hand.
+            <br/>Click the 'v' icon to set a player's position.
+            <br/>Set the known cards at the time you want to analyze.
+        </div>
         <div className="flex flex-row w-full gap-4 ml-2 flex-wrap">
             {gameState.players.map((player, index) => (
                 <div key={index} className="cursor-pointer">

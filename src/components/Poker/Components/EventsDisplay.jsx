@@ -16,6 +16,16 @@ export default function EventsDisplay({gameState, setGameState}) {
 
     return <details open className="flex flex-col w-full my-5 m-auto">
         <summary className="text-sm font-bold mb-2">Events</summary>
+        <div className="text-sm text-gray-500 mb-2">
+            Add the events that happened in the hand.
+            <br/>Set the actor, action and amount for each event.
+            <br/>Only set events up to the point you want to analyze.
+            <div className="font-bold">
+                <br/>E.G. 
+                <br/>"Villain raises to 10"
+                <br/>"Hero calls"
+            </div>
+        </div>
         <div className="flex flex-col w-full gap-1 ml-2 flex-wrap">
             <div className="text-sm text-gray-500 mt-2">Preflop</div>
             {gameState.events["preflop"].map((event, index) => (

@@ -19,6 +19,9 @@ export default function BoardDisplay({ gameState, setGameState }) {
 
     return <div className="flex flex-col w-full my-5 m-auto">
         <div className="text-sm font-bold mb-2">Board</div>
+        <div className="text-sm text-gray-500 mb-2">
+            Tap cards to set them up to the point to want to analyze.
+        </div>
         <div className="flex flex-row w-fit gap-2 ml-2">
             {gameState.board.map((card, index) => (
                 <div key={index} className="cursor-pointer" onClick={() => {
