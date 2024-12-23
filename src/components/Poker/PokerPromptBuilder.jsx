@@ -68,11 +68,13 @@ export default function PokerPromptBuilder() {
             case '12': return "Q";
             case '13': return "K";
             case '14': return "A";
+            case '1': return "A";
             case 10: return "T";
             case 11: return "J";
             case 12: return "Q";
             case 13: return "K";
             case 14: return "A";
+            case 1: return "A";
             case null: return "?";
             default: return value;
         }
