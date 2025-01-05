@@ -29,6 +29,7 @@ import GingerbreadShowtime from './pages/GingerbreadShowtime'
 import BibleReadingPage from './BQE/Pages/BibleReadingPage'
 import BibleReadingManualPage from './BQE/Pages/BibleReadingManualPage'
 import FirstPeterPericopePage from './BQE/Pages/FirstPeterPericopePage'
+import BlindDisplay from './pages/BlindDisplay'
 
 import { Helmet } from 'react-helmet';
 import SecretSantaForm from './SecretSanta/SecretSantaForm';
@@ -55,6 +56,7 @@ export default function App() {
     { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
     { target: '/group3724', label: 'Group 3-7-2024', element: <BibleReadingManualPage />, showInHeader: false, showInFooter: true },
     { target: '/poker', label: 'Poker Hand Analyzer', element: <PokerPage />, showInHeader: true, showInFooter: true },
+    { target: '/pokerblinds', label: 'Blinds', element: <BlindDisplay />, showInHeader: false, showInFooter: true, customWidth: true },
     { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: false, showInFooter: true },
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/gbshow', label: 'GB Showtime', element: <GingerbreadShowtime />, showInHeader: false, showInFooter: false },
@@ -88,7 +90,12 @@ export default function App() {
           <Routes>
             {/* <Route path="/login-api" element={<TokenExchangePage />} /> */}
             {pages.map((page) => {
-              return <Route key={page.target} path={page.target} element={<DefaultPageLayout>{page.element}</DefaultPageLayout>} />
+              if (page.customWidth) {
+                return <Route key={page.target} path={page.target} element={page.element} />
+              }
+              else {
+                return <Route key={page.target} path={page.target} element={<DefaultPageLayout>{page.element}</DefaultPageLayout>} />
+              }
             })}
             {/* <Route path={'/budget'} element={<BudgetPage />}></Route> */}
             <Route path={'/santa/:name'} element={<SecretSantaForm />}></Route>
