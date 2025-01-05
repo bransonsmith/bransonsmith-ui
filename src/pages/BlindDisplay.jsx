@@ -32,6 +32,17 @@ const BlindDisplay = () => {
         { "Level": 17, "SB": 5000, "BB": 10000,  "Ante": 0, "StartSeconds": 19200, "Rebuys": 0, "AddOns": 0 },
     ];
 
+    const chips =[
+        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#0e1930',     'value': 5 },
+        { 'name': 'Red',    'color': '#6e091a', 'detail': '#e6e7e8',   'text': '#e6e7e8',       'value': 10 },
+        { 'name': 'Black',  'color': '#080707', 'detail': '#d1cfcf', 'text': '#d1cfcf',     'value': 25 },
+        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#e6e7e8',  'text': '#e6e7e8',      'value': 50 },
+        { 'name': 'Green',  'color': '#336135', 'detail': '#e6e7e8', 'text': '#e6e7e8',     'value': 100 },
+        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#e6e7e8',  'text': '#e6e7e8',      'value': 250 },
+        { 'name': 'Yellow', 'color': '#e8dc72', 'detail': '#ffffff','text': '#ffffff',    'value': 500 },
+        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#0d0b0a',     'value': 1000 },
+    ]
+
     useEffect(() => {
         if (!loading) {
             let timer;
@@ -313,6 +324,20 @@ const BlindDisplay = () => {
                                 )
                             }
                         })}
+                    </div>
+                </div>
+
+
+                <div className="flex flex-col w-fit mr-10 mb-auto">
+                    <div className="mb-2 text-gray-600 font-bold text-2xl">Chips</div>
+                    <div className="w-fit flex flex-col gap-1">
+
+                        {chips.map((chip) =>    
+                            <div key={chip.color} className="w-20 h-20 font-bold text-center pt-3 text-3xl rounded-full border-8 border-contentBg shadow-lg shadow-black [text-shadow:_0px_0px_1px_rgb(0_0_0)]" 
+                                style={{background: chip.color, color: chip.text}}>
+                                    {chip.value}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

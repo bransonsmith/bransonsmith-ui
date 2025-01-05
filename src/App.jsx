@@ -56,7 +56,7 @@ export default function App() {
     { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
     { target: '/group3724', label: 'Group 3-7-2024', element: <BibleReadingManualPage />, showInHeader: false, showInFooter: true },
     { target: '/poker', label: 'Poker Hand Analyzer', element: <PokerPage />, showInHeader: true, showInFooter: true },
-    { target: '/pokerblinds', label: 'Blinds', element: <BlindDisplay />, showInHeader: false, showInFooter: true, customWidth: true },
+    { target: '/pokerblinds', label: 'Poker Blinds Display', element: <BlindDisplay />, showInHeader: false, showInFooter: true, customWidth: true },
     { target: '/GingerBreadCompetition', label: 'Ginger Bread Competition', element: <GingerbreadCompetitionPage />, showInHeader: false, showInFooter: true },
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/gbshow', label: 'GB Showtime', element: <GingerbreadShowtime />, showInHeader: false, showInFooter: false },
