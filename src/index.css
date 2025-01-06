@@ -91,3 +91,11 @@ li {
 .baseball-box:hover {
     background-size: 130%;
 }
+
+.text-outlined {
+    -webkit-text-stroke: 1px #555555;
+}
+
+.text-outlined-dark {
+    -webkit-text-stroke: 1px #111111;
+}

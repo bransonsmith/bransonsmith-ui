@@ -16,7 +16,7 @@ const BlindDisplay = () => {
         { "Level": 1,  "SB": 5,   "BB": 10,      "Ante": 0, "StartSeconds": 0,   "Rebuys": 0, "AddOns": 0 },
         { "Level": 2,  "SB": 10,  "BB": 20,      "Ante": 0, "StartSeconds": 1200,  "Rebuys": 0, "AddOns": 0 },
         { "Level": 3,  "SB": 15,  "BB": 30,      "Ante": 0, "StartSeconds": 2400,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 4,  "SB": 20,  "BB": 40,      "Ante": 0, "StartSeconds": 3600,  "Rebuys": 0, "AddOns": 0 },
+        { "Level": 4,  "SB": 25,  "BB": 50,      "Ante": 0, "StartSeconds": 3600,  "Rebuys": 0, "AddOns": 0 },
         { "Level": 5,  "SB": 40,  "BB": 80,      "Ante": 0, "StartSeconds": 4800,  "Rebuys": 0, "AddOns": 0 },
         { "Level": 6,  "SB": 50,  "BB": 100,     "Ante": 0, "StartSeconds": 6000,  "Rebuys": 0, "AddOns": 0 },
         { "Level": 7,  "SB": 100, "BB": 200,     "Ante": 0, "StartSeconds": 7200,  "Rebuys": 0, "AddOns": 0 },
@@ -33,14 +33,14 @@ const BlindDisplay = () => {
     ];
 
     const chips =[
-        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#0e1930',     'value': 5 },
-        { 'name': 'Red',    'color': '#6e091a', 'detail': '#e6e7e8',   'text': '#e6e7e8',       'value': 10 },
+        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#ffffff',     'value': 5 },
+        { 'name': 'Red',    'color': '#6e091a', 'detail': '#d1cfcf',   'text': '#e6e7e8',       'value': 10 },
         { 'name': 'Black',  'color': '#080707', 'detail': '#d1cfcf', 'text': '#d1cfcf',     'value': 25 },
-        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#e6e7e8',  'text': '#e6e7e8',      'value': 50 },
-        { 'name': 'Green',  'color': '#336135', 'detail': '#e6e7e8', 'text': '#e6e7e8',     'value': 100 },
-        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#e6e7e8',  'text': '#e6e7e8',      'value': 250 },
+        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#d1cfcf',  'text': '#e6e7e8',      'value': 50 },
+        { 'name': 'Green',  'color': '#336135', 'detail': '#d1cfcf', 'text': '#e6e7e8',     'value': 100 },
+        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#ffffff',  'text': '#ffffff',      'value': 250 },
         { 'name': 'Yellow', 'color': '#e8dc72', 'detail': '#ffffff','text': '#ffffff',    'value': 500 },
-        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#0d0b0a',     'value': 1000 },
+        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#ffffff',     'value': '1K' },
     ]
 
     useEffect(() => {
@@ -138,7 +138,12 @@ const BlindDisplay = () => {
 
     return (
         <div className="w-screen max-w-7xl mx-auto py-80">
-
+            
+            {isPaused &&
+                    <span className="text-7xl bg-contentBg font-bold sticky left-1/3 top-1/3 text-error-700 mx-auto my-auto border-4 border-error-900 h-fit w-fit py-2 px-5">
+                        PAUSED
+                    </span>
+                }
             <div className="flex flex-row mt-2 w-full flex-wrap mb-10 py-6 border-b border-gray-700">
                 <div className="flex flex-col mx-auto">
                     <div className="my-auto text-2xl">Local Time:</div>
@@ -262,16 +267,10 @@ const BlindDisplay = () => {
                         </div>
                         )}
 
-                
-                {isPaused &&
-                    <span className="text-7xl font-bold text-error-700 mx-auto my-auto border-4 border-error-900 h-fit w-fit py-2 px-5">PAUSED</span>
-                }
-
-
                 <div className="flex flex-col w-fit ml-auto mr-10 mb-auto">
                     <div className="mb-2 text-gray-600 font-bold text-2xl">Blind Levels</div>
                     <div className="w-fit flex flex-col border border-gray-400">
-                        <div className="flex flex-row font-bold border-b border-gray-600 gap-1 p-1 text-gray-400">
+                        <div className="flex flex-row font-bold border-b border-gray-600 gap-1 p-1 text-gray-400 px-2">
                             <div className="w-6">#</div>
                             <div className="w-16"><div className="w-fit ml-auto">SB</div></div>
                             <div>/</div>
@@ -281,7 +280,7 @@ const BlindDisplay = () => {
                         {levels.map((level) => {
                             if (elapsedSeconds > 0 && currentLevel && level.Level === currentLevel.Level) {
                                 return (
-                                    <div key={level.Level} className="flex flex-row border-b border-gray-600 font-bold gap-1 p-1">
+                                    <div key={level.Level} className="flex text-lg flex-row border-b border-gray-600 font-bold gap-1 p-1 px-2">
                                         <div className="w-6">{level.Level}</div>
                                         <div className="w-16"><div className="w-fit ml-auto">{level.SB}</div></div>
                                         <div>/</div>
@@ -290,20 +289,20 @@ const BlindDisplay = () => {
                                     </div>
                                 )
                             }
-                            else if (nextLevel && level.Level === nextLevel.Level) {
-                                return (
-                                    <div key={level.Level} className="flex flex-row border-b border-gray-600 text-gray-400 font-bold gap-1 p-1">
-                                        <div className="w-6">{level.Level}</div>
-                                        <div className="w-16"><div className="w-fit ml-auto">{level.SB}</div></div>
-                                        <div>/</div>
-                                        <div className="w-16"><div className="w-fit mr-auto">{level.BB}</div></div>
-                                        <div className="w-16"><div className="w-fit mr-auto">{formatTime(level.StartSeconds)}</div></div> 
-                                    </div>
-                                )
-                            }
+                            // else if (nextLevel && level.Level === nextLevel.Level) {
+                            //     return (
+                            //         <div key={level.Level} className="flex text-lg flex-row border-b border-gray-600 text-gray-400 font-bold gap-1 p-1 px-2">
+                            //             <div className="w-6">{level.Level}</div>
+                            //             <div className="w-16"><div className="w-fit ml-auto">{level.SB}</div></div>
+                            //             <div>/</div>
+                            //             <div className="w-16"><div className="w-fit mr-auto">{level.BB}</div></div>
+                            //             <div className="w-16"><div className="w-fit mr-auto">{formatTime(level.StartSeconds)}</div></div> 
+                            //         </div>
+                            //     )
+                            // }
                             else if (currentLevel && level.Level < currentLevel.Level) {
                                 return (
-                                    <div key={level.Level} className="flex flex-row border-b border-gray-600 text-gray-600 gap-1 p-1">
+                                    <div key={level.Level} className="flex text-lg flex-row border-b border-gray-600 text-gray-500 gap-1 p-1 px-2">
                                         <div className="w-6">{level.Level}</div>
                                         <div className="w-16"><div className="w-fit ml-auto">{level.SB}</div></div>
                                         <div>/</div>
@@ -314,7 +313,7 @@ const BlindDisplay = () => {
                             }
                             else {
                                 return (
-                                    <div key={level.Level} className="flex flex-row border-b border-gray-600 text-gray-500 gap-1 p-1">
+                                    <div key={level.Level} className="flex text-lg flex-row border-b border-gray-600 text-gray-500 gap-1 p-1 px-2">
                                         <div className="w-6">{level.Level}</div>
                                         <div className="w-16"><div className="w-fit ml-auto">{level.SB}</div></div>
                                         <div>/</div>
@@ -330,14 +329,40 @@ const BlindDisplay = () => {
 
                 <div className="flex flex-col w-fit mr-10 mb-auto">
                     <div className="mb-2 text-gray-600 font-bold text-2xl">Chips</div>
-                    <div className="w-fit flex flex-col gap-1">
-
+                    <div className="w-52 flex flex-row flex-wrap gap-4">
                         {chips.map((chip) =>    
-                            <div key={chip.color} className="w-20 h-20 font-bold text-center pt-3 text-3xl rounded-full border-8 border-contentBg shadow-lg shadow-black [text-shadow:_0px_0px_1px_rgb(0_0_0)]" 
-                                style={{background: chip.color, color: chip.text}}>
-                                    {chip.value}
+                        <div className="relative w-24 h-24">
+                            <div
+                                className="text-outlined-dark absolute w-24 h-24 font-bold text-center pt-4 text-4xl rounded-full border-8 border-contentBg shadow-xl shadow-contentBg [text-shadow:_0px_0px_6px_rgb(0_0_0)]"
+                                style={{ background: chip.color, color: chip.text }}
+                            >
+                                {chip.value}
                             </div>
-                        )}
+                            {[...Array(8)].map((_, i) => {
+                                const angle = (i * 45 * Math.PI) / 180;
+                                const radius = 46;
+                                let leftAdjust = 0;
+                                let topAdjust = 0;
+                                // if (i === 7) { leftAdjust =  .5; topAdjust = -.5; }
+                                // if (i === 5) { leftAdjust = -.5; topAdjust = -.5; }
+                                // if (i === 3) { leftAdjust = -.5; topAdjust =  .5; }
+                                // if (i === 1) { leftAdjust =  .5; topAdjust =  .5; }
+                                return {
+                                    transform: `rotate(${i * 45}deg)`,
+                                    left: `${radius + Math.cos(angle) * radius + leftAdjust}%`,
+                                    top: `${radius + Math.sin(angle) * radius + topAdjust}%`
+                                };
+                            }).map((style, i) => (
+                                <div
+                                    key={i}
+                                    className="absolute w-2 h-2 -translate-x-1/2 -translate-y-1/2"
+                                    style={{ ...style, color: chip.detail, backgroundColor: chip.detail }}
+                                >
+                                    {/* {i} */}
+                                    {/* <div className="w-1 h-1 border-2 rotate-45" style={{ borderColor: chip.text }} /> */}
+                                </div>
+                            ))}
+                        </div>)}
                     </div>
                 </div>
             </div>
