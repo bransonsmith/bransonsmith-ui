@@ -33,7 +33,7 @@ export default function TumblingCard ({start}) {
             </div>
         }
         { start === 1 &&
-            <div className="card-animation">
+            <div className="card-animation2">
                 <PokerCard suit={suit} value={rank}/>
             </div>
         }

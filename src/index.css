@@ -104,33 +104,31 @@ li {
     0% {
       transform: translateX(0vw) rotate(0deg);
     }
-    75% {
-      transform: translateX(71vw) rotate(726deg);
+    70% {
+      transform: translateX(69vw) rotate(1086deg);
     }
-    76% {
-      transform: translateX(72vw) translateY(20px) rotate(720deg);
+    71% {
+      transform: translateX(70vw) translateY(20px) rotate(1080deg);
     }
-    77% {
-      transform: translateX(73vw) translateY(0px) rotate(720deg);
+    72% {
+      transform: translateX(71vw) translateY(0px) rotate(1080deg);
     }
     99% {
-      transform: translateX(78vw) rotate(720deg);
+      transform: translateX(78vw) rotate(1080deg);
     }
     100% {
-      transform: translateX(95vw) rotate(720deg);
+      transform: translateX(95vw) rotate(1080deg);
     }
 }
 
-
 .card-animation {
-    /* position: absolute;
-    bottom: 10%; */
-    animation: tumble 4s linear normal;
+    position: absolute;
+    animation: tumble 4.2s linear normal;
     z-index: 9999999;
 }
 .card-animation2 {
-    /* position: absolute;
-    bottom: 10%; */
-    animation: tumble 4s linear normal;
+    position: relative;
+    left: -24px;
+    animation: tumble 4.3s linear normal;
     z-index: 9999999;
 }

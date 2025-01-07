@@ -15,8 +15,7 @@ const BlindDisplay = () => {
 
     const [showCardAnimation, setShowCardAnimation] = useState(false);
     const [showCardAnimation2, setShowCardAnimation2] = useState(false);
-    const [showCardAnimation3, setShowCardAnimation3] = useState(false);
-    const [showCardAnimation4, setShowCardAnimation4] = useState(false);
+    const [lastAnimationTime, setLastAnimationTime] = useState(null);
 
     const levels = [
         { "Level": 1,  "SB": 5,   "BB": 10,      "Ante": 0, "StartSeconds": 0,     "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
@@ -39,14 +38,14 @@ const BlindDisplay = () => {
     ];
 
     const chips =[
-        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#ffffff',         'value': 10 },
-        { 'name': 'Red',    'color': '#6e091a', 'detail': '#d1cfcf',   'text': '#e6e7e8',       'value': 50 },
-        { 'name': 'Black',  'color': '#080707', 'detail': '#d1cfcf', 'text': '#d1cfcf',         'value': 100 },
-        { 'name': 'Green',  'color': '#336135', 'detail': '#d1cfcf', 'text': '#e6e7e8',         'value': 250 },
-        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#d1cfcf',  'text': '#e6e7e8',        'value': '1K' },
-        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#ffffff',  'text': '#ffffff',        'value': '2.5K' },
-        { 'name': 'Yellow', 'color': '#e8dc72', 'detail': '#ffffff','text': '#ffffff',          'value': '5K' },
-        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#ffffff',         'value': '10K' },
+        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#ffffff', 'value': 10    },
+        { 'name': 'Red',    'color': '#6e091a', 'detail': '#d1cfcf', 'text': '#e6e7e8', 'value': 50    },
+        { 'name': 'Black',  'color': '#080707', 'detail': '#d1cfcf', 'text': '#d1cfcf', 'value': 100   },
+        { 'name': 'Green',  'color': '#336135', 'detail': '#d1cfcf', 'text': '#e6e7e8', 'value': 250   },
+        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#d1cfcf', 'text': '#e6e7e8', 'value': '1K'  },
+        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#ffffff', 'text': '#ffffff', 'value': '2.5K'},
+        { 'name': 'Yellow', 'color': '#e8dc72', 'detail': '#ffffff', 'text': '#ffffff', 'value': '5K'  },
+        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#ffffff', 'value': '10K' },
     ]
 
     useEffect(() => {
@@ -69,6 +68,9 @@ const BlindDisplay = () => {
                 timer = setInterval(() => {
                     setLocalTime(new Date());
                 }, 1000);
+            }
+            if (startTime) {
+                potentiallyRunAnimation();
             }
     
             saveState();
@@ -168,32 +170,32 @@ const BlindDisplay = () => {
         audio.play();
     };
 
-    const animateCards = () => {
+    const potentiallyRunAnimation = () => {
+        var diceRoll = Math.floor(Math.random() * 50);
+        let diff = 0
+        if (lastAnimationTime !== null) {
+            diff = new Date() - lastAnimationTime;
+        }
+        if (lastAnimationTime === null || diff > 8000) {
+            if (diceRoll === 11) {
+                animateCards();
+            }
+        }
+    }
 
+    const animateCards = () => {
         setShowCardAnimation(true);
+        setLastAnimationTime(new Date());
         setTimeout(() => {
             setShowCardAnimation2(true);
-        }, 300);
-        // setTimeout(() => {
-        //     setShowCardAnimation3(true);
-        // }, 800);
-        // setTimeout(() => {
-        //     setShowCardAnimation4(true);
-        // }, 1100);
+        }, 100);
 
         setTimeout(() => {
             setShowCardAnimation(false);
-        }, 4000);
+        }, 4200);
         setTimeout(() => {
             setShowCardAnimation2(false);
-        }, 4300);
-
-        // setTimeout(() => {
-        //     setShowCardAnimation3(false);
-        // }, 4800);
-        // setTimeout(() => {
-        //     setShowCardAnimation4(false);
-        // }, 5100);
+        }, 4400);
     }
 
     return (
@@ -209,13 +211,13 @@ const BlindDisplay = () => {
                 }
             <div className="flex flex-row mt-2 w-full flex-wrap mb-10 py-6 border-b border-gray-700">
                 <div className="flex flex-col mx-auto">
-                    <div className="my-auto text-2xl">Local Time:</div>
+                    {/* <div className="my-auto text-2xl">Local Time:</div> */}
                     <div className="my-auto text-4xl font-bold"> {localTime.toLocaleTimeString()}</div>
                 </div>
 
                 {startTime && (
                     <div className="flex flex-col mx-auto">
-                        <div className="my-auto text-2xl">Play-Time Duration:</div>
+                        {/* <div className="my-auto text-2xl">Play-Time Duration:</div> */}
                         <div className="flex flex-row gap-2">
                             <div className="my-auto text-4xl font-bold"> {formatTime(elapsedSeconds)}</div>
 
@@ -239,9 +241,9 @@ const BlindDisplay = () => {
 
                 {startTime && (
                     <div className="flex flex-col mx-auto">
-                        <div className="my-auto text-2xl">Start Time:</div>
+                        {/* <div className="my-auto text-2xl">Start Time:</div> */}
                         <div className="flex flex-row gap-2">
-                            <div className="my-auto text-4xl font-bold"> {startTime.toLocaleTimeString()}</div>
+                            <div className="my-auto text-2xl font-bold"> {startTime.toLocaleTimeString()}</div>
                             <button className="border-2 border-gray-700 text-gray-400 bg-contentBg mt-2 px-3 ml-3 w-fit h-fit hover:bg-red-900" onClick={endTournament}>
                                 Delete Tournament
                             </button>
@@ -430,24 +432,17 @@ const BlindDisplay = () => {
                     </div>
                 </div>
             </div>
-
-            <div className="w-screen flex">
-                { showCardAnimation && <>
-                    <TumblingCard start={0} />
-                </>
-                }
-                { showCardAnimation2 && <>
-                    <TumblingCard start={1} />
-                </>
-                } 
-                { showCardAnimation3 && <>
-                    <TumblingCard start={5} />
-                </>
-                }
-                { showCardAnimation4 && <>
-                    <TumblingCard start={6} />
-                </>
-                }
+            <div className="absolute w-full h-fit">
+                <div className="w-screen flex relative -top-48">
+                    { showCardAnimation && <>
+                        <TumblingCard start={0} />
+                    </>
+                    }
+                    { showCardAnimation2 && <>
+                        <TumblingCard start={1} />
+                    </>
+                    }
+                </div>
             </div>
         </div>
     );
