@@ -99,3 +99,38 @@ li {
 .text-outlined-dark {
     -webkit-text-stroke: 1px #111111;
 }
+
+@keyframes tumble {
+    0% {
+      transform: translateX(0vw) rotate(0deg);
+    }
+    75% {
+      transform: translateX(71vw) rotate(726deg);
+    }
+    76% {
+      transform: translateX(72vw) translateY(20px) rotate(720deg);
+    }
+    77% {
+      transform: translateX(73vw) translateY(0px) rotate(720deg);
+    }
+    99% {
+      transform: translateX(78vw) rotate(720deg);
+    }
+    100% {
+      transform: translateX(95vw) rotate(720deg);
+    }
+}
+
+
+.card-animation {
+    /* position: absolute;
+    bottom: 10%; */
+    animation: tumble 4s linear normal;
+    z-index: 9999999;
+}
+.card-animation2 {
+    /* position: absolute;
+    bottom: 10%; */
+    animation: tumble 4s linear normal;
+    z-index: 9999999;
+}

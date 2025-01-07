@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import TumblingCard from '../components/Poker/TumblingCard';
 
 const BlindDisplay = () => {
     const [startTime, setStartTime] = useState(null);
-
+    
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const [lastPausedAt, setLastPausedAt] = useState(null);
@@ -12,35 +13,40 @@ const BlindDisplay = () => {
     const [lastSaveTime, setLastSaveTime] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [showCardAnimation, setShowCardAnimation] = useState(false);
+    const [showCardAnimation2, setShowCardAnimation2] = useState(false);
+    const [showCardAnimation3, setShowCardAnimation3] = useState(false);
+    const [showCardAnimation4, setShowCardAnimation4] = useState(false);
+
     const levels = [
-        { "Level": 1,  "SB": 5,   "BB": 10,      "Ante": 0, "StartSeconds": 0,   "Rebuys": 0, "AddOns": 0 },
-        { "Level": 2,  "SB": 10,  "BB": 20,      "Ante": 0, "StartSeconds": 1200,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 3,  "SB": 15,  "BB": 30,      "Ante": 0, "StartSeconds": 2400,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 4,  "SB": 25,  "BB": 50,      "Ante": 0, "StartSeconds": 3600,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 5,  "SB": 40,  "BB": 80,      "Ante": 0, "StartSeconds": 4800,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 6,  "SB": 50,  "BB": 100,     "Ante": 0, "StartSeconds": 6000,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 7,  "SB": 100, "BB": 200,     "Ante": 0, "StartSeconds": 7200,  "Rebuys": 0, "AddOns": 0 },
-        { "Level": 8,  "SB": 150, "BB": 300,     "Ante": 0, "StartSeconds": 8400, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 9,  "SB": 200, "BB": 400,     "Ante": 0, "StartSeconds": 9600, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 10, "SB": 300, "BB": 600,     "Ante": 0, "StartSeconds": 10800, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 11, "SB": 400, "BB": 800,     "Ante": 0, "StartSeconds": 12000, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 12, "SB": 500, "BB": 1000,    "Ante": 0, "StartSeconds": 13200, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 13, "SB": 1000, "BB": 2000,   "Ante": 0, "StartSeconds": 14400, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 14, "SB": 1500, "BB": 3000,   "Ante": 0, "StartSeconds": 15600, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 15, "SB": 2000, "BB": 4000,   "Ante": 0, "StartSeconds": 16800, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 16, "SB": 3000, "BB": 6000,   "Ante": 0, "StartSeconds": 18000, "Rebuys": 0, "AddOns": 0 },
-        { "Level": 17, "SB": 5000, "BB": 10000,  "Ante": 0, "StartSeconds": 19200, "Rebuys": 0, "AddOns": 0 },
+        { "Level": 1,  "SB": 5,   "BB": 10,      "Ante": 0, "StartSeconds": 0,     "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 2,  "SB": 10,  "BB": 20,      "Ante": 0, "StartSeconds": 1200,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 3,  "SB": 15,  "BB": 30,      "Ante": 0, "StartSeconds": 2400,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 4,  "SB": 25,  "BB": 50,      "Ante": 0, "StartSeconds": 3600,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 5,  "SB": 40,  "BB": 80,      "Ante": 0, "StartSeconds": 4800,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 6,  "SB": 50,  "BB": 100,     "Ante": 0, "StartSeconds": 6000,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 7,  "SB": 100, "BB": 200,     "Ante": 0, "StartSeconds": 7200,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 8,  "SB": 150, "BB": 300,     "Ante": 0, "StartSeconds": 8400,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 9,  "SB": 200, "BB": 400,     "Ante": 0, "StartSeconds": 9600,  "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 10, "SB": 300, "BB": 600,     "Ante": 0, "StartSeconds": 10800, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 11, "SB": 400, "BB": 800,     "Ante": 0, "StartSeconds": 12000, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 12, "SB": 500, "BB": 1000,    "Ante": 0, "StartSeconds": 13200, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 13, "SB": 1000, "BB": 2000,   "Ante": 0, "StartSeconds": 14400, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 14, "SB": 1500, "BB": 3000,   "Ante": 0, "StartSeconds": 15600, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 15, "SB": 2000, "BB": 4000,   "Ante": 0, "StartSeconds": 16800, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 16, "SB": 3000, "BB": 6000,   "Ante": 0, "StartSeconds": 18000, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
+        { "Level": 17, "SB": 5000, "BB": 10000,  "Ante": 0, "StartSeconds": 19200, "Rebuys": 0, "AddOns": 0, "RebuyAllowed": false },
     ];
 
     const chips =[
-        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#ffffff',     'value': 5 },
-        { 'name': 'Red',    'color': '#6e091a', 'detail': '#d1cfcf',   'text': '#e6e7e8',       'value': 10 },
-        { 'name': 'Black',  'color': '#080707', 'detail': '#d1cfcf', 'text': '#d1cfcf',     'value': 25 },
-        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#d1cfcf',  'text': '#e6e7e8',      'value': 50 },
-        { 'name': 'Green',  'color': '#336135', 'detail': '#d1cfcf', 'text': '#e6e7e8',     'value': 100 },
-        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#ffffff',  'text': '#ffffff',      'value': 250 },
-        { 'name': 'Yellow', 'color': '#e8dc72', 'detail': '#ffffff','text': '#ffffff',    'value': 500 },
-        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#ffffff',     'value': '1K' },
+        { 'name': 'White',  'color': '#e6e7e8', 'detail': '#0e1930', 'text': '#ffffff',         'value': 10 },
+        { 'name': 'Red',    'color': '#6e091a', 'detail': '#d1cfcf',   'text': '#e6e7e8',       'value': 50 },
+        { 'name': 'Black',  'color': '#080707', 'detail': '#d1cfcf', 'text': '#d1cfcf',         'value': 100 },
+        { 'name': 'Green',  'color': '#336135', 'detail': '#d1cfcf', 'text': '#e6e7e8',         'value': 250 },
+        { 'name': 'Blue',   'color': '#1a348a', 'detail': '#d1cfcf',  'text': '#e6e7e8',        'value': '1K' },
+        { 'name': 'Pink',   'color': '#a883a3', 'detail': '#ffffff',  'text': '#ffffff',        'value': '2.5K' },
+        { 'name': 'Yellow', 'color': '#e8dc72', 'detail': '#ffffff','text': '#ffffff',          'value': '5K' },
+        { 'name': 'Brown',  'color': '#785e4e', 'detail': '#0d0b0a', 'text': '#ffffff',         'value': '10K' },
     ]
 
     useEffect(() => {
@@ -51,6 +57,14 @@ const BlindDisplay = () => {
                     setElapsedSeconds(elapsedSeconds + 1);
                     setLocalTime(new Date());
                 }, 1000);
+                if (nextLevel && currentLevel) {
+                    if (timeToNextLevel === 3) {
+                        playNextLevelSound();
+                    }
+                    if (timeToNextLevel === 60) {
+                        playOneMinuteToNextLevelSound();
+                    }
+                }
             } else {
                 timer = setInterval(() => {
                     setLocalTime(new Date());
@@ -135,10 +149,59 @@ const BlindDisplay = () => {
 
     const currentLevel = levels.filter(level => level.StartSeconds <= elapsedSeconds).reduce((max, level) => level.Level > max.Level ? level : max, levels[0]) || null;
     const nextLevel = elapsedSeconds > 0 ? levels.find(level => level.Level === currentLevel.Level + 1) : levels[0];
+    const timeToNextLevel = nextLevel.StartSeconds - elapsedSeconds;
+
+    const playOneMinuteToNextLevelSound = () => {
+        const audio = new Audio('/short-beep-tone-47916.mp3')
+        const audio2 = new Audio('/short-beep-tone-47916.mp3')
+        const audio3 = new Audio('/short-beep-tone-47916.mp3')
+        audio.play();
+        setTimeout(() => {
+            audio2.play();
+        }, 550);
+        setTimeout(() => {
+            audio3.play();
+        }, 550 + 210);
+    };
+    const playNextLevelSound = () => {
+        const audio = new Audio('/short-beep-countdown-81121.mp3')
+        audio.play();
+    };
+
+    const animateCards = () => {
+
+        setShowCardAnimation(true);
+        setTimeout(() => {
+            setShowCardAnimation2(true);
+        }, 300);
+        // setTimeout(() => {
+        //     setShowCardAnimation3(true);
+        // }, 800);
+        // setTimeout(() => {
+        //     setShowCardAnimation4(true);
+        // }, 1100);
+
+        setTimeout(() => {
+            setShowCardAnimation(false);
+        }, 4000);
+        setTimeout(() => {
+            setShowCardAnimation2(false);
+        }, 4300);
+
+        // setTimeout(() => {
+        //     setShowCardAnimation3(false);
+        // }, 4800);
+        // setTimeout(() => {
+        //     setShowCardAnimation4(false);
+        // }, 5100);
+    }
 
     return (
         <div className="w-screen max-w-7xl mx-auto py-80">
-            
+
+
+            <button className="sticky top-2 left-2" onClick={animateCards}> Cards </button>
+
             {isPaused &&
                     <span className="text-7xl bg-contentBg font-bold sticky left-1/3 top-1/3 text-error-700 mx-auto my-auto border-4 border-error-900 h-fit w-fit py-2 px-5">
                         PAUSED
@@ -206,7 +269,8 @@ const BlindDisplay = () => {
                             { nextLevel && <>
                             
                                     <div className="mb-0 text-4xl font-bold text-gray-400">TIME UNTIL NEXT LEVEL</div>
-                                    {nextLevel.StartSeconds - elapsedSeconds > ((nextLevel.StartSeconds - currentLevel.StartSeconds) * .1) && (
+                                    {nextLevel.StartSeconds - elapsedSeconds > ((nextLevel.StartSeconds - currentLevel.StartSeconds) * .1) &&
+                                     nextLevel.StartSeconds - elapsedSeconds > 10 && (
                                         <div className="text-8xl font-bold text-white mb-8">
                                             {trimFormatTime(nextLevel.StartSeconds - elapsedSeconds)}
                                         </div>
@@ -331,7 +395,7 @@ const BlindDisplay = () => {
                     <div className="mb-2 text-gray-600 font-bold text-2xl">Chips</div>
                     <div className="w-52 flex flex-row flex-wrap gap-4">
                         {chips.map((chip) =>    
-                        <div className="relative w-24 h-24">
+                        <div key={chip.color} className="relative w-24 h-24">
                             <div
                                 className="text-outlined-dark absolute w-24 h-24 font-bold text-center pt-4 text-4xl rounded-full border-8 border-contentBg shadow-xl shadow-contentBg [text-shadow:_0px_0px_6px_rgb(0_0_0)]"
                                 style={{ background: chip.color, color: chip.text }}
@@ -365,6 +429,25 @@ const BlindDisplay = () => {
                         </div>)}
                     </div>
                 </div>
+            </div>
+
+            <div className="w-screen flex">
+                { showCardAnimation && <>
+                    <TumblingCard start={0} />
+                </>
+                }
+                { showCardAnimation2 && <>
+                    <TumblingCard start={1} />
+                </>
+                } 
+                { showCardAnimation3 && <>
+                    <TumblingCard start={5} />
+                </>
+                }
+                { showCardAnimation4 && <>
+                    <TumblingCard start={6} />
+                </>
+                }
             </div>
         </div>
     );
