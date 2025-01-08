@@ -1,4 +1,4 @@
-import PokerCard from './PokerCard';
+import PokerCard from '../Poker/PokerCard';
 import { useState, useEffect } from 'react';
 
 export default function TumblingCard ({start}) {
@@ -33,7 +33,7 @@ export default function TumblingCard ({start}) {
             </div>
         }
         { start === 1 &&
-            <div className="card-animation">
+            <div className="card-animation2">
                 <PokerCard suit={suit} value={rank}/>
             </div>
         }
