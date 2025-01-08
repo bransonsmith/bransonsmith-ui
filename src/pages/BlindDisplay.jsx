@@ -30,10 +30,7 @@ const BlindDisplay = () => {
     const [localSave, setLocalSave] = useState(null);
     const [remoteSave, setRemoteSave] = useState(null);
 
-    const [socketState, setSocketState] = useState('Not Connected');
-    const wsUrl = 'ws://192.168.1.87:8088'
     const httpUrl = 'http://192.168.1.87:8088/data'
-    const ws = useRef(null);
 
     useEffect(() => {
         setLoading(true);
@@ -54,6 +51,7 @@ const BlindDisplay = () => {
             var existingRemoteStateJson = await readGameFromRemote()
             if (existingRemoteStateJson !== null) {
                 if (localStateIsPublisher) {
+                    console.log('initialize values to pulled remote')
                     const state = {
                         startTimeString: existingRemoteStateJson.startTimeString,
                         elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
@@ -92,20 +90,17 @@ const BlindDisplay = () => {
             }
         }
         getRemoteState();
-        if (localStateIsSubscriber) {
-            setLoading(false);
-            // connect();
-        }
 
         if (!localStateIsPublisher && !localStateIsSubscriber) {
-            setStartTime(new Date(existingLocalStateJson.startTimeString));
-            setElapsedSeconds(parseInt(existingLocalStateJson.elapsedSeconds));
-            setIsPaused(true);
-            setLastPausedAt(new Date());
+            if (existingLocalState) {
+                const existingLocalStateJson = JSON.parse(existingLocalState);
+                setStartTime(new Date(existingLocalStateJson.startTimeString));
+                setElapsedSeconds(parseInt(existingLocalStateJson.elapsedSeconds));
+                setIsPaused(true);
+                setLastPausedAt(new Date());
+            }
         }
         setLoading(false);
-
-        return () => ws.current?.close();
       }, []);
 
     useEffect(() => {
@@ -180,9 +175,8 @@ const BlindDisplay = () => {
 
     const writeGameToRemote = async (stateJsonString) => {
         console.log('Write to remote', stateJsonString)
-        const url = 'http://192.168.1.87:8088/data'
         try {
-            const response = await fetch(url, {
+            const response = await fetch(httpUrl, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -214,6 +208,7 @@ const BlindDisplay = () => {
     const saveState = () => {
         if (startTime) {
             
+            const localState = localStorage.getItem('bs-pokerBlinds');
             const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
             const localStateIsPublisher = localStorage.getItem('bs-pokerBlinds-remotePublisher') === 'true';
 
@@ -364,60 +359,42 @@ const BlindDisplay = () => {
 
             <div className="flex flex-col gap-3 mt-32">
                 <div className="flex flex-row gap-3">
-                    <div>Socket:</div>
-                    { socketState && (socketState === 'Working' || socketState === 'Connected') && <div className="font-bold text-accent-400">{socketState}</div> }
-                    { socketState && (socketState === 'Error' || socketState === 'Closed')      && <div className="font-bold text-error-800" >{socketState}</div> }
-                    { socketState && (socketState === 'Not Connected as Publisher')      && <div className="font-bold text-slate-500" >{socketState}</div> }
                     <label className="my-auto">Remote Subscriber</label>
                     <input type="checkbox" checked={remoteSubscriber} onChange={toggleRemoteSubscriber} />
                     <label className="my-auto">Remote Publisher</label>
                     <input type="checkbox" checked={remotePublisher} onChange={toggleRemotePublisher} />
                 </div>
-                <div className="flex flex-col">
-                    <div>Local Save:</div>
-                    { !localSave && <div>None</div> }
-                    { localSave && <div className="ml-6">
-                        {Object.keys(localSave).map((key) => {
-                            return <div key={key}>{key}: {localSave[key].toString()}</div>
-                        })}
-                    </div> }
-                    { localSave && <div className="flex flex-row gap-3">
-                        <button className="ml-10 w-fit h-fit bg-contentBg border-2 border-accent-400" onClick={() => {}}>Load from Local</button>
-                        <button className="ml-10 w-fit h-fit bg-contentBg border-2 border-accent-400" onClick={() => {}}>Write to Local</button> 
-                    </div> }
-                </div>
-                <div className="flex flex-col">
-                    <div>Remote Save:</div>
-                    { !remoteSave && <div>None</div> }
-                    { remoteSave && <div className="ml-6">
-                        {Object.keys(remoteSave).map((key) => {
-                            return <div key={key}>{key}: {remoteSave[key].toString()}</div>
-                        })}
-                    </div> }
-                    { remoteSave && <div className="flex flex-row gap-3">
-                        <button className="ml-10 w-fit h-fit bg-contentBg border-2 border-accent-400" onClick={() => {}}>Load from Remote</button>
-                        <button className="ml-10 w-fit h-fit bg-contentBg border-2 border-accent-400" onClick={() => {}}>Write to Remote</button> 
-                    </div> }
-                </div>
-                <div className="flex flex-col">
-                    <div>In Memory:</div>
-                    { !startTime && <div>None</div> }
-                    { startTime && lastPausedAt && <div className="ml-6">
-                        <div>startTimeString: { startTime.toISOString().toString() }</div>
-                        <div>elapsedSeconds: { elapsedSeconds.toString() }</div>
-                        <div>isPaused: { isPaused.toString() }</div>
-                        { lastPausedAt && <div>lastPausedAtString: { lastPausedAt.toString() }</div> }
-                    </div> }
-                    { startTime && <div className="flex flex-row gap-3">
-                        <button className="ml-10 w-fit h-fit bg-contentBg border-2 border-accent-400" onClick={() => {}}>Load from Memory</button>
-                        <button className="ml-10 w-fit h-fit bg-contentBg border-2 border-accent-400" onClick={() => {}}>Write to Memory</button> 
-                    </div> }
-
-                    <div> = Add controls to opt in to writing or reacting to remote events.</div>
-                    <div> = After remote check, can save to local (might be saving what was just received from remote).</div>
-                    <div> = Should only read from local if there is no remote data enabled.</div>
-                    <div> = Should only write to local with no remote via opt in. Don't want to overwrite cached remote data in localStorage unintentionally.</div>
-                </div>
+                <details>
+                    <summary>State Debug</summary>
+                    <div className="flex flex-col">
+                        <div>Local Save:</div>
+                        { !localSave && <div>None</div> }
+                        { localSave && <div className="ml-6">
+                            {Object.keys(localSave).map((key) => {
+                                return <div key={key}>{key}: {localSave[key].toString()}</div>
+                            })}
+                        </div> }
+                    </div>
+                    <div className="flex flex-col">
+                        <div>Remote Save:</div>
+                        { !remoteSave && <div>None</div> }
+                        { remoteSave && <div className="ml-6">
+                            {Object.keys(remoteSave).map((key) => {
+                                return <div key={key}>{key}: {remoteSave[key].toString()}</div>
+                            })}
+                        </div> }
+                    </div>
+                    <div className="flex flex-col">
+                        <div>In Memory:</div>
+                        { !startTime && <div>None</div> }
+                        { startTime && lastPausedAt && <div className="ml-6">
+                            <div>startTimeString: { startTime.toString() }</div>
+                            <div>elapsedSeconds: { elapsedSeconds.toString() }</div>
+                            <div>isPaused: { isPaused.toString() }</div>
+                            { lastPausedAt && <div>lastPausedAtString: { lastPausedAt.toString() }</div> }
+                        </div> }
+                    </div>
+                </details>
             </div>
 
             <BlindSounds timeToNextLevel={timeToNextLevel}/>
