@@ -36,123 +36,65 @@ const BlindDisplay = () => {
     const ws = useRef(null);
 
     useEffect(() => {
-        const fetchChipsAndLevels = async () => {
-            let Chips = await getChips();
-            let Levels = await getLevels();
-            setChips(Chips);
-            setLevels(Levels);
-        }
-
-        // function connect() {
-            
-        //   ws.current = new WebSocket(wsUrl);
-        //   setSocketState('Connected');
-    
-        //   ws.current.onmessage = (event) => {
-        //     console.log('WS event!', event);
-        //     const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
-        //     const localStateIsPublisher = localStorage.getItem('bs-pokerBlinds-remotePublisher') === 'true';
-        //     setSocketState('Working');
-        //     if (localStateIsSubscriber) {
-        //         const remoteState = JSON.parse(event.data);
-        //         console.log('Remote State:', remoteState);
-        //         if (remoteState.startTimeString) {
-        //             setStartTime(new Date(remoteState.startTimeString));
-        //         }
-        //         setElapsedSeconds(parseInt(remoteState.elapsedSeconds));
-        //         setIsPaused(remoteState.isPaused === 'true');
-        //         console.log('setting lastPausedAt', remoteState.lastPausedAtString)
-        //         setLastPausedAt(new Date(remoteState.lastPausedAtString));
-
-        //         localStorage.setItem('bs-pokerBlinds', JSON.stringify(remoteState));
-        //     }
-        //     // setData(JSON.parse(event.data));
-        //   };
-    
-        //   ws.current.onclose = () => {
-        //     console.error('WebSocket closed! Attempting to reconnect...');
-        //     setSocketState('Closed');
-        //     const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
-        //     const localStateIsPublisher = localStorage.getItem('bs-pokerBlinds-remotePublisher') === 'true';
-        //     if (localStateIsSubscriber) {
-        //         setTimeout(connect, 3000); 
-        //     }
-        //     if (localStateIsPublisher) {
-        //         setSocketState('Not Connected as Publisher');
-        //     }
-        //   };
-    
-        //   ws.current.onerror = (error) => {
-        //     console.error('WebSocket error!', error);
-        //     setSocketState('Error');
-        //     ws.current?.close();
-        //   };
-        // }
-
         setLoading(true);
+        const fetchChipsAndLevels = async () => { setChips(await getChips()); setLevels(await getLevels()); }
+        fetchChipsAndLevels();
+
         const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
         const localStateIsPublisher = localStorage.getItem('bs-pokerBlinds-remotePublisher') === 'true';
-        if (localStateIsSubscriber) {
-            setRemoteSubscriber(true);
-        }
-        if (localStateIsPublisher) {
-            setRemotePublisher(true);
-        }
-
         const existingLocalState = localStorage.getItem('bs-pokerBlinds');
-        const existingLocalStateJson = JSON.parse(existingLocalState);
+        setRemoteSubscriber(localStateIsSubscriber);
+        setRemotePublisher(localStateIsPublisher);
         if (existingLocalState) {
+            const existingLocalStateJson = JSON.parse(existingLocalState);
             setLocalSave(existingLocalStateJson);
         }
 
         async function getRemoteState() {
             var existingRemoteStateJson = await readGameFromRemote()
-            if (localStateIsPublisher && existingRemoteStateJson !== null) {
-                const state = {
-                    startTimeString: existingRemoteStateJson.startTimeString,
-                    elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
-                    isPaused: true,
-                    lastPausedAtString: new Date().toISOString(),
+            if (existingRemoteStateJson !== null) {
+                if (localStateIsPublisher) {
+                    const state = {
+                        startTimeString: existingRemoteStateJson.startTimeString,
+                        elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                        isPaused: true,
+                        lastPausedAtString: new Date().toISOString(),
+                        localTime: new Date().toISOString(),
+                    }
+                    setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                    setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                    setIsPaused(true);
+                    setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+
+                    localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                    writeGameToRemote(JSON.stringify(state));
+                    setLocalSave(state);
+                    setRemoteSave(state);
                 }
-                
-                setStartTime(new Date(existingRemoteStateJson.startTimeString));
-                setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
-                setIsPaused(true);
-                console.log('setting lastPausedAt 121', existingRemoteStateJson.lastPausedAtString)
-                setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+                if (localStateIsSubscriber) {
+                    console.log('initialize values to pulled remote')
+                    const state = {
+                        startTimeString: existingRemoteStateJson.startTimeString,
+                        elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                        isPaused: existingRemoteStateJson.isPaused.toString(),
+                        lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+                    }
 
-                localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
-                writeGameToRemote(JSON.stringify(state));
-                setLocalSave(state);
-                setRemoteSave(state);
-            }
-            if (localStateIsSubscriber && existingRemoteStateJson !== null) {
-                console.log('setting remote state')
-                const state = {
-                    startTimeString: existingRemoteStateJson.startTimeString,
-                    elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
-                    isPaused: true.toString(),
-                    lastPausedAtString: new Date().toISOString(),
+                    setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                    setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                    setIsPaused(existingRemoteStateJson.isPaused === 'true');
+                    setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+
+                    localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                    setLocalSave(state);
+                    setRemoteSave(state);
                 }
-
-                setStartTime(new Date(existingRemoteStateJson.startTimeString));
-                setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
-                setIsPaused(existingRemoteStateJson.isPaused === 'true');
-                console.log('setting lastPausedAt 141', existingRemoteStateJson.lastPausedAtString)
-                setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
-
-                localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
-                setLocalSave(state);
-                setRemoteSave(state);
             }
         }
         getRemoteState();
         if (localStateIsSubscriber) {
+            setLoading(false);
             // connect();
-        }
-
-        if (chips === null || levels === null) {
-            fetchChipsAndLevels();
         }
 
         if (!localStateIsPublisher && !localStateIsSubscriber) {
@@ -189,23 +131,51 @@ const BlindDisplay = () => {
                     }
                 }
             }
-            const updateSubscription = async () => {
-                await pullLatestRemote()
-            }
-
-            updateSubscription();
             saveState();
             return () => clearInterval(timer);
         }
     }, [startTime, isPaused, localTime, loading]);
+
+    useEffect(() => {
+        let timer2;
+        const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
+        if (localStateIsSubscriber) {
+            timer2 = setInterval(() => { 
+                const updateSubscription = async () => {
+                    await pullLatestRemote()
+                }
+                setLocalTime(new Date());
+                updateSubscription();
+            }, 1000);
+        }
+    }, [remoteSubscriber]);
 
     const pullLatestRemote = async () => {
 
         const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
         if (localStateIsSubscriber) {
             console.log('pulling latest remote')
-            await readGameFromRemote()
+            var existingRemoteStateJson = await readGameFromRemote()
+            if (existingRemoteStateJson !== null) {
+                const state = {
+                    startTimeString: existingRemoteStateJson.startTimeString,
+                    elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                    isPaused: existingRemoteStateJson.isPaused.toString(),
+                    lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+                }
+
+                setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                setIsPaused(existingRemoteStateJson.isPaused === 'true');
+                setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+                // setLocalTime(new Date());
+
+                localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                setLocalSave(state);
+                setRemoteSave(state);
+            }
         }
+        return
     }
 
     const writeGameToRemote = async (stateJsonString) => {
@@ -222,7 +192,6 @@ const BlindDisplay = () => {
             const data = await response.json()
             localStorage.setItem('bs-pokerBlinds', stateJsonString);
             setRemoteSave(JSON.parse(stateJsonString));
-            // console.log('Wrote to remote', stateJsonString)
         }
         catch(e) {
             console.log('error', e)
@@ -235,27 +204,6 @@ const BlindDisplay = () => {
             const existingRemoteState = await response.json();
             const existingRemoteStateJson = JSON.parse(existingRemoteState);
             setRemoteSave(existingRemoteStateJson);
-
-            const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
-            if (localStateIsSubscriber) {
-                console.log('Updating from latest remote', existingRemoteStateJson)
-                // update memory to remote-values
-                if (existingRemoteState.startTimeString) {
-                    setStartTime(new Date(existingRemoteState.startTimeString));
-                }
-                setElapsedSeconds(parseInt(existingRemoteState.elapsedSeconds));
-                setIsPaused(existingRemoteState.isPaused === 'true');
-                if (existingRemoteState.lastPausedAtString) {
-                    try {
-                        console.log('setting lastPausedAt 246', existingRemoteState.lastPausedAtString)
-                        setLastPausedAt(new Date(existingRemoteState.lastPausedAtString));
-
-                    }
-                    catch (e) {
-                        console.log('error setting lastPausedAt 246', e)
-                    }
-                }
-            }
             return existingRemoteStateJson;
         }
         catch(e) {
@@ -272,7 +220,6 @@ const BlindDisplay = () => {
             let startTimeString = startTime.toISOString();
             let lastPausedAtString = new Date().toISOString();
             if (lastPausedAt) {
-                // console.log('lastPausedAt 270', lastPausedAt)
                 let lastPausedAtString = lastPausedAt.toISOString();
             }
 
@@ -281,6 +228,7 @@ const BlindDisplay = () => {
                 elapsedSeconds: elapsedSeconds.toString(),
                 isPaused: isPaused.toString(),
                 lastPausedAtString: lastPausedAtString,
+                localTime: new Date().toISOString(),
             }
             if (localStateIsPublisher) {
                 localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
@@ -314,7 +262,6 @@ const BlindDisplay = () => {
         } 
         else {
             newPausedAt = new Date();
-            // console.log('setting lastPausedAt 306', newPausedAt)
             setLastPausedAt(newPausedAt);
         }
         setIsPaused(!oldPauseValue);
@@ -326,7 +273,25 @@ const BlindDisplay = () => {
         localStorage.setItem('bs-pokerBlinds-remoteSubscriber', (newRemoteSubscriberValue).toString());
 
         if (newRemoteSubscriberValue) {
-            await readGameFromRemote()
+            var existingRemoteStateJson = await readGameFromRemote()
+            if (existingRemoteStateJson !== null) {
+                console.log('setting remote state')
+                const state = {
+                    startTimeString: existingRemoteStateJson.startTimeString,
+                    elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                    isPaused: existingRemoteStateJson.isPaused.toString(),
+                    lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+                }
+
+                setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                setIsPaused(existingRemoteStateJson.isPaused === 'true');
+                setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+
+                localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                setLocalSave(state);
+                setRemoteSave(state);
+            }
         }
 
         setRemoteSubscriber(newRemoteSubscriberValue);
@@ -344,6 +309,7 @@ const BlindDisplay = () => {
                     elapsedSeconds: elapsedSeconds.toString(),
                     isPaused: isPaused.toString(),
                     lastPausedAtString: lastPausedAt.toISOString().toString(),
+                    localTime: new Date().toISOString(),
                 }
                 localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
                 setLocalSave(state);
