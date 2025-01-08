@@ -1,4 +1,4 @@
-import PokerCard from './PokerCard';
+import PokerCard from '../Poker/PokerCard';
 import { useState, useEffect } from 'react';
 
 export default function TumblingCard ({start}) {
