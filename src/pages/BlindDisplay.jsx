@@ -52,40 +52,58 @@ const BlindDisplay = () => {
             if (existingRemoteStateJson !== null) {
                 if (localStateIsPublisher) {
                     console.log('initialize values to pulled remote')
-                    const state = {
-                        startTimeString: existingRemoteStateJson.startTimeString,
-                        elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
-                        isPaused: true,
-                        lastPausedAtString: new Date().toISOString(),
-                        localTime: new Date().toISOString(),
-                    }
-                    setStartTime(new Date(existingRemoteStateJson.startTimeString));
-                    setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
-                    setIsPaused(true);
-                    setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
 
-                    localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
-                    writeGameToRemote(JSON.stringify(state));
-                    setLocalSave(state);
-                    setRemoteSave(state);
+                    if (!existingRemoteStateJson.startTimeString) {
+                        setStartTime(null);
+                        setElapsedSeconds(0);
+                        setIsPaused(false);
+                        setLastPausedAt(null);
+                    }
+                    else {
+                        const state = {
+                            startTimeString: existingRemoteStateJson.startTimeString,
+                            elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                            isPaused: true,
+                            lastPausedAtString: new Date().toISOString(),
+                            localTime: new Date().toISOString(),
+                        }
+                        setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                        setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                        setIsPaused(true);
+                        setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+    
+                        localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                        writeGameToRemote(JSON.stringify(state));
+                        setLocalSave(state);
+                        setRemoteSave(state);
+                    }
                 }
                 if (localStateIsSubscriber) {
                     console.log('initialize values to pulled remote')
-                    const state = {
-                        startTimeString: existingRemoteStateJson.startTimeString,
-                        elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
-                        isPaused: existingRemoteStateJson.isPaused.toString(),
-                        lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+
+                    if (!existingRemoteStateJson.startTimeString) {
+                        setStartTime(null);
+                        setElapsedSeconds(0);
+                        setIsPaused(false);
+                        setLastPausedAt(null);
                     }
-
-                    setStartTime(new Date(existingRemoteStateJson.startTimeString));
-                    setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
-                    setIsPaused(existingRemoteStateJson.isPaused === 'true');
-                    setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
-
-                    localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
-                    setLocalSave(state);
-                    setRemoteSave(state);
+                    else {
+                        const state = {
+                            startTimeString: existingRemoteStateJson.startTimeString,
+                            elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                            isPaused: existingRemoteStateJson.isPaused.toString(),
+                            lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+                        }
+    
+                        setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                        setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                        setIsPaused(existingRemoteStateJson.isPaused === 'true');
+                        setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+    
+                        localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                        setLocalSave(state);
+                        setRemoteSave(state);
+                    }
                 }
             }
         }
@@ -94,10 +112,17 @@ const BlindDisplay = () => {
         if (!localStateIsPublisher && !localStateIsSubscriber) {
             if (existingLocalState) {
                 const existingLocalStateJson = JSON.parse(existingLocalState);
-                setStartTime(new Date(existingLocalStateJson.startTimeString));
-                setElapsedSeconds(parseInt(existingLocalStateJson.elapsedSeconds));
-                setIsPaused(true);
-                setLastPausedAt(new Date());
+                if (!existingLocalState.startTimeString) {
+                    setStartTime(null);
+                    setElapsedSeconds(0);
+                    setIsPaused(false);
+                    setLastPausedAt(null);
+                } else {
+                    setStartTime(new Date(existingLocalStateJson.startTimeString));
+                    setElapsedSeconds(parseInt(existingLocalStateJson.elapsedSeconds));
+                    setIsPaused(true);
+                    setLastPausedAt(new Date());
+                }
             }
         }
         setLoading(false);
@@ -145,6 +170,14 @@ const BlindDisplay = () => {
         }
     }, [remoteSubscriber]);
 
+    const endTournament = async () => {
+        localStorage.removeItem('bs-pokerBlinds');
+        if (remotePublisher) {
+            await writeGameToRemote(null);
+        }
+        window.location.reload();
+    };
+
     const pullLatestRemote = async () => {
 
         const localStateIsSubscriber = localStorage.getItem('bs-pokerBlinds-remoteSubscriber') === 'true';
@@ -152,22 +185,31 @@ const BlindDisplay = () => {
             console.log('pulling latest remote')
             var existingRemoteStateJson = await readGameFromRemote()
             if (existingRemoteStateJson !== null) {
-                const state = {
-                    startTimeString: existingRemoteStateJson.startTimeString,
-                    elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
-                    isPaused: existingRemoteStateJson.isPaused.toString(),
-                    lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+
+                if (!existingRemoteStateJson.startTimeString) {
+                    setStartTime(null);
+                    setElapsedSeconds(0);
+                    setIsPaused(false);
+                    setLastPausedAt(null);
                 }
-
-                setStartTime(new Date(existingRemoteStateJson.startTimeString));
-                setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
-                setIsPaused(existingRemoteStateJson.isPaused === 'true');
-                setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
-                // setLocalTime(new Date());
-
-                localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
-                setLocalSave(state);
-                setRemoteSave(state);
+                else {
+                    const state = {
+                        startTimeString: existingRemoteStateJson.startTimeString,
+                        elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                        isPaused: existingRemoteStateJson.isPaused.toString(),
+                        lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+                    }
+    
+                    setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                    setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                    setIsPaused(existingRemoteStateJson.isPaused === 'true');
+                    setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+                    // setLocalTime(new Date());
+    
+                    localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                    setLocalSave(state);
+                    setRemoteSave(state);
+                }
             }
         }
         return
@@ -270,22 +312,31 @@ const BlindDisplay = () => {
         if (newRemoteSubscriberValue) {
             var existingRemoteStateJson = await readGameFromRemote()
             if (existingRemoteStateJson !== null) {
-                console.log('setting remote state')
-                const state = {
-                    startTimeString: existingRemoteStateJson.startTimeString,
-                    elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
-                    isPaused: existingRemoteStateJson.isPaused.toString(),
-                    lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+
+                if (!existingRemoteStateJson.startTimeString) {
+                    setStartTime(null);
+                    setElapsedSeconds(0);
+                    setIsPaused(false);
+                    setLastPausedAt(null);
                 }
-
-                setStartTime(new Date(existingRemoteStateJson.startTimeString));
-                setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
-                setIsPaused(existingRemoteStateJson.isPaused === 'true');
-                setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
-
-                localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
-                setLocalSave(state);
-                setRemoteSave(state);
+                else {
+                    console.log('setting remote state')
+                    const state = {
+                        startTimeString: existingRemoteStateJson.startTimeString,
+                        elapsedSeconds: existingRemoteStateJson.elapsedSeconds.toString(),
+                        isPaused: existingRemoteStateJson.isPaused.toString(),
+                        lastPausedAtString: existingRemoteStateJson.lastPausedAtString,
+                    }
+    
+                    setStartTime(new Date(existingRemoteStateJson.startTimeString));
+                    setElapsedSeconds(parseInt(existingRemoteStateJson.elapsedSeconds));
+                    setIsPaused(existingRemoteStateJson.isPaused === 'true');
+                    setLastPausedAt(new Date(existingRemoteStateJson.lastPausedAtString));
+    
+                    localStorage.setItem('bs-pokerBlinds', JSON.stringify(state));
+                    setLocalSave(state);
+                    setRemoteSave(state);
+                }
             }
         }
 
@@ -315,6 +366,19 @@ const BlindDisplay = () => {
         setRemotePublisher(newRemotePublisherValue);
     }
 
+    const plusTime = () => {
+        setElapsedSeconds(elapsedSeconds + 30);
+    }
+
+    const minusTime = () => {
+        if (elapsedSeconds >= 30) {
+            setElapsedSeconds(elapsedSeconds - 30);
+        }
+        else {
+            setElapsedSeconds(0);
+        }
+    }
+
     return (
         <div className="w-screen max-w-7xl mx-auto py-80">
             {isPaused && <span className="text-7xl bg-contentBg font-bold sticky left-1/3 top-1/3 text-error-700 mx-auto my-auto border-4 border-error-900 h-fit w-fit py-2 px-5">
@@ -328,6 +392,9 @@ const BlindDisplay = () => {
                 togglePause={togglePause}
                 isPaused={isPaused}
                 showPauseResumeButton={!remoteSubscriber}
+                endTournament={endTournament}
+                plusTime={plusTime}
+                minusTime={minusTime}
             />
 
             <div className="flex flex-row flex-wrap w-full pb-10 px-0">
