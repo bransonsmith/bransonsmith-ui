@@ -83,6 +83,18 @@ li {
     background-position: center;
 }
 
+.poker-pilot-box {
+    background-image: url('./assets/PokerPilotLogo.png');
+    background-size: 100%;
+    background-position: left;
+    background-repeat: no-repeat;
+    @apply border-2 rounded-lg border-gray-700;
+}
+.poker-pilot-box:hover {
+    background-size: 150%;
+    background-position: center;
+}
+
 .baseball-box {
     background-image: url('./assets/baseball.png');
     background-size: 100%;

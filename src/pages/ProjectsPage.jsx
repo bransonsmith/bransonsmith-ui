@@ -11,7 +11,7 @@ export default function ProjectsPage() {
                         </p>
                     
                         <p className='text-defaultText font-normal text-sm p-0 m-0 my-5'>
-                            By taking advantage of <b>DynamoDb</b>, <b>Lambda</b>, and <b>Aws Amplify</b>, this entire application is always live, but only costs pennies a month (which predominately goes to Twilio/Sms Costs), and is prepared to scale on demand.
+                            By taking advantage of <b>DynamoDb</b>, <b>Lambda</b>, and <b>Aws Amplify</b>, this entire application is always live, but only costs less than 1 penny a month (which predominately goes to Twilio/Sms Costs), and is prepared to scale on demand.
                         </p>
                         <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">Check out Church Lunch</button>
                     </div>,
@@ -21,12 +21,23 @@ export default function ProjectsPage() {
             link: 'https://master.d2tddv8x1fnka4.amplifyapp.com/',
             content: <div className="p-0 mr-auto my-0 w-80">
                         <p className='text-defaultText font-normal text-sm p-0 m-0 mt-0'>
-                            This subscription web app provides stock analysis to users. It's a react app in front of Django (Python) + PostgreSQL
+                            This subscription web app provides stock analysis to users. It's a react app in front of Django (Python) + PostgreSQL, utilizing Stripe subscriptions. This link is to a dev-preview version, while the owning-company awaits launch.
                         </p>
                         <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">Check out Smoke Preview</button>
                     </div>,
             image: <div className="smoke-box h-52 w-80 mb-auto shadow-md shadow-black"/>
         },
+        {
+            name: 'Poker Pilot',
+            link: 'https://pokerpilot.net',
+            content: <div className="p-0 mr-auto my-0 w-80">
+                        <p className='text-defaultText font-normal text-sm p-0 m-0 mt-0'>
+                            Tool to organize and run a poker tournament. React app in front of AWS api gateway, lambda, dynamo, integrated with Auth0 and Stripe.
+                        </p>
+                        <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">Poker Pilot (alpha)</button>
+                    </div>,
+            image: <div className="poker-pilot-box h-52 w-80 mb-auto shadow-md shadow-black"/>
+        }
         // { name: 'Fantasy Baseball Luck Analysis', 
         //     content: <div className="p-0 mr-auto my-0 w-80">
         //                 <p className='text-defaultText font-normal text-sm p-0 m-0 mt-0'>
