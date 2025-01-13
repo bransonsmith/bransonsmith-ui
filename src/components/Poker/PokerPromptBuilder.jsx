@@ -200,13 +200,14 @@ export default function PokerPromptBuilder() {
         <EventsDisplay gameState={gameState} setGameState={setGameState} />
 
         <div className="mt-12">
-            <label className="text-sm text-gray-500">Password</label>
+            <label className="text-sm text-gray-500">Password (use 'preview' for throttled preview usage)</label>
             <input type="password" className="w-full p-2 border border-neutral-400 rounded-md" onChange={(e) => setPassword(e.target.value)} />
         </div>
 
-        { (!password || password.length < 8) &&
+        { (!password || password.length < 7) &&
             <button disabled className="mt-1 bg-neutral-700 border-2 border-neutral-500 text-neutral-400 text-lg"> Analyze (password required first ^)</button>
         }
+
         { loading &&
             <div className="flex flex-row w-fit p-3 bg-gray-900 text-lg rounded-lg font-bold text-gray-400 gap-4">
                 <Loading />
@@ -216,7 +217,7 @@ export default function PokerPromptBuilder() {
             </div>
         }
 
-        { password && password.length > 8 && !loading &&
+        { password && password.length > 6 && !loading &&
         <button className="mt-1 bg-accent-400 text-defaultText text-lg border-2 border-defaultText"
             onClick={analyzeHand}> 
             Analyze 

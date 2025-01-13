@@ -50,7 +50,7 @@ export default function App() {
     { target: '/home', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '/podcast', label: 'Podcast', element: <PodcastPage />, showInHeader: false, showInFooter: false },
     // { target: '/santa', label: 'Secret Santa', element: <SecretSantaPage />, showInHeader: false, showInFooter: false },
-    { target: '/santa', label: 'Christmas Lists', element: <GiftList2024 />, showInHeader: true, showInFooter: true },
+    { target: '/santa', label: 'Christmas Lists', element: <GiftList2024 />, showInHeader: false, showInFooter: true },
     { target: '/quests', label: 'Quests', element: <DndQuests />, showInHeader: false, showInFooter: false },
     { target: '/peter', label: '1 Peter Pericopes', element: <FirstPeterPericopePage />, showInHeader: false, showInFooter: false },
     { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
