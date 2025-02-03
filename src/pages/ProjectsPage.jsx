@@ -3,6 +3,17 @@
 export default function ProjectsPage() {
 
     const projects = [
+        {
+            name: 'Poker Pilot',
+            link: 'https://pokerpilot.net/',
+            content: <div className="p-0 mr-auto my-0 w-80">
+                        <p className='text-defaultText font-normal text-sm p-0 m-0 mt-0'>
+                            Tool to organize and run a poker tournament. React + .NET Web API + DynamoDb + Lambda, integrated with Auth0 and Stripe.
+                        </p>
+                        <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">Poker Pilot</button>
+                    </div>,
+            image: <div className="poker-pilot-box h-52 w-80 mb-auto shadow-md shadow-black"/>
+        },
         { name: 'Church Lunch', 
             link: 'https://master.d2nn0kevvgeq5s.amplifyapp.com/',
             content: <div className="p-0 mr-auto my-0 w-80">
@@ -26,17 +37,6 @@ export default function ProjectsPage() {
                         <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">Check out Smoke Preview</button>
                     </div>,
             image: <div className="smoke-box h-52 w-80 mb-auto shadow-md shadow-black"/>
-        },
-        {
-            name: 'Poker Pilot',
-            link: 'https://pokerpilot.net',
-            content: <div className="p-0 mr-auto my-0 w-80">
-                        <p className='text-defaultText font-normal text-sm p-0 m-0 mt-0'>
-                            Tool to organize and run a poker tournament. React app in front of AWS api gateway, lambda, dynamo, integrated with Auth0 and Stripe.
-                        </p>
-                        <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">Poker Pilot (alpha)</button>
-                    </div>,
-            image: <div className="poker-pilot-box h-52 w-80 mb-auto shadow-md shadow-black"/>
         }
         // { name: 'Fantasy Baseball Luck Analysis', 
         //     content: <div className="p-0 mr-auto my-0 w-80">
