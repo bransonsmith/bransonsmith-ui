@@ -1,0 +1,130 @@
+
+.left-head {
+    border-right: 1px solid  gray;
+    text-align: right;
+}
+.matchup {
+    font-size: 12px;
+}
+.top-head {
+    border-bottom: 1px solid  gray;
+    width: min(100%, 800px);
+    text-align: center;
+}
+.luck-file-teams {
+    margin-left: 0px;
+    width: 100%;
+    padding: 0px;
+    border-bottom: 1px solid  gray;
+    margin: auto;
+}
+.luck-file-team {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid gray;
+    border-bottom: 0px;
+    padding: 5px 10px;
+}
+.luck-file-team-stats {
+    display: flex;
+    flex-direction: row;
+    border-color: gray;
+    /* border: 1px solid  var(--bran-colors-edge); */
+    width: fit-content;
+    padding: 0px;
+}
+.luck-file-team-stat {
+    /* width: 100vw; */
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-data {
+    font-size: 8px;
+    min-width: 30px;
+    width: 100%;
+    text-align: center;
+    padding: 2px 0px 1px 0px;
+    border-color: #222;
+}
+
+.table-label-font {
+    font-size: 10px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+.luck-file-details { 
+    cursor: pointer;
+}
+
+.luck-file-details .luck-file-summary > * {
+    display: inline;
+}
+
+.team-luck {
+    margin: auto 0px 3px 6px;
+    font-size: 12px;
+    font-weight: normal;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.team-trait {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    /* height: 30px; */
+    margin: 5px auto auto 0px;
+}
+
+.team-trait-label {
+    font-size: 7.5px;
+    color: var(--bran-colors-font-secondary);
+    margin: 0px auto auto auto;
+    text-align: center;
+}
+
+.team-trait-value {
+    font-size: 8px;
+    font-weight: bold;
+    margin: auto auto auto auto;
+}
+
+@media (min-width: 500px) {
+    .matchup {
+        font-size: 16px;
+    }
+
+    .stat-data {
+        font-size: 12px;
+        padding: 2px;
+        width: 48px;
+        height: 24px;
+    }
+    
+    .table-label-font {
+        font-size: 14px;
+    }
+    
+    h3 {
+        font-size: 16px;
+    }
+
+    .team-luck {
+        font-size: 16px;
+    }
+    
+    .team-trait-label {
+        font-size: 11px;
+    }
+    
+    .team-trait-value {
+        font-size: 11px;
+    }
+}
+

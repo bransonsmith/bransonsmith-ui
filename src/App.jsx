@@ -30,6 +30,8 @@ import BibleReadingPage from './BQE/Pages/BibleReadingPage'
 import BibleReadingManualPage from './BQE/Pages/BibleReadingManualPage'
 import FirstPeterPericopePage from './BQE/Pages/FirstPeterPericopePage'
 import BlindDisplay from './pages/BlindDisplay'
+import FantasyBaseball from './pages/FantasyBaseball'
+import FantasyLuckPage from './components/Baseball/FantasyLuckPage'
 
 import { Helmet } from 'react-helmet';
 import SecretSantaForm from './SecretSanta/SecretSantaForm';
@@ -61,6 +63,8 @@ export default function App() {
     { target: '/gbadmin', label: 'GB Admin', element: <GingerBreadAdmin />, showInHeader: false, showInFooter: false },
     { target: '/gbshow', label: 'GB Showtime', element: <GingerbreadShowtime />, showInHeader: false, showInFooter: false },
     { target: '/gbballot', label: 'GB Ballot', element: <GbBallotPage />, showInHeader: false, showInFooter: false },
+    { target: '/fbb', label: 'Fantasy Baseball', element: <FantasyBaseball />, showInHeader: false, showInFooter: false },
+    { target: '/fbbl', label: 'Fantasy Luck', element: <FantasyLuckPage />, showInHeader: false, showInFooter: true },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]

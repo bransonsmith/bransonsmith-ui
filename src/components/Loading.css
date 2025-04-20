@@ -1,6 +1,7 @@
 .lds-ring {
     /* change color here */
-    color: #1c4c5b
+    color: #1c4c5b;
+    border: 1px solid salmon;
   }
   .lds-ring,
   .lds-ring div {
@@ -18,7 +19,7 @@
     position: absolute;
     width: 32px;
     height: 32px;
-    margin: 8px;
+    margin: 3px;
     border: 8px solid currentColor;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
