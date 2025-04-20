@@ -45,8 +45,8 @@ export default function FantasyLuckPage(props) {
         luck_files.unshift(itemToMove)
 
         setFiles(luck_files)
-        setSelectedFile(luck_files[0])
-        setSortedTeams(getSortedTeams(luck_files[0]))
+        setSelectedFile(luck_files[1])
+        setSortedTeams(getSortedTeams(luck_files[1]))
     }
 
     async function getLuckStats(yearValue=year) {
@@ -243,10 +243,25 @@ export default function FantasyLuckPage(props) {
         return 'Week ' + filename.substring(4) 
     }
 
+    function filenameSort(a,b) {
+        if (a.filename === "totals") {
+            return -1
+        }
+
+        let a_num = parseInt(a.filename.substring(4))
+        let b_num = parseInt(b.filename.substring(4))
+        return b_num - a_num
+    }
+
     return (
         <div className="fantasy-luck-page">
             
-            <div className="explanation">
+            <h1 className="my-0 text 2xl">Fantasy Baseball Funzone "Luck Score"</h1>
+            <h2 className="my-0 text-sm text-gray-400 text-normal flex flex-col pl-3">
+                <div className="underline ">Luck Score - </div>
+                <div className="font-normal">How many wins received based on your weekly opponent's performance.<br/>e.g. If you have 2nd most HR in a week, and you just happen to be playing against the person with the most HR that week, then you got very "unlucky".</div>
+            </h2>
+            <div className="explanation mx-0">
                 <details>
                     <summary>How is Luck Score calculated?</summary><br/>
 
@@ -358,7 +373,7 @@ export default function FantasyLuckPage(props) {
             {files && selectedFile && sortedTeams?
             <div className="file-display">
                 
-                <ul className="tab-heads">{files.sort((a, b) => b.filename.localeCompare(a.filename)).map((file) =>
+                <ul className="tab-heads">{files.sort(filenameSort).map((file) =>
                     <li key={file.filename} onClick={() => {setNewSelectedFile(file)}}>
                         { selectedFile && file.filename == selectedFile.filename?
                             <div className="tab-head tab-head-selected">
