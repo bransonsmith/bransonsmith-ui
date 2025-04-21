@@ -76,6 +76,21 @@ export default function FantasyLuckPage(props) {
             sorted.sort((a, b) => (parseInt(a.matchup.num) > parseInt(b.matchup.num)) ? 1 : -1)
         }
 
+
+        sorted.forEach(team => {
+            if (team.name === "Left-Field Lizards") {
+                team.logo = 'Left-Field Lizards.png'
+            }
+            else if (team.name === "Lovable Winners") {
+                team.logo = 'Lovable Winners.jpg'
+            }
+            else if (team.name === "One 5picy Meatball") {
+                team.logo = 'One 5picy Meatball.png'
+            }
+            else {
+                team.logo =  team.name + '.svg'
+            }
+        })
         return sorted
     } 
 
@@ -242,7 +257,7 @@ export default function FantasyLuckPage(props) {
             "Avg Rank": { "name": "average_rank", "dir": 1 },
             "Expected Ws": { "name": "expected_wins", "dir": -1 },
             "Luck Score": { "name": "luck_score", "dir": -1 },
-            "Matchup": { "name": "matchup", "dir": 1 },
+            // "Matchup": { "name": "matchup", "dir": 1 },
         }
         let selectedAttr = attr_map[attribute]
 
@@ -392,7 +407,7 @@ export default function FantasyLuckPage(props) {
                     <select id="sort-selector" onChange={(event) => sortTeamsBy(event.target.value)}>
                         <option>Expected Ws</option>
                         <option>Luck Score</option>
-                        <option>Matchup</option>
+                        {/* <option>Matchup</option> */}
                         <option>Record</option>
                         <option>Avg Rank</option>
                     </select>

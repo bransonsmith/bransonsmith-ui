@@ -94,25 +94,30 @@ export default function LuckFile(props) {
                 <li className="luck-file-team" key={index} style={{'background': getMatchupColor(team)}}>
                 
                 <details className='luck-file-details'>
-                    <summary className='luck-file-summary'>
-                        <h3 className="team-label">{team.name} 
+                    <summary className='w-full'>
+                        <h3 className="w-full">
+                            <div className="text-2xl flex flex-row gap-x-2 h-fit">
+                                <img src={team.logo} alt="logo" className="w-8 h-8 mb-auto mt-0 rounded-full border border-gray-700 border-radius-full" />
+                                <div className="text-2xl mt-auto">{team.name} </div>
+                                <div className="text-lg mt-auto">{team.matchup.wins.length}-{team.matchup.losses.length}-{team.matchup.ties.length}</div>
+                                <div className="text-lg mt-auto">({rankStr(team.winPctRank)})</div>
+                            </div>
                             <div className="team-luck">
-                                <div className="team-trait" onClick={() => sortBy(getWinPct)}>
-                                    <div className="team-trait-label">Record ({rankStr(team.winPctRank)})</div>
-									<div className="team-trait-value">{team.matchup.wins.length}-{team.matchup.losses.length}-{team.matchup.ties.length}</div>
-									<div className="team-trait-value">{getWinPct(team)}</div>
+                                {/* <div className="team-trait" onClick={() => sortBy(getWinPct)}>
+                                    <div className="team-trait-label">Record </div>
+									
+                                </div> */}
+                                <div className="team-trait flex flex-col w-fit">
+									<div className="team-trait-label mr-auto ml-0">Luck Score ({rankStr(team.luckScoreRank)})</div>
+                                    <div className="team-trait-value mr-auto ml-0">{Number.parseFloat(team.luck_score * .01).toFixed(2)}</div>
                                 </div>
                                 <div className="team-trait">
-                                    <div className="team-trait-label">Avg Rank ({rankStr(team.avgRankRank)})</div>
-                                    <div className="team-trait-value">{Number.parseFloat(team.average_rank).toFixed(2)}</div>
+                                    <div className="team-trait-label mr-auto ml-0">Avg Rank ({rankStr(team.avgRankRank)})</div>
+                                    <div className="team-trait-value mr-auto ml-0">{Number.parseFloat(team.average_rank).toFixed(2)}</div>
                                 </div>
                                 <div className="team-trait">
-									<div className="team-trait-label">Expected Ws ({rankStr(team.expectedWinsRank)})</div>
-                                    <div className="team-trait-value">{Number.parseFloat(team.expected_wins).toFixed(2)}</div> 
-                                </div>
-                                <div className="team-trait">
-									<div className="team-trait-label">Luck Score ({rankStr(team.luckScoreRank)})</div>
-                                    <div className="team-trait-value">{Number.parseFloat(team.luck_score * .01).toFixed(2)}</div>
+									<div className="team-trait-label mr-auto ml-0">Expected Ws ({rankStr(team.expectedWinsRank)})</div>
+                                    <div className="team-trait-value mr-auto ml-0">{Number.parseFloat(team.expected_wins).toFixed(2)}</div> 
                                 </div>
                             </div>
                         </h3>
