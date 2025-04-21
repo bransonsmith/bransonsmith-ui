@@ -29,11 +29,53 @@ export default function FantasyLuckPage(props) {
         Object.keys(fileWithTeams.teams).forEach(team_key => {
            sorted.push(fileWithTeams.teams[team_key]) 
         });
+
+        // assign stat rankings for each team for: 
+
+        console.log('Sorting')
+
+        let byAvgRank = []
+        let byExpectedWins = []
+        let byLuckScore = []
+        let byWinPct = []
+
+        sorted.sort((a, b) => (Number.parseFloat(a.average_rank) > Number.parseFloat(b.average_rank)) ? 1 : -1)
+        sorted.forEach(team => byAvgRank.push(team))
+        
+        console.log('byAvgRank', byAvgRank)
+
+        sorted.sort((a, b) => (Number.parseFloat(a.expected_wins) < Number.parseFloat(b.expected_wins)) ? 1 : -1)
+        sorted.forEach(team => byExpectedWins.push(team))
+
+        console.log('byExpectedWins', byExpectedWins)
+
+        sorted.sort((a, b) => (Number.parseFloat(a.luck_score) < Number.parseFloat(b.luck_score)) ? 1 : -1)
+        sorted.forEach(team => byLuckScore.push(team))
+
+        sorted.sort((a, b) => (Number.parseFloat(a.matchup.wins.length + a.matchup.ties.length * .5) / (a.matchup.wins.length + a.matchup.ties.length + a.matchup.losses.length) < Number.parseFloat(b.matchup.wins.length + b.matchup.ties.length * .5) / (b.matchup.wins.length + b.matchup.ties.length + b.matchup.losses.length)) ? 1 : -1)
+        sorted.forEach(team => byWinPct.push(team))
+
+        sorted.forEach(team => {
+            team['avgRankRank'] = byAvgRank.indexOf(team) + 1
+            team['expectedWinsRank'] = byExpectedWins.indexOf(team) + 1
+            team['luckScoreRank'] = byLuckScore.indexOf(team) + 1
+            team['winPctRank'] = byWinPct.indexOf(team) + 1
+        })
+
+        // Number.parseFloat(team.average_rank).toFixed(2)
+        // Number.parseFloat(team.expected_wins).toFixed(2)
+        // Number.parseFloat(team.luck_score * .01).toFixed(2)
+        // winPct:    function getWinPct(team) {
+        //     let to3Digits = "" + ((team.matchup.wins.length + team.matchup.ties.length * .5) / (team.matchup.wins.length + team.matchup.ties.length + team.matchup.losses.length)).toFixed(3)
+        //     return "." + to3Digits.split('.')[1]
+        // }
+
         if (fileWithTeams.filename == "totals") {
             sorted.sort((a, b) => (parseFloat(a.average_rank) > parseFloat(b.average_rank)) ? 1 : -1)
         } else {
             sorted.sort((a, b) => (parseInt(a.matchup.num) > parseInt(b.matchup.num)) ? 1 : -1)
         }
+
         return sorted
     } 
 
@@ -196,7 +238,7 @@ export default function FantasyLuckPage(props) {
     function sortTeamsBy(attribute) {
         setCurrentSortAttribute(attribute)
         const attr_map = {
-            "Win %": { "name": "wl", "dir": -1 },
+            "Record": { "name": "wl", "dir": -1 },
             "Avg Rank": { "name": "average_rank", "dir": 1 },
             "Expected Ws": { "name": "expected_wins", "dir": -1 },
             "Luck Score": { "name": "luck_score", "dir": -1 },
@@ -343,7 +385,7 @@ export default function FantasyLuckPage(props) {
                 </details>
             </div>
 
-            {files?
+            {files && selectedFile && selectedFile.filename === 'totals'? 
             <div className="menu">
                 <div className="sort-select">
                     <div className="sort-label">Sort By</div>
@@ -351,7 +393,7 @@ export default function FantasyLuckPage(props) {
                         <option>Expected Ws</option>
                         <option>Luck Score</option>
                         <option>Matchup</option>
-                        <option>Win %</option>
+                        <option>Record</option>
                         <option>Avg Rank</option>
                     </select>
                 </div>

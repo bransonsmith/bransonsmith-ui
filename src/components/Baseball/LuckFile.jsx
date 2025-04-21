@@ -71,6 +71,23 @@ export default function LuckFile(props) {
     //     sorted.sort((a, b) => (parseInt(a[trait]) > parseInt(b[trait])) ? 1*asc : -1 *asc)
     //     return sorted.findIndex(t => t.name === teamToRank.name) + 1
     // }
+
+    function rankStr(rank) {
+        if (rank === 0) {
+            return '0th'
+        }
+        if (rank === 1) {
+            return '1st'
+        }
+        if (rank === 2) {
+            return '2nd'
+        }
+        if (rank === 3) {
+            return '3rd'
+        }
+        return rank + 'th'
+    }
+
     return (<div>
         {/* <h2 className="luck-file-label">{props.file.Label}</h2> */}
         <ul className="luck-file-teams">{props.teams.map((team, index) =>
@@ -81,20 +98,20 @@ export default function LuckFile(props) {
                         <h3 className="team-label">{team.name} 
                             <div className="team-luck">
                                 <div className="team-trait" onClick={() => sortBy(getWinPct)}>
-                                    <div className="team-trait-label">Record</div>
+                                    <div className="team-trait-label">Record ({rankStr(team.winPctRank)})</div>
 									<div className="team-trait-value">{team.matchup.wins.length}-{team.matchup.losses.length}-{team.matchup.ties.length}</div>
 									<div className="team-trait-value">{getWinPct(team)}</div>
                                 </div>
                                 <div className="team-trait">
-                                    <div className="team-trait-label">Avg Rank</div>
+                                    <div className="team-trait-label">Avg Rank ({rankStr(team.avgRankRank)})</div>
                                     <div className="team-trait-value">{Number.parseFloat(team.average_rank).toFixed(2)}</div>
                                 </div>
                                 <div className="team-trait">
-									<div className="team-trait-label">Expected Ws</div>
+									<div className="team-trait-label">Expected Ws ({rankStr(team.expectedWinsRank)})</div>
                                     <div className="team-trait-value">{Number.parseFloat(team.expected_wins).toFixed(2)}</div> 
                                 </div>
                                 <div className="team-trait">
-									<div className="team-trait-label">Luck Score</div>
+									<div className="team-trait-label">Luck Score ({rankStr(team.luckScoreRank)})</div>
                                     <div className="team-trait-value">{Number.parseFloat(team.luck_score * .01).toFixed(2)}</div>
                                 </div>
                             </div>
