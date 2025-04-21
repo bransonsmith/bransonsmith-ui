@@ -93,14 +93,15 @@ export default function LuckFile(props) {
         <ul className="luck-file-teams">{props.teams.map((team, index) =>
                 <li className="luck-file-team" key={index} style={{'background': getMatchupColor(team)}}>
                 
-                <details className='luck-file-details'>
-                    <summary className='w-full'>
-                        <h3 className="w-full">
-                            <div className="text-2xl flex flex-row gap-x-2 h-fit">
+                <details className='luck-file-details w-full'>
+                    <summary className='luck-file-summary w-full flex'>
+                        <h3 className="w-11/12 flex flex-col pt-1">
+                            <div className="text-2xl flex flex-row gap-x-2 h-fit w-full mb-auto mt-0">
                                 <img src={team.logo} alt="logo" className="w-8 h-8 mb-auto mt-0 rounded-full border border-gray-700 border-radius-full" />
                                 <div className="text-2xl mt-auto">{team.name} </div>
                                 <div className="text-lg mt-auto">{team.matchup.wins.length}-{team.matchup.losses.length}-{team.matchup.ties.length}</div>
                                 <div className="text-lg mt-auto">({rankStr(team.winPctRank)})</div>
+                                <div className="text-xs text-blue-600 ml-auto mr-0">[expand]</div>
                             </div>
                             <div className="team-luck">
                                 {/* <div className="team-trait" onClick={() => sortBy(getWinPct)}>

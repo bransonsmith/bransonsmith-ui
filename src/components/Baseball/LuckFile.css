@@ -62,8 +62,20 @@ h3 {
     cursor: pointer;
 }
 
-.luck-file-details .luck-file-summary > * {
-    display: inline;
+.luck-file-summary > h3 {
+    display: inline-flex; /* Aligns content horizontally */
+    align-items: center; /* Vertically aligns content */
+    gap: 0.5rem; /* Adds spacing between elements */
+    margin: 0; /* Removes default margin */
+    width: full;
+    
+}
+
+.summary::marker {
+    display: inline-flex;
+    margin-bottom: auto;
+    margin-top: 0px;
+    border: 1px solid   red;
 }
 
 .team-luck {
