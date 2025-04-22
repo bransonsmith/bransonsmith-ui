@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './FantasyLuckPage.css'
+import FantasyTeamSummary from './FantasyTeamSummary';
 
 // import axios from "axios";
 import LuckFile from './LuckFile';
@@ -32,8 +33,6 @@ export default function FantasyLuckPage(props) {
 
         // assign stat rankings for each team for: 
 
-        console.log('Sorting')
-
         let byAvgRank = []
         let byExpectedWins = []
         let byLuckScore = []
@@ -42,12 +41,8 @@ export default function FantasyLuckPage(props) {
         sorted.sort((a, b) => (Number.parseFloat(a.average_rank) > Number.parseFloat(b.average_rank)) ? 1 : -1)
         sorted.forEach(team => byAvgRank.push(team))
         
-        console.log('byAvgRank', byAvgRank)
-
         sorted.sort((a, b) => (Number.parseFloat(a.expected_wins) < Number.parseFloat(b.expected_wins)) ? 1 : -1)
         sorted.forEach(team => byExpectedWins.push(team))
-
-        console.log('byExpectedWins', byExpectedWins)
 
         sorted.sort((a, b) => (Number.parseFloat(a.luck_score) < Number.parseFloat(b.luck_score)) ? 1 : -1)
         sorted.forEach(team => byLuckScore.push(team))
@@ -78,6 +73,7 @@ export default function FantasyLuckPage(props) {
 
 
         sorted.forEach(team => {
+            team.isHidden = false
             if (team.name === "Left-Field Lizards") {
                 team.logo = 'Left-Field Lizards.png'
             }
@@ -400,6 +396,7 @@ export default function FantasyLuckPage(props) {
                 </details>
             </div>
 
+
             {files && selectedFile && selectedFile.filename === 'totals'? 
             <div className="menu">
                 <div className="sort-select">
@@ -531,6 +528,13 @@ export default function FantasyLuckPage(props) {
                 
             </div>
             :<span/>
+            }
+
+
+            { files
+            ? <FantasyTeamSummary teams={sortedTeams} files={files} />
+            : <></>
+
             }
         
         </div>
