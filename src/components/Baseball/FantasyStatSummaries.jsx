@@ -390,7 +390,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
     function getStyleStringForWinEfficiency(statValue) {
 
         let styleString = ''
-        if (statValue.winEfficiencyRankPct < .25) { styleString += ` font-bold text-yellow-100` }
+        if (statValue.winEfficiencyRankPct < .25) { styleString += ` font-bold text-yellow-200` }
 
         return styleString
     }
@@ -440,7 +440,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
     }
 
     return (
-    <details className="flex flex-col w-full py-4 px-0">
+    <details open className="flex flex-col w-full py-4 px-0">
         <summary>
             <h2 className="mt-0 py-0">Fantasy Stat Summaries</h2>
         </summary>        
@@ -452,7 +452,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
             <div className="flex flex-row w-full gap-x-1 gap-y-1">Bottom-right value is WIN EFFICIENCY; aka having to earn less of a stat to beat more opponents = more efficient.</div>
             <div className="flex flex-row w-full gap-x-1 gap-y-1"><div className="rounded w-fit px-1 bg-accentShadePositive-700">Lighter Blue</div>: benefits more from small gains relative to other values in this stat. </div>
             <div className="flex flex-row w-full gap-x-1 gap-y-1"><div className="rounded border w-fit px-1 border-accentShadeNegative-800">Oranger Border</div>: benefits more from small gains relative to all values in ALL stats. </div>
-            <div className="flex flex-row w-full gap-x-1 gap-y-1"><div className="text-yellow-100 font-bold">Yellow #</div>: This value has a high-performing WIN EFFICIENCY.</div>
+            <div className="flex flex-row w-full gap-x-1 gap-y-1"><div className="text-yellow-200 font-bold">Yellow #</div>: This value has a high-performing WIN EFFICIENCY.</div>
             <div className="flex flex-row w-full gap-x-1 gap-y-1"><div className="font-bold">Team Logo</div>: team's average for this stat</div>
         </div>
 
@@ -533,7 +533,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
 
                             if (s.isTeamAvg) {
                                 if (teamsDict[s.team].isHidden) { return <></> }
-                                return <div key={i} className={`flex flex-col w-16 h-fit py-0 text-sm text-neutral-300 rounded-xl border border-purple-600 gap-y-0 ` + getStatValueStyles(s, fullLeagueStatsDict[statKey])}>
+                                return <div key={i} className={`flex flex-col w-14 h-fit py-0 text-sm text-neutral-300 border rounded-sm border-gray-800 gap-y-0 ` + getStatValueStyles(s, fullLeagueStatsDict[statKey])}>
                                     <div className="w-full mx-auto px-0 text-center text-neutral-300 flex flex-row" style={{fontSize: '0.7rem'}}>
                                         <></>
                                         <div className='mx-auto my-auto  text-sm font-bold z-10 [text-shadow:_0px_0px_10px_rgb(0_0_0)]'>
@@ -541,11 +541,11 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
                                         </div>
                                     </div>
                                     <div className="w-fit mx-auto -mt-1 z-10"> {s.team} </div>
-                                    <img src={getLogoPathByTeamKey(s.team)} alt="logo" className="w-full h-10 mb-auto -mt-9 mx-auto opacity-50 rounded" />     
+                                    <img src={getLogoPathByTeamKey(s.team)} alt="logo" className="w-full h-10 mb-auto -mt-9 mx-auto opacity-75 rounded" />     
                                 </div>
                             }
                             else {
-                                return <div key={i} className={`flex flex-col w-16 h-fit py-0 text-sm rounded-sm border border-gray-800 gap-y-0 ` + getStatValueStyles(s, fullLeagueStatsDict[statKey])}>
+                                return <div key={i} className={`flex flex-col w-14 h-fit py-0 text-sm rounded-sm border border-gray-800 gap-y-0 ` + getStatValueStyles(s, fullLeagueStatsDict[statKey])}>
                                     <div className="w-full mx-auto px-0 text-center text-neutral-400 flex flex-row" style={{fontSize: '0.7rem'}}>
                                         <img src={getLogoPathByTeamKey(s.team)} alt="logo" className="w-4 h-4 mb-auto mr-auto ml-auto mt-auto mb-0 opacity-100 rounded" />
                                         <div className='mx-auto my-auto text-neutral-300 text-sm font-bold z-10 '>
@@ -554,7 +554,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
                                     </div>
                                     <div className="w-full mx-auto px-0 text-center text-neutral-400 flex flex-row" style={{fontSize: '0.7rem'}}>
                                         <div className="w-fit mx-auto"> {s.globalWinDiffPct.toFixed(2)} </div>
-                                        <div className={`w-fit mx-auto ` + getStyleStringForWinEfficiency(s)}> {s.winEfficiency.toFixed(2)} </div>
+                                        <div className={`w-fit mx-auto font-bold ` + getStyleStringForWinEfficiency(s)}> {s.winEfficiency.toFixed(2)} </div>
                                     </div>  
                                 </div>
                             }                            
