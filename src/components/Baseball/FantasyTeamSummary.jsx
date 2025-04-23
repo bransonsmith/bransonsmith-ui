@@ -10,6 +10,7 @@ export default function FantasyTeamSummary({teams, files}) {
 
     const [statSummariesWithTeams, setStatSummariesWithTeams] = useState(null);
     const [teamHiddenStatus, setTeamHiddenStatus] = useState(null);
+    const [allValueEfficiencies, setAllValueEfficiencies] = useState(null);
 
     useEffect(() => {
 
@@ -30,7 +31,7 @@ export default function FantasyTeamSummary({teams, files}) {
                 })
             }
         })
-        console.log('teamHiddenStatus', teamHiddenStatusBuilder);
+        // console.log('teamHiddenStatus', teamHiddenStatusBuilder);
         setTeamHiddenStatus(teamHiddenStatusBuilder);
 
         let allRankUps = []
@@ -46,6 +47,9 @@ export default function FantasyTeamSummary({teams, files}) {
             let min = Math.min(...statSummaries[statKey].values);
             let median = statSummaries[statKey].values.sort((a,b) => a-b)[Math.floor(statSummaries[statKey].values.length / 2)];
 
+            let bottomQuarterValue = statSummaries[statKey].values[Math.floor(statSummaries[statKey].values.length * 0.25)];
+            let topQuarterValue = statSummaries[statKey].values[Math.floor(statSummaries[statKey].values.length * 0.75)];
+
             let variance = statSummaries[statKey].values.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / statSummaries[statKey].values.length;
             let stddev = Math.sqrt(variance);
             let zScores = statSummaries[statKey].values.map((x) => (x - avg) / stddev);
@@ -54,13 +58,24 @@ export default function FantasyTeamSummary({teams, files}) {
             let zScoreMin = Math.min(...zScores);
 
             let cv = stddev / avg;
+
+            let lowerIsBetterList = ['ERA', 'WHIP'];
+            let lowerIsBetter = lowerIsBetterList.includes(statKey);
+            let sumOfWins = 0;
+            let sumOfValues = 0;
+
+            let sortedValues = statSummaries[statKey].values.sort((a,b) => lowerIsBetter ? a-b : b-a);
+            sortedValues.forEach((value, i) => {
+                sumOfValues += value;
+                sumOfWins += sortedValues.filter(x => lowerIsBetter ? x < value : x > value).length;
+            })
             
+            let teamsInLeagueNumber = 12
+            let numberOfWeeksDone = files.length - 2;
+            let winPerStat = sumOfWins / (teamsInLeagueNumber * numberOfWeeksDone   ) / sumOfValues;
 
             let detailedValues = statSummaries[statKey].values.map(v => {
                 
-                let lowerIsBetterList = ['ERA', 'WHIP'];
-                let lowerIsBetter = lowerIsBetterList.includes(statKey);
-
                 let tenPctOfRange = Math.abs(max - min) * 0.1;
 
                 let tenPercentHigherValue = v + tenPctOfRange;
@@ -76,6 +91,16 @@ export default function FantasyTeamSummary({teams, files}) {
                 let rankUps = Math.abs(tenPercentHigherValueRank - baseValueRank);
                 allRankUps.push(rankUps);
                 rankUpSum += rankUps;
+                
+                sortedValues = sortedValues.sort((a,b) => lowerIsBetter ? a-b : b-a);
+                let winsPerStatTimesValue = winPerStat * v;
+                let wins = sortedValues.filter(x => lowerIsBetter ? x > v : x < v).length;
+                let teamsInLeagueNumber = 12
+                let numberOfWeeksDone = files.length - 2;
+                let actualWins = wins / teamsInLeagueNumber / numberOfWeeksDone;
+                let winsRatio = actualWins / v;
+                let winsPerformance = wins / winsPerStatTimesValue;
+
                 return { 
                     baseIndex: statSummaries[statKey].values.indexOf(v),
                     value: v,
@@ -83,24 +108,59 @@ export default function FantasyTeamSummary({teams, files}) {
                     tenPercentHigherValueRank,
                     tenPercentHigherValue: tenPercentHigherValue,
                     rankUps,
+                    winsPerStatTimesValue,
+                    wins,
+                    winsRatio,
+                    winsPerformance,
                 }
             });
-
 
             detailedValues = detailedValues.map((detailedValue, i) => {
                 let rankUpsPct = detailedValues.sort((a,b) => b.rankUps - a.rankUps)
                                                 .filter(x => x.rankUps > detailedValue.rankUps).length * 100;
+
+                let winsRatioRank = detailedValues.sort((a,b) => b.winsRatio - a.winsRatio)
+                                                .filter(x => x.winsRatio > detailedValue.winsRatio).length;
+
+                let winsRatioPct = detailedValues.sort((a,b) => b.winsRatio - a.winsRatio)
+                                                .filter(x => x.winsRatio > detailedValue.winsRatio).length * 100;
+
+                let winsRatioOverStatAverage = detailedValue.winsRatio / winPerStat;
+                let valueEfficiency = winsRatioOverStatAverage;
+
                 return {
                     ...detailedValue,
                     rankUpsPct: rankUpsPct / detailedValues.length,
+                    winsRatioRank,
+                    winsRatioPct: winsRatioPct / detailedValues.length,
+                    winsRatioOverStatAverage,
+                    valueEfficiency
                 }
             })
  
+            detailedValues = detailedValues.map((detailedValue, i) => {
+
+                let winsRatioOverStatAverageRank = detailedValues.sort((a,b) => b.winsRatioOverStatAverage - a.winsRatioOverStatAverage)
+                                                .filter(x => x.winsRatioOverStatAverage > detailedValue.winsRatioOverStatAverage).length;
+
+                let winsRatioOverStatAveragePct = detailedValues.sort((a,b) => b.winsRatioOverStatAverage - a.winsRatioOverStatAverage)
+                                                .filter(x => x.winsRatioOverStatAverage > detailedValue.winsRatioOverStatAverage).length * 100;
+
+                return {
+                    ...detailedValue,
+                    winsRatioOverStatAverageRank,
+                    winsRatioOverStatAveragePct: winsRatioOverStatAveragePct / detailedValues.length,
+                }
+            })
+            
+            statSummaries[statKey].winPerStat = winPerStat;
             statSummaries[statKey].avg = avg;
             statSummaries[statKey].mode = mode;
             statSummaries[statKey].max = max;
             statSummaries[statKey].min = min;
             statSummaries[statKey].median = median;
+            statSummaries[statKey].bottomQuarterValue = bottomQuarterValue;
+            statSummaries[statKey].topQuarterValue = topQuarterValue;
             statSummaries[statKey].variance = variance;
             statSummaries[statKey].stddev = stddev;
             statSummaries[statKey].zScores = zScores;
@@ -131,8 +191,30 @@ export default function FantasyTeamSummary({teams, files}) {
         })
         
         let totalsFile = files.find(file => file.filename === 'totals');
-        console.log(totalsFile)
+        // console.log(totalsFile)
 
+
+
+        let allValueEfficienciesBuilder = [];
+        Object.keys(statSummaries).forEach((statKey) => {
+            let statSummary = statSummaries[statKey];
+            let statValueEfficiencies = statSummary.detailedValues.forEach((detailedValue, i) => {
+                allValueEfficienciesBuilder.push(detailedValue.valueEfficiency);
+            })
+        })
+        
+        
+        allValueEfficienciesBuilder = allValueEfficienciesBuilder.sort((a,b) => b-a);
+
+        Object.keys(statSummaries).forEach((statKey) => {
+            let statSummary = statSummaries[statKey];
+            let statValueEfficiencies = statSummary.detailedValues.forEach((detailedValue, i) => {
+                let valueEfficiencyRank = allValueEfficienciesBuilder.filter(x => x > detailedValue.valueEfficiency).length;
+                let valueEfficiencyPct = allValueEfficienciesBuilder.filter(x => x > detailedValue.valueEfficiency).length * 100;
+                statSummary.detailedValues[i].valueEfficiencyRank = valueEfficiencyRank;
+                statSummary.detailedValues[i].valueEfficiencyPct = valueEfficiencyPct / allValueEfficienciesBuilder.length;
+            })
+        })
 
         let statSummariesWithTeamAverages = {};
 
@@ -152,8 +234,8 @@ export default function FantasyTeamSummary({teams, files}) {
 
         setStatSummariesWithTeams(statSummariesWithTeamAverages);
         setStatSummariesState(statSummaries);
-        console.log('statSummaries', statSummaries);
-        console.log('setStatSummariesWithTeams', statSummariesWithTeamAverages);
+        // console.log('statSummaries', statSummaries);
+        // console.log('setStatSummariesWithTeams', statSummariesWithTeamAverages);
     }, [teams, files]);
 
 
@@ -353,6 +435,24 @@ export default function FantasyTeamSummary({teams, files}) {
                                         <div>10% of Range</div>
                                         <div>{statSummariesState[statKey].tenPctOfRange.toFixed(2)}</div>
                                     </div>
+
+                                    <div className="text-center text-sm mt-auto text-gray-500 flex flex-col w-fit">
+                                        <div>v25%</div>
+                                        <div>{statSummariesState[statKey].bottomQuarterValue.toFixed(2)}</div>
+                                    </div>
+                                    <div className="text-center text-sm mt-auto text-gray-500 flex flex-col w-fit">
+                                        <div>MED</div>
+                                        <div>{statSummariesState[statKey].median.toFixed(2)}</div>
+                                    </div>
+                                    <div className="text-center text-sm mt-auto text-gray-500 flex flex-col w-fit">
+                                        <div>^25%</div>
+                                        <div>{statSummariesState[statKey].topQuarterValue.toFixed(2)}</div>
+                                    </div>
+
+                                    <div className="text-center text-sm mt-auto text-gray-500 flex flex-col w-fit">
+                                        <div>AvgWinsPerStat</div>
+                                        <div>{(statSummariesState[statKey].winPerStat * 100).toFixed(2)}</div>
+                                    </div>
                                     <div className="text-xs text-blue-600 ml-auto mr-0 my-0 py-0">
                                         [expand]
                                     </div>
@@ -367,7 +467,7 @@ export default function FantasyTeamSummary({teams, files}) {
                                         }
                                         
                                         if (s.team && !teamHiddenStatus[s.team.name]) {
-                                            return <div key={i} className={`flex flex-col w-12 h-fit py-0 text-sm rounded-sm border border-gray-800 ` + getStatValueStyles(s, statSummariesState[statKey])}>
+                                            return <div key={i} className={`flex flex-col w-16 h-fit py-0 text-sm rounded-sm border border-gray-800 ` + getStatValueStyles(s, statSummariesState[statKey])}>
                                             <div className='mx-auto my-auto font-bold z-10 [text-shadow:_0px_0px_5px_rgb(5_5_5)]'>
                                                 {getValueString(statKey, s.value, true)}
                                             </div>
@@ -375,12 +475,12 @@ export default function FantasyTeamSummary({teams, files}) {
                                         </div>
                                         }
 
-                                        return <div key={i} className={`flex flex-col w-12 h-fit py-0 text-sm rounded-sm border ` + getStatValueStyles(s, statSummariesState[statKey])}>
+                                        return <div key={i} className={`flex flex-col w-16 h-fit py-0 text-sm rounded-sm border ` + getStatValueStyles(s, statSummariesState[statKey])}>
                                             <div className='mx-auto my-auto font-bold'>
                                                 {getValueString(statKey, s.value)}
                                             </div>
                                             <div className='mx-auto my-auto text-gray-400'>
-                                                {s.rankUps}
+                                                {s.rankUps} | {(s.winsRatio * 100).toFixed(2)} | {(s.winsRatioOverStatAverage).toFixed(2)} | {(s.valueEfficiencyRank)}
                                             </div>
                                         </div>
                                     })}

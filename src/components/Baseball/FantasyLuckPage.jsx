@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './FantasyLuckPage.css'
 import FantasyTeamSummary from './FantasyTeamSummary';
+import FantasyStatSummaries from './FantasyStatSummaries';
 
 // import axios from "axios";
 import LuckFile from './LuckFile';
@@ -97,6 +98,13 @@ export default function FantasyLuckPage(props) {
         var [itemToMove] = luck_files.splice(luck_files.length - 1, 1)
         luck_files.unshift(itemToMove)
 
+        luck_files.forEach((file, index) => {
+            file.index = index
+            if (file.filename !== "totals") {
+                file.number = parseInt(file.filename.substring(4))
+                file.isCurrent = (index === 1)
+            }
+        })
         setFiles(luck_files)
         setSelectedFile(luck_files[1])
         setSortedTeams(getSortedTeams(luck_files[1]))
@@ -530,13 +538,20 @@ export default function FantasyLuckPage(props) {
             :<span/>
             }
 
-
+{/* 
             { files
             ? <FantasyTeamSummary teams={sortedTeams} files={files} />
             : <></>
 
-            }
+            } */}
         
+
+            { files
+            ? <FantasyStatSummaries completedMatchupFiles={files.filter(f => f.filename !== 'totals' && !f.isCurrent)} />
+            : <></>
+
+            }
+
         </div>
     )
 }
