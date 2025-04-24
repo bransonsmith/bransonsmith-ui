@@ -209,6 +209,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
                 }
             })
 
+            
 
             sortedValues.forEach((value, index) => {
 
@@ -256,19 +257,15 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
 
         // console.log("allStatValues", allStatValues.map(v => v.winEfficiency))
         let allStatValuesSortedByWinEfficiency = allStatValues.sort((a, b) => {
-            let aVal = a.winEfficiency ?? -Infinity; // Use -Infinity if winEfficiency is undefined
-            let bVal = b.winEfficiency ?? -Infinity; // Use -Infinity if winEfficiency is undefined
-        
-            if (aVal === 0 && bVal !== 0) return 1; 
-            if (bVal === 0 && aVal !== 0) return -1; 
+            let aVal = a.winEfficiency ?? 0; 
+            let bVal = b.winEfficiency ?? 0; 
         
             return bVal - aVal;
         })
-        // console.log("allStatValuesSortedByWinEfficiency", allStatValuesSortedByWinEfficiency.map(v => v.winEfficiency))
         Object.keys(fullLeagueStatsDictBuilder).forEach(statKey => {
             let statEntry = fullLeagueStatsDictBuilder[statKey]
             statEntry.values.forEach(statValue => {
-                let winEfficiencyRank = allStatValuesSortedByWinEfficiency.findIndex(v => v.value === statValue.value)
+                let winEfficiencyRank = allStatValuesSortedByWinEfficiency.findIndex(v => v.winEfficiency === statValue.winEfficiency)
                 statValue.winEfficiencyRank = winEfficiencyRank
                 statValue.winEfficiencyRankPct = winEfficiencyRank / allStatValuesSortedByWinEfficiency.length
             })
