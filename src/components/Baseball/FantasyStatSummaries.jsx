@@ -279,7 +279,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
         Object.keys(fullLeagueStatsDictBuilder).forEach(statKey => {
             let statEntry = fullLeagueStatsDictBuilder[statKey]
             statEntry.values.forEach(statValue => {
-                let winRank = allStatValuesSortedByWins.findIndex(v => v.value === statValue.value)
+                let winRank = allStatValuesSortedByWins.findIndex(v => v.wins === statValue.wins)
                 statValue.winRank = winRank
                 statValue.winRankPct = winRank / allStatValuesSortedByWins.length
             })
@@ -293,27 +293,28 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
         Object.keys(fullLeagueStatsDictBuilder).forEach(statKey => {
             let statEntry = fullLeagueStatsDictBuilder[statKey]
             statEntry.values.forEach(statValue => {
-                let winRank = allStatValuesSortedByWinDiffAt10.findIndex(v => v.value === statValue.value)
+                let winRank = allStatValuesSortedByWinDiffAt10.findIndex(v => v.increasedStatCalcs[20].winDiff === statValue.increasedStatCalcs[20].winDiff)
                 statValue.winRankAt10 = winRank
                 statValue.winRankAt10Pct = winRank / allStatValuesSortedByWinDiffAt10.length
             })
         })
 
-        let allStatValuesSortedByRankPct = allStatValues.sort((a, b) => {
+        let allStatValuesSortedBywinDiffPct = allStatValues.sort((a, b) => {
             let aVal = a.increasedStatCalcs[20].winDiffPct
             let bVal = b.increasedStatCalcs[20].winDiffPct
             return bVal - aVal
         })
+        // console.log("allStatValuesSortedBywinDiffPct--", allStatValuesSortedBywinDiffPct)
         Object.keys(fullLeagueStatsDictBuilder).forEach(statKey => {
             let statEntry = fullLeagueStatsDictBuilder[statKey]
             statEntry.values.forEach(statValue => {
-                let winRank = allStatValuesSortedByRankPct.findIndex(v => v.increasedStatCalcs[20].winDiffPct === statValue.increasedStatCalcs[20].winDiffPct)
-                statValue.globalWinDiffPct = winRank
-                statValue.globalWinDiffPct = winRank / allStatValuesSortedByRankPct.length
+                // console.log(statValue)
+                let winRank = allStatValuesSortedBywinDiffPct.findIndex(v => v.increasedStatCalcs[20].winDiff === statValue.increasedStatCalcs[20].winDiff)
+                statValue.globalWinDiffPct = winRank / allStatValuesSortedBywinDiffPct.length
                 statValue.globalRank = winRank + 1
             })
         })
-
+        // console.log("allStatValuesSortedBywinDiffPct", allStatValuesSortedBywinDiffPct) 
         // calculate team totals and averages for each stat
         Object.keys(teamsDictBuilder).forEach(teamKey => {
             let team = teamsDictBuilder[teamKey]
@@ -345,7 +346,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
 
         // console.log("fullLeagueStatsDictBuilder", fullLeagueStatsDictBuilder)
         // console.log("teamsDictBuilder", teamsDictBuilder)
-
+        // console.log("fullLeagueStatsDictBuilder", fullLeagueStatsDictBuilder)
         setFullLeagueStatsDict(fullLeagueStatsDictBuilder)
         setTeamsDict(teamsDictBuilder)
     }, []);
@@ -402,7 +403,6 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
 
         let statToCheckVal = detailedValue.increasedStatCalcs[20].winDiffPct * 100;
         let overallToCheckVal = detailedValue.globalWinDiffPct * 100;
-        let winEfficiencyStat = detailedValue.winEfficiencyRankPct * 100;
 
         if      (statToCheckVal < 5)  { styleString += `bg-accentShadePositive-700 ` }
         else if (statToCheckVal < 10) { styleString += `bg-accentShadePositive-600 ` }
@@ -415,10 +415,10 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
         else if (statToCheckVal < 80) { styleString += `bg-accentShadePositive-200 ` }
         else if (statToCheckVal < 90) { styleString += `bg-accentShadePositive-100 ` }
 
-        if      (overallToCheckVal > 90)  { styleString += `border-accentShadeNegative-950` }
-        else if (overallToCheckVal > 80)  { styleString += `border-accentShadeNegative-800` }
-        else if (overallToCheckVal > 70)  { styleString += `border-accentShadeNegative-700` }
-        else styleString += `border-gray-800`
+        if      (overallToCheckVal < 10)  { styleString += ` border border-accentShadeNegative-950 ` }
+        else if (overallToCheckVal < 20)  { styleString += ` border border-accentShadeNegative-800 ` }
+        else if (overallToCheckVal < 30)  { styleString += ` border border-accentShadeNegative-700 ` }
+        else styleString += ` border border-gray-800`
 
         return styleString
     }
@@ -542,7 +542,7 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
                                 </div>
                             }
                             else {
-                                return <div key={i} className={`flex flex-col w-14 h-fit py-0 text-sm rounded-sm border border-gray-800 gap-y-0 ` + getStatValueStyles(s, fullLeagueStatsDict[statKey])}>
+                                return <div key={i} className={`flex flex-col w-14 h-fit py-0 text-sm rounded-sm gap-y-0 ` + getStatValueStyles(s, fullLeagueStatsDict[statKey])}>
                                     <div className="w-full mx-auto px-0 text-center text-neutral-400 flex flex-row" style={{fontSize: '0.7rem'}}>
                                         <img src={getLogoPathByTeamKey(s.team)} alt="logo" className="w-4 h-4 mb-auto mr-auto ml-auto mt-auto mb-0 opacity-100 rounded" />
                                         <div className='mx-auto my-auto text-neutral-300 text-sm font-bold z-10 '>
