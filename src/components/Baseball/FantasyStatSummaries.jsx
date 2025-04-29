@@ -76,7 +76,9 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
         let fullLeagueStatsDictBuilder = {}
         let teamsDictBuilder = {}
         
-        completedMatchupFiles.forEach(file => {
+        let fileNumToUse = 5
+        let filesToUse = completedMatchupFiles.length > fileNumToUse ? completedMatchupFiles.slice(0, fileNumToUse) : completedMatchupFiles
+        filesToUse.forEach(file => {
             Object.keys(file.teams).forEach((teamKey) => {
                 let team = file.teams[teamKey]
                 if (!teamsDictBuilder[teamKey]) {
@@ -415,9 +417,9 @@ export default function FantasyStatSummaries({completedMatchupFiles}) {
         else if (statToCheckVal < 80) { styleString += `bg-accentShadePositive-200 ` }
         else if (statToCheckVal < 90) { styleString += `bg-accentShadePositive-100 ` }
 
-        if      (overallToCheckVal < 10)  { styleString += ` border border-accentShadeNegative-950 ` }
-        else if (overallToCheckVal < 20)  { styleString += ` border border-accentShadeNegative-800 ` }
-        else if (overallToCheckVal < 30)  { styleString += ` border border-accentShadeNegative-700 ` }
+        if      (overallToCheckVal > 70)  { styleString += ` border border-accentShadeNegative-950 ` }
+        else if (overallToCheckVal > 80)  { styleString += ` border border-accentShadeNegative-800 ` }
+        else if (overallToCheckVal > 90)  { styleString += ` border border-accentShadeNegative-700 ` }
         else styleString += ` border border-gray-800`
 
         return styleString
