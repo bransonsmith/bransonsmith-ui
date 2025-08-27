@@ -31,6 +31,7 @@ import BibleReadingManualPage from './BQE/Pages/BibleReadingManualPage'
 import FirstPeterPericopePage from './BQE/Pages/FirstPeterPericopePage'
 import BlindDisplay from './pages/BlindDisplay'
 import FantasyBaseball from './pages/FantasyBaseball'
+import MarioBaseball from './pages/MarioBaseball'
 import FantasyLuckPage from './components/Baseball/FantasyLuckPage'
 
 import { Helmet } from 'react-helmet';
@@ -65,6 +66,7 @@ export default function App() {
     { target: '/gbballot', label: 'GB Ballot', element: <GbBallotPage />, showInHeader: false, showInFooter: false },
     { target: '/fbb', label: 'Fantasy Baseball', element: <FantasyBaseball />, showInHeader: false, showInFooter: false },
     { target: '/fbbl', label: 'Fantasy Luck', element: <FantasyLuckPage />, showInHeader: false, showInFooter: true },
+    { target: '/mssb', label: 'Mario Baseball', element: <MarioBaseball />, showInHeader: false, showInFooter: true },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },
     { target: '*', label: 'Not Found', element: <NotFoundPage />, showInHeader: false, showInFooter: false },
   ]
