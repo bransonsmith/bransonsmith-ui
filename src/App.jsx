@@ -31,6 +31,7 @@ import BibleReadingManualPage from './BQE/Pages/BibleReadingManualPage'
 import FirstPeterPericopePage from './BQE/Pages/FirstPeterPericopePage'
 import JohnQuizPage from './BQE/Pages/JohnQuizPage'
 import JohnQuizPageHead from './BQE/Pages/JohnQuizPageHead'
+import GenericChapterSectionQuizRoute from './BQE/Pages/GenericChapterSectionQuizRoute'
 import BlindDisplay from './pages/BlindDisplay'
 import FantasyBaseball from './pages/FantasyBaseball'
 import FantasyLuckPage from './components/Baseball/FantasyLuckPage'
@@ -59,6 +60,8 @@ export default function App() {
     { target: '/peter', label: '1 Peter Pericopes', element: <FirstPeterPericopePage />, showInHeader: false, showInFooter: false },
     { target: '/johnquiz', label: 'John Quiz', element: <JohnQuizPage />, showInHeader: false, showInFooter: false },
     { target: '/johnquiz1-5', label: 'John Quiz 1-5', element: <JohnQuizPageHead />, showInHeader: false, showInFooter: false },
+    { target: '/chapquiz/:book/:chStart/:chEnd', label: 'Chap Quiz', element: <GenericChapterSectionQuizRoute />, showInHeader: false, showInFooter: false },
+    { target: '/chapquiz', label: 'Chap Quiz', element: <GenericChapterSectionQuizRoute />, showInHeader: false, showInFooter: false },
     { target: '/biblereading', label: 'Bible Extended Reading', element: <BibleReadingPage />, showInHeader: false, showInFooter: true },
     { target: '/group3724', label: 'Group 3-7-2024', element: <BibleReadingManualPage />, showInHeader: false, showInFooter: true },
     { target: '/poker', label: 'Poker Hand Analyzer', element: <PokerPage />, showInHeader: true, showInFooter: true },
