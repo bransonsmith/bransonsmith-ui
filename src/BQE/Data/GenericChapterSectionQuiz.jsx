@@ -257,7 +257,7 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
             )}
             {phase === 'review' && (
                 <>
-                    <p className="mb-2">Review and reorder your answers if needed. Drag and drop or use the arrows to rearrange. When ready, submit for grading.</p>
+                    <p className="mb-2">Review and reorder the sections so that they are in order. <br/> Scored on sections being  in the right chapter, and in the exact right global-position chronologically.</p>
                     {wordBank &&
                         <div className="flex flex-col w-full my-4">
                             {wordBank.map((item, index) => {
