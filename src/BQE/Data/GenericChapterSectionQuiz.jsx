@@ -130,11 +130,7 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
     }
 
     function reset() {
-        setSubmitted(false);
-        setPhase('classify');
-        setClassifyIndex(0);
-        setClassified([]);
-        setWordBank([]);
+        window.location.reload()
     }
 
     function isCorrect(submission, chapterGuess, item) {
