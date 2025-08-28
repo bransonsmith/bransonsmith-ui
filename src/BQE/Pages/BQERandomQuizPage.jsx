@@ -287,6 +287,8 @@ export default function BQERandomQuizPage(props) {
                 <h4>Other Quizzes</h4>
                 <div className="my-4 mr-4 flex flex-row flex-wrap w-full">
                     <a href='/peter'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer">1 Peter | Big Picture Check</button></a>
+                    <a href='/johnquiz1-5'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer">John 1-5 | Order Sections</button></a>
+                    <a href='/johnquiz'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer">John Full | Order Sections</button></a>
                 </div>
             </div>
         }
