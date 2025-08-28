@@ -3,6 +3,8 @@ import '../Components/BQEQuizReport.css'
 import BQETermSearch from "../Components/BQETermSearch";
 import BQEVerseSearchAndDisplay from '../Components/BQEVerseSearchAndDisplay';
 import { useEffect, useState } from 'react';
+import BQEBookChapterRangeSelector from '../Components/BQEBookChapterRangeSelector';
+import OtherQuizzesSection from '../Components/OtherQuizzesSection';
 import { getScores } from '../Services/BQEScoreService';
 import { Helmet } from 'react-helmet';
 
@@ -42,7 +44,7 @@ export default function BQEPage(props) {
             <div className="bqe-page">
                 <br/><br/><br/>
                 <h1 className="bp-item" style={{'textAlign': 'center'}}>Bible Quiz Extraordinaire!</h1>
-                <a href="/BQE/Quiz" className='flex-row bp-item'><button className='flex-row fill-row breath bg-contentBg text-defaultText border-2 rounded border-accent-300 shadow-lg shadow-black text-lg'><span className='flex-col breath '>Take the Random Quiz!</span></button></a>
+                <a href="/BQE/Quiz" className='flex-row bp-item'><button className='flex-row fill-row breath bg-contentBg text-defaultText border-2 rounded border-accent-300 shadow-lg shadow-black text-lg'><span className='flex-col breath '>Take the Classic BQE Quiz!</span></button></a>
 
                 { scores && scores.length > 0
                 ? <div className='bqe-score-board'>
@@ -67,14 +69,7 @@ export default function BQEPage(props) {
                 </div>
                 }
 
-                <div className="mt-10 flex flex-col flex-wrap w-full">
-                    <h4>Other Quizzes</h4>
-                    <div className="my-4 mr-4 flex flex-row flex-wrap w-full gap-x-4 gap-y-4">
-                        <a href='/peter'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer">1 Peter | Big Picture Check</button></a>
-                        <a href='/johnquiz1-5'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer">John 1-5 | Order Sections</button></a>
-                        <a href='/johnquiz'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer">John Full | Order Sections</button></a>
-                    </div>
-                </div>
+                <OtherQuizzesSection />
 
                 <br/><br/><br/>
                 <div className='edged-item' style={{'padding': 'min(50px, 5%)'}}>
@@ -93,3 +88,4 @@ export default function BQEPage(props) {
         </div>
     )
 } 
+

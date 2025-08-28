@@ -1,13 +1,21 @@
 
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import BQEBookChapterRangeSelector from '../Components/BQEBookChapterRangeSelector'
 import { NTHeadingData } from '../Data/NTHeadingData.js'
 
 export default function GenericChapterSectionQuiz({initBookName, initFirstChapter, initLastChapter}) {
 
-
     const [bookName, setBookName] = useState(initBookName ?? 'John')
     const [firstChapter, setFirstChapter] = useState(initFirstChapter ?? 1)
     const [lastChapter, setLastChapter] = useState(initLastChapter ?? 5)
+
+    // Separate selector state for starting a new quiz (so current quiz state isn't mutated prematurely)
+    const [selBook, setSelBook] = useState(bookName)
+    const [selFirstChapter, setSelFirstChapter] = useState(firstChapter)
+    const [selLastChapter, setSelLastChapter] = useState(lastChapter)
+
+    const navigate = useNavigate();
 
     // PHASES: 'classify', 'review', 'submitted'
     const [phase, setPhase] = useState('classify');
@@ -215,6 +223,17 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
         }
     }
 
+    function startNewQuiz() {
+        const f = parseInt(selFirstChapter, 10);
+        const l = parseInt(selLastChapter, 10);
+        if (isNaN(f) || isNaN(l) || f < 1 || l < f) {
+            // Simple validation; could surface a nicer message later
+            return;
+        }
+        const url = `/chapquiz/${encodeURIComponent(selBook)}/${f}/${l}`;
+        window.location.href = url;
+    }
+
     return (
         <div className="flex flex-col w-full">
             <h2>{bookName} <span className="text-sm">{firstChapter}-{lastChapter}</span></h2>
@@ -371,6 +390,25 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
                     <button className="my-4 mx-auto px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white" onClick={reset}>Try Again</button>
                 </>
             )}
+
+            {/* New quiz range selector & button */}
+            <div className="mt-36 pt-6 border-t border-slate-700">
+                <h3 className="mb-2 text-lg font-semibold">Start a new Order-the-Sections Quiz</h3>
+                <BQEBookChapterRangeSelector
+                    verseBook={selBook}
+                    firstChapter={selFirstChapter}
+                    lastChapter={selLastChapter}
+                    setVerseBook={setSelBook}
+                    setFirstChapter={setSelFirstChapter}
+                    setLastChapter={setSelLastChapter}
+                />
+                <button
+                    onClick={startNewQuiz}
+                    className="mt-4 px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white"
+                >
+                    Start New Quiz
+                </button>
+            </div>
         </div>
     );
 }

@@ -107,3 +107,12 @@ export const BibleData = {
         { 'bookName': 'Romans', 'chapterNum': 16, 'verseNum': 24}   //Romans 16:24
     ]
 }
+
+// Augment each book object with a 'testament' property (Old/New) if not already present
+// Determined by its ordinal position vs the Old Testament max range (default 39)
+const otMax = BibleData.testaments.find(t => t.name === 'Old Testament')?.range_max || 39;
+BibleData.passage_data.forEach((book, idx) => {
+    if (!book.testament) {
+        book.testament = (idx + 1) <= otMax ? 'Old Testament' : 'New Testament';
+    }
+});
