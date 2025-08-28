@@ -1,13 +1,27 @@
-import { useEffect, useState } from 'react'
+
+import { useState } from 'react'
 import { JohnQuizData } from '../Data/JohnQuizData15.js'
 
-export default function JohnQuizPageHead() {
 
-    const [wordBank, setWordBank] = useState(getShuffledListOfJohnQuizData())
+export default function JohnQuizPageHead() {
+    // PHASES: 'classify', 'review', 'submitted'
+    const [phase, setPhase] = useState('classify');
+    // For phase 1: shuffled pericopes, and answers as {title, chosenChapter}
+    const [shuffledPericopes] = useState(() => shuffleArray([...JohnQuizData]));
+    const [classifyIndex, setClassifyIndex] = useState(0);
+    const [classified, setClassified] = useState([]); // {title, startChapter, chosenChapter, ...}
+    // For phase 2/3: wordBank is the user's current order (with chapter markers)
+    const [wordBank, setWordBank] = useState([]);
+    // For move highlight effect
+    const [movedIndex, setMovedIndex] = useState(null);
     const [draggedItem, setDraggedItem] = useState(null);
     const [dragOverIndex, setDragOverIndex] = useState(null);
+    const [answerKey, setAnswerKey] = useState(generateAnswerKey());
     const [submitted, setSubmitted] = useState(false);
-    const [answerKey, setAnswerKey] = useState(generateAnswerKey())
+
+    const [bookName, setBookName] = useState('John')
+    const [firstChapter, setFirstChapter] = useState(1)
+    const [lastChapter, setLastChapter] = useState(5)
 
     const handleDragStart = (e, item, index) => {
         setDraggedItem({ item, index });
@@ -34,81 +48,108 @@ export default function JohnQuizPageHead() {
         setDragOverIndex(null); // Reset drag over index after dropping
     };
 
-    function generateAnswerKey() {
 
-        let fullList = []
-        let lastInsertedChapter = 0
+    function generateAnswerKey() {
+        let fullList = [];
+        let lastInsertedChapter = 0;
         JohnQuizData.forEach(p => {
             while (p.startChapter > lastInsertedChapter) {
-                lastInsertedChapter++
+                lastInsertedChapter++;
                 fullList.push({
                     isChapterMarker: true,
                     chapter: lastInsertedChapter,
                     title: `Chapter ${lastInsertedChapter}`
-                })
+                });
             }
-            let pCopy = {
-                ...p
-            }
-            pCopy.isCorrect = undefined
-            fullList.push(pCopy)
-        })
-        return fullList
+            let pCopy = { ...p };
+            pCopy.isCorrect = undefined;
+            fullList.push(pCopy);
+        });
+        return fullList;
     }
 
-    function getShuffledListOfJohnQuizData() {
-        const numChapters = 5;
-        const chapterMarkers = [];
-        for (let ch = 1; ch <= numChapters; ch++) {
-            chapterMarkers.push({
-                isChapterMarker: true,
-                chapter: ch,
-                title: `Chapter ${ch}`
-            });
-        }
-
-        const shuffledPericopes = [...JohnQuizData];
-        for (let i = shuffledPericopes.length - 1; i > 0; i--) {
+    function shuffleArray(arr) {
+        // Fisher-Yates shuffle
+        let a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [shuffledPericopes[i], shuffledPericopes[j]] = [shuffledPericopes[j], shuffledPericopes[i]];
+            [a[i], a[j]] = [a[j], a[i]];
         }
+        return a;
+    }
 
-        const itemsPerChapter = shuffledPericopes.length / numChapters;
-        let finishedList = [];
-        let nextPericope = 0;
-        for (let ch = 1; ch <= numChapters; ch++) {
-            finishedList.push({
-                isChapterMarker: true,
-                chapter: ch,
-                title: `Chapter ${ch}`
+
+    // Phase 1: handle chapter selection for a pericope
+    function handleClassifyChapter(chapterNum) {
+        const current = shuffledPericopes[classifyIndex];
+        setClassified(prev => [...prev, { ...current, chosenChapter: chapterNum }]);
+        if (classifyIndex + 1 < shuffledPericopes.length) {
+            setClassifyIndex(classifyIndex + 1);
+        } else {
+            // Include the last classified item directly
+            const lastAnswer = { ...shuffledPericopes[classifyIndex], chosenChapter: chapterNum };
+            const allClassified = [...classified, lastAnswer];
+            const chapters = Array.from(new Set(JohnQuizData.map(p => p.startChapter))).sort((a,b)=>a-b);
+            let reviewList = [];
+            chapters.forEach(ch => {
+                reviewList.push({ isChapterMarker: true, chapter: ch, title: `Chapter ${ch}` });
+                allClassified
+                    .filter(item => item.chosenChapter === ch)
+                    .forEach(item => reviewList.push(item));
             });
-            // Calculate the target index for this chapter
-            const nextTarget = Math.round(itemsPerChapter * ch);
-            while (nextPericope < nextTarget && nextPericope < shuffledPericopes.length) {
-                finishedList.push(shuffledPericopes[nextPericope]);
-                nextPericope++;
-            }
+            setWordBank(reviewList);
+            setPhase('review');
         }
-        return finishedList;
     }
 
     function checkOrder() {
-        setSubmitted(true)
+        setSubmitted(true);
+        setPhase('submitted');
     }
 
     function reset() {
-        setSubmitted(false)
-        const shuffled = getShuffledListOfJohnQuizData()
-        setWordBank(shuffled)
+        setSubmitted(false);
+        setPhase('classify');
+        setClassifyIndex(0);
+        setClassified([]);
+        setWordBank([]);
     }
 
+    function isCorrect(submission, chapterGuess, item) {
+        // Returns true if the item is in the same index in submission as in JohnQuizData
+        const idx = submission.findIndex(i => i.title === item.title);
+        const correctIdx = JohnQuizData.findIndex(i => i.title === item.title);
+        return idx === correctIdx;
+    }
 
-        function isCorrect(submission, chapterGuess, item) {
-            // Returns true if the item is in the same index in submission as in JohnQuizData
-            const idx = submission.findIndex(i => i.title === item.title);
-            const correctIdx = JohnQuizData.findIndex(i => i.title === item.title);
-            return idx === correctIdx;
+    function isCorrectChapter(submission, item) {
+        // Find the index of this item in submission and in answerKey
+        const subIdx = submission.findIndex(i => i.title === item.title);
+        const ansIdx = answerKey.findIndex(i => i.title === item.title);
+        if (subIdx === -1 || ansIdx === -1) return false;
+
+        // Find the most recent chapter marker before this item in submission
+        let subChapter = null;
+        for (let i = subIdx - 1; i >= 0; i--) {
+            if (submission[i].isChapterMarker) {
+                subChapter = submission[i].chapter;
+                break;
+            }
         }
+
+        // Find the most recent chapter marker before this item in answerKey
+        let ansChapter = null;
+        for (let i = ansIdx - 1; i >= 0; i--) {
+            if (answerKey[i].isChapterMarker) {
+                ansChapter = answerKey[i].chapter;
+                break;
+            }
+        }
+
+        let result = subChapter === ansChapter
+
+        return subChapter === ansChapter;
+    }
 
     function getScoreString() {
         // Create submission list (wordBank with all chapter markers filtered out)
@@ -117,11 +158,28 @@ export default function JohnQuizPageHead() {
         // Set isCorrect prop on each non-chapter marker item in wordBank
         wordBank.forEach(item => {
             if (!item.isChapterMarker) {
-                item.isCorrect = isCorrect(submission, item.startChapter, item);
+                item.correctChapter = isCorrectChapter(wordBank, item)
+                if (item.correctChapter)
+                {
+                    item.isCorrect = isCorrect(submission, item.startChapter, item);
+                }
+                else {
+                    item.isCorrect = false
+                }
                 if (item.isCorrect) correct++;
             }
         });
-        return `${correct} of ${submission.length} | ${(correct/submission.length*100).toFixed(2)}%`;
+
+        const pointsPerCorrectChapter = 10;
+        const bonusForPerfectPlacement = 1;
+
+        let correctChapterCount = wordBank.filter(i => !i.isChapterMarker && i.correctChapter === true).length
+        let correctOverallCount = wordBank.filter(i => !i.isChapterMarker && i.isCorrect === true).length
+        return <div className="felx flex-col w-full">
+            <div className="">{`Score: ${correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter} out of ${submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement)} | ${((correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter) / (submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement))*100).toFixed(2)}%` }</div>
+            <div className="font-normal text-sm">{`${correctChapterCount} of ${submission.length} correct chapters | ${pointsPerCorrectChapter} pts each | ${(correctChapterCount/submission.length*100).toFixed(2)}%`}</div>
+            <div className="font-normal text-sm">{`${correctOverallCount} of ${submission.length} perfect placement | ${bonusForPerfectPlacement} pts each | ${(correctOverallCount/submission.length*100).toFixed(2)}%`}</div>
+        </div>
     }
 
     function moveUp(index) {
@@ -129,6 +187,8 @@ export default function JohnQuizPageHead() {
             const newWordBank = [...wordBank];
             [newWordBank[index], newWordBank[index - 1]] = [newWordBank[index - 1], newWordBank[index]];
             setWordBank(newWordBank);
+            setMovedIndex(index - 1);
+            setTimeout(() => setMovedIndex(null), 1200);
         }
     }
 
@@ -137,131 +197,167 @@ export default function JohnQuizPageHead() {
             const newWordBank = [...wordBank];
             [newWordBank[index], newWordBank[index + 1]] = [newWordBank[index + 1], newWordBank[index]];
             setWordBank(newWordBank);
+            setMovedIndex(index + 1);
+            setTimeout(() => setMovedIndex(null), 1200);
         }
     }
 
-    return <div className="flex flex-col w-full">
-        <h2>John </h2>
-        <p>Sort the following section titles from the book of John (ESV).
-            <br/> (desktop can drag and drop, mobile users use the up and down buttons to move items)
-        </p>
-
-        {submitted
-        ? <>
-            <div className="text-2xl font-bold text-slate-400">{getScoreString()}</div>
-            <div className="flex flex-row w-full">
-
-            <div className="flex flex-col w-5/12 my-0 mx-auto">
-                <h3> Your Guess </h3>
-                {wordBank.map((item, index) => {
-                    if (item.isChapterMarker) {
-                        return (
-                            <div key={index} className="w-full flex items-center my-0 py-0 select-none h-fit">
-                                <span className="text-sm text-gray-400 ml-2 mr-2 whitespace-nowrap h-fit">{item.title}</span>
-                                <div className="flex-1 border-t border-b border-gray-500 ml-2 h-0 w-full" />
-                            </div>
-                        );
-                    }
-                    return (
-                        <div
-                            key={index}
-                            className={`mx-auto my-0 py-2 px-4 rounded-md border-x-2 border-y-2 ${item.isCorrect === true ? 'bg-accent-700' : item.isCorrect === false ? 'bg-red-950' : ''} border-neutral-900 w-full`}
-                        >
-                            {item.title}
-                        </div>
-                    );
-                })}
-            </div>
-            <div className="flex flex-col w-5/12 my-0 mx-auto">
-                <h3> Correct Order </h3>
-                {answerKey.map((item, index) => {
-                    if (item.isChapterMarker) {
-                        return (
-                            <div key={index} className="w-full flex items-center my-0 py-0 select-none h-fit">
-                                <span className="text-sm text-gray-400 ml-2 mr-2 whitespace-nowrap h-fit">{item.title}</span>
-                                <div className="flex-1 border-t border-b border-gray-500 ml-2 h-0 w-full" />
-                            </div>
-                        );
-                    }
-                    return (
-                        <div
-                            key={index}
-                            className={`mx-auto my-0 py-2 px-4 rounded-md border-x-2 border-y-2 ${item.isCorrect === true ? 'bg-accent-700' : item.isCorrect === false ? 'bg-red-950' : ''} border-neutral-900 w-full`}
-                        >
-                            {item.title}
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-            <button className="my-4 mx-auto px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white" onClick={reset}>Try Again</button>
-        </>
-        :<>
-            {wordBank &&
-                <div className="flex flex-col w-full my-4">
-                    {wordBank.map((item, index) => {
-                        if (item.isChapterMarker) { 
-                            return (
-                                <div
-                                    key={index}
-                                    draggable
-                                    onDragStart={(e) => handleDragStart(e, item, index)}
-                                    onDragOver={(e) => handleDragOver(e, index)}
-                                    onDragLeave={handleDragLeave}
-                                    onDrop={() => handleDrop(index)}
-                                    className={`w-full flex items-center my-0 py-0 select-none cursor-grab h-fit ${dragOverIndex === index ? 'border border-slate-300 bg-slate-800' : ''}`}
-                                >
-                                    <span className="text-sm text-gray-400 ml-2 mr-2 whitespace-nowrap h-fit">{item.title}</span>
-                                    <div className="flex-1 border-t border-b border-gray-500 ml-2 h-0 w-full" />
-                                </div>
-                            );
-                        }
-                        const canMoveUp = index > 0;
-                        const canMoveDown = index < wordBank.length - 1;
-
-                        return (
-                            <div className="flex flex-row w-full mt-1" key={index} >
-                                <div
-                                    className={`border-2 rounded-xl w-8 h-8 mr-1 my-auto text-center ${canMoveUp ? 'cursor-pointer bg-slate-600 border-slate-400' : 'bg-slate-900 border-slate-700 opacity-40 cursor-not-allowed'}`}
-                                    onClick={() => canMoveUp && moveUp(index)}
-                                >^</div>
-                                <div
-                                    className={`border-2 rounded-xl w-8 h-8 mr-1 my-auto text-center ${canMoveDown ? 'cursor-pointer bg-slate-600 border-slate-400' : 'bg-slate-900 border-slate-700 opacity-40 cursor-not-allowed'}`}
-                                    onClick={() => canMoveDown && moveDown(index)}
-                                >v</div>
-                                <div
-                                    key={index}
-                                    draggable
-                                    onDragStart={(e) => handleDragStart(e, item, index)}
-                                    onDragOver={(e) => {
-                                        // Only allow drag over if not a chapter marker and within same chapter
-                                        if (!item.isChapterMarker && !wordBank[index].isChapterMarker) handleDragOver(e, index);
-                                    }}
-                                    onDragLeave={handleDragLeave}
-                                    onDrop={() => {
-                                        // Only allow drop if not on a chapter marker and within same chapter
-                                        if (!item.isChapterMarker && !wordBank[index].isChapterMarker) handleDrop(index);
-                                    }}
-                                    className={`mx-auto my-0 py-2 px-4 rounded-md border-x-4 border-y-2 ${dragOverIndex === index ? 'border-slate-300 relative top-1 left-1' : 'border-slate-700'} w-10/12 cursor-grab bg-slate-700`}
-                                    style={{ opacity: item.isChapterMarker ? 0.5 : 1 }}
-                                >
-                                    {item.title}
-                                    {item.iam && (
-                                        <span className="mx-4 text-sm text-green-500">I AM</span>
-                                    )}
-                                    {item.sign && (
-                                        <span className="mx-4 text-sm text-yellow-400">sign</span>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
+    return (
+        <div className="flex flex-col w-full">
+            <h2>{bookName} <span className="text-sm">{firstChapter}-{lastChapter}</span></h2>
+            {phase === 'classify' && (
+                <div className="flex flex-col items-center my-8">
+                    <p className="mb-4">What chapter is this section in?</p>
+                    <div className="text-xl font-bold mb-6">{shuffledPericopes[classifyIndex]?.title}</div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {Array.from(new Set(JohnQuizData.map(p => p.startChapter))).sort((a,b)=>a-b).map(ch => (
+                            <button
+                                key={ch}
+                                className="px-4 py-2 rounded bg-slate-900 text-white border-2 border-accent-500 hover:bg-accent-800"
+                                onClick={() => handleClassifyChapter(ch)}
+                            >
+                                {ch}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="text-sm text-gray-400">{classifyIndex+1} of {shuffledPericopes.length}</div>
                 </div>
-            }
-            <button className="my-4 mx-auto px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white" onClick={checkOrder}>Submit</button>
-        </>
-        }
-        
-    </div>
+            )}
+            {phase === 'review' && (
+                <>
+                    <p className="mb-2">Review and reorder your answers if needed. Drag and drop or use the arrows to rearrange. When ready, submit for grading.</p>
+                    {wordBank &&
+                        <div className="flex flex-col w-full my-4">
+                            {wordBank.map((item, index) => {
+                                if (item.isChapterMarker) {
+                                    return (
+                                        <div
+                                            key={index}
+                                            draggable
+                                            onDragStart={(e) => handleDragStart(e, item, index)}
+                                            onDragOver={(e) => handleDragOver(e, index)}
+                                            onDragLeave={handleDragLeave}
+                                            onDrop={() => handleDrop(index)}
+                                            className={`w-full flex items-center my-0 py-0 select-none cursor-grab h-fit ${dragOverIndex === index ? 'border border-slate-300 bg-slate-800' : ''}`}
+                                        >
+                                            <span className="text-sm text-gray-400 ml-2 mr-2 whitespace-nowrap h-fit">{item.title}</span>
+                                            <div className="flex-1 border-t border-b border-gray-500 ml-2 h-0 w-full" />
+                                        </div>
+                                    );
+                                }
+                                const canMoveUp = index > 0;
+                                const canMoveDown = index < wordBank.length - 1;
+                                return (
+                                    <div className="flex flex-row w-full mt-1" key={index} >
+                                        <div
+                                            className={`border-2 rounded-xl w-8 h-8 mr-1 my-auto text-center ${canMoveUp ? 'cursor-pointer bg-slate-900 border-slate-400' : 'bg-slate-900 border-slate-700 opacity-40 cursor-not-allowed'}`}
+                                            onClick={() => canMoveUp && moveUp(index)}
+                                        >^</div>
+                                        <div
+                                            className={`border-2 rounded-xl w-8 h-8 mr-1 my-auto text-center ${canMoveDown ? 'cursor-pointer bg-slate-900 border-slate-400' : 'bg-slate-900 border-slate-700 opacity-40 cursor-not-allowed'}`}
+                                            onClick={() => canMoveDown && moveDown(index)}
+                                        >v</div>
+                                        <div
+                                            key={index}
+                                            draggable
+                                            onDragStart={(e) => handleDragStart(e, item, index)}
+                                            onDragOver={(e) => {
+                                                if (!item.isChapterMarker && !wordBank[index].isChapterMarker) handleDragOver(e, index);
+                                            }}
+                                            onDragLeave={handleDragLeave}
+                                            onDrop={() => {
+                                                if (!item.isChapterMarker && !wordBank[index].isChapterMarker) handleDrop(index);
+                                            }}
+                                            className={`mx-auto my-0 py-2 px-4 rounded-md border-x-4 border-y-2 ${dragOverIndex === index ? 'border-slate-300 relative top-1 left-1' : 'border-slate-700'} w-10/12 cursor-grab bg-slate-900 ${movedIndex === index ? 'ring-4 ring-green-400 ring-opacity-80 transition-all duration-500' : ''}`}
+                                            style={{ opacity: item.isChapterMarker ? 0.5 : 1 }}
+                                        >
+                                            {item.title}
+                                            {item.iam && (
+                                                <span className="mx-4 text-sm text-green-500">I AM</span>
+                                            )}
+                                            {item.sign && (
+                                                <span className="mx-4 text-sm text-yellow-400">sign</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    }
+                    <button className="my-4 mx-auto px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white" onClick={checkOrder}>Submit</button>
+                </>
+            )}
+            {phase === 'submitted' && (
+                <>
+                    <div className="text-2xl font-bold text-slate-400">{getScoreString()}</div>
+                    <div className="flex flex-row w-full">
+                        <div className="flex flex-col w-5/12 my-0 mx-auto">
+                            <h3> Your Guess </h3>
+                            {wordBank.map((item, index) => {
+                                if (item.isChapterMarker) {
+                                    return (
+                                        <div key={index} className="w-full flex items-center my-0 py-0 select-none h-fit">
+                                            <span className="text-sm text-gray-400 ml-2 mr-2 whitespace-nowrap h-fit">{item.title}</span>
+                                            <div className="flex-1 border-t border-b border-gray-500 ml-2 h-0 w-full" />
+                                        </div>
+                                    );
+                                }
+                                // Determine classes for correctChapter and isCorrect
+                                let base = 'mx-auto my-0 py-2 px-4 rounded-md border-x border-y w-full mt-1 flex flex-row';
+                                let color = ' border-neutral-900 ';
+                                let animate = '';
+                                if (item.correctChapter === true && item.isCorrect === false) {
+                                    color += ' bg-green-800 border-green-950 ';
+                                }
+                                else if (item.isCorrect === true) {
+                                    color += ' bg-green-700 border-green-100 '; 
+                                    animate = ' animate-pulse-fast shadow-[0_0_6px_2px_rgba(34,197,94,0.7)] ';
+                                } 
+                                else if (item.isCorrect === false && item.correctChapter === false) {
+                                    color += ' bg-red-950 ';
+                                } 
+                                else {
+                                    color += '  ';
+                                }
+                                return (
+                                    <div
+                                        key={index}
+                                        className={base + color + animate}
+                                        style={item.isCorrect ? { transition: 'box-shadow 0.5s', borderWidth: 1 } : {}}
+                                    >
+                                        {item.title}
+                                        { item.correctChapter === false &&
+                                            <span className="text-gray-500 ml-auto mr-0">{'ch' + item.startChapter}</span>
+                                        }
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="flex flex-col w-5/12 my-0 mx-auto">
+                            <h3> Correct Order </h3>
+                            {answerKey.map((item, index) => {
+                                if (item.isChapterMarker) {
+                                    return (
+                                        <div key={index} className="w-full flex items-center my-0 py-0 select-none h-fit">
+                                            <span className="text-sm text-gray-400 ml-2 mr-2 whitespace-nowrap h-fit">{item.title}</span>
+                                            <div className="flex-1 border-t border-b border-gray-500 ml-2 h-0 w-full" />
+                                        </div>
+                                    );
+                                }
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`mx-auto my-0  mt-1 py-2 px-4 rounded-md border-x border-y  border-neutral-900 w-full`}
+                                    >
+                                        {item.title}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <button className="my-4 mx-auto px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white" onClick={reset}>Try Again</button>
+                </>
+            )}
+        </div>
+    );
 }
-
