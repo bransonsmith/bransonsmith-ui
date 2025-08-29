@@ -129,9 +129,62 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
         setClassifyIndex(i => Math.max(0, i - 1));
     }
 
-    function checkOrder() {
+    async function checkOrder() {
         setSubmitted(true);
         setPhase('submitted');
+        // Compute score details before persisting usage
+        const scoreDetails = computeScoreDetails();
+        await handleCreate('ChapQuizUsage', scoreDetails)
+    }
+
+    const handleCreate = async (tableName, scoreDetails) => { 
+        // scoreDetails expected shape from computeScoreDetails()
+        if (!scoreDetails) {
+            const errorMessage = `Error creating ${tableName}. Missing score details.`;
+            if (typeof setToastMessage === 'function') setToastMessage({message: errorMessage, error: true});
+            console.error(errorMessage);
+            return;
+        }
+        function createId() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              const r = Math.random() * 16 | 0;
+              const v = c === 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+            });
+        }
+        const newItem = {
+            Id: createId(),
+            submissionTime: new Date().toISOString(),
+            bookName: bookName,
+            startChapter: firstChapter,
+            endChapter: lastChapter,
+            name: `${bookName}|${firstChapter}-${lastChapter}`,
+            score: scoreDetails.score,
+            maxScore: scoreDetails.maxScore,
+            percent: scoreDetails.percent,
+            totalSections: scoreDetails.totalSections,
+            correctChapters: scoreDetails.correctChapterCount,
+            correctPlacements: scoreDetails.correctPlacementCount
+        };
+        const forDynamo = JSON.stringify(newItem);
+        try {
+            
+            const functionBaseUrl = "https://q2555xh4l7ppkwldozgnavh3ce0aweeq.lambda-url.us-east-1.on.aws/";
+            const response = await fetch(`${functionBaseUrl}?table=${tableName}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: forDynamo
+            })
+            if (!response.ok) {
+                const errorMessage = `Error creating ${tableName}. ${response.status}`
+                console.error(errorMessage);
+            }
+        } catch (error) {
+            const errorMessage = `Error creating ${tableName}. ${error.message}`
+            console.error(errorMessage);
+        }
     }
 
     function reset() {
@@ -174,34 +227,46 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
     }
 
     function getScoreString() {
+        const details = computeScoreDetails();
+        return <div className="felx flex-col w-full">
+            <div className="">{`${details.score} of ${details.maxScore} | ${(details.percent).toFixed(2)}%` }</div>
+            <div className="font-normal text-sm">{`${details.correctChapterCount} of ${details.totalSections} correct chapters | ${details.pointsPerCorrectChapter} pts each | ${(details.correctChapterCount/details.totalSections*100).toFixed(2)}%`}</div>
+            <div className="font-normal text-sm">{`${details.correctPlacementCount} of ${details.totalSections} perfect placement | ${details.bonusPerPerfectPlacement} pts each | ${(details.correctPlacementCount/details.totalSections*100).toFixed(2)}%`}</div>
+        </div>
+    }
+
+    function computeScoreDetails() {
         // Create submission list (wordBank with all chapter markers filtered out)
         const submission = wordBank.filter(i => !i.isChapterMarker);
-        let correct = 0;
-        // Set isCorrect prop on each non-chapter marker item in wordBank
+        // Set correctness
         wordBank.forEach(item => {
             if (!item.isChapterMarker) {
-                item.correctChapter = isCorrectChapter(wordBank, item)
-                if (item.correctChapter)
-                {
+                item.correctChapter = isCorrectChapter(wordBank, item);
+                if (item.correctChapter) {
                     item.isCorrect = isCorrect(submission, item.startChapter, item);
+                } else {
+                    item.isCorrect = false;
                 }
-                else {
-                    item.isCorrect = false
-                }
-                if (item.isCorrect) correct++;
             }
         });
-
         const pointsPerCorrectChapter = 10;
-        const bonusForPerfectPlacement = 1;
-
-        let correctChapterCount = wordBank.filter(i => !i.isChapterMarker && i.correctChapter === true).length
-        let correctOverallCount = wordBank.filter(i => !i.isChapterMarker && i.isCorrect === true).length
-        return <div className="felx flex-col w-full">
-            <div className="">{`${correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter} of ${submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement)} | ${((correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter) / (submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement))*100).toFixed(2)}%` }</div>
-            <div className="font-normal text-sm">{`${correctChapterCount} of ${submission.length} correct chapters | ${pointsPerCorrectChapter} pts each | ${(correctChapterCount/submission.length*100).toFixed(2)}%`}</div>
-            <div className="font-normal text-sm">{`${correctOverallCount} of ${submission.length} perfect placement | ${bonusForPerfectPlacement} pts each | ${(correctOverallCount/submission.length*100).toFixed(2)}%`}</div>
-        </div>
+        const bonusPerPerfectPlacement = 1;
+        const correctChapterCount = wordBank.filter(i => !i.isChapterMarker && i.correctChapter === true).length;
+        const correctPlacementCount = wordBank.filter(i => !i.isChapterMarker && i.isCorrect === true).length;
+        const totalSections = submission.length;
+        const score = (correctPlacementCount * bonusPerPerfectPlacement) + (correctChapterCount * pointsPerCorrectChapter);
+        const maxScore = totalSections * (pointsPerCorrectChapter + bonusPerPerfectPlacement);
+        const percent = maxScore === 0 ? 0 : (score / maxScore) * 100;
+        return {
+            totalSections,
+            correctChapterCount,
+            correctPlacementCount,
+            pointsPerCorrectChapter,
+            bonusPerPerfectPlacement,
+            score,
+            maxScore,
+            percent
+        };
     }
 
     function moveUp(index) {
