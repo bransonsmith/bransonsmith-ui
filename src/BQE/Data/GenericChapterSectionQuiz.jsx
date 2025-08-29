@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BQEBookChapterRangeSelector from '../Components/BQEBookChapterRangeSelector'
 import { NTHeadingData } from '../Data/NTHeadingData.js'
@@ -103,25 +103,30 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
 
     // Phase 1: handle chapter selection for a pericope
     function handleClassifyChapter(chapterNum) {
+        if (phase !== 'classify') return;
         const current = shuffledPericopes[classifyIndex];
-        setClassified(prev => [...prev, { ...current, chosenChapter: chapterNum }]);
+        const next = [...classified, { ...current, chosenChapter: chapterNum }];
+        setClassified(next);
         if (classifyIndex + 1 < shuffledPericopes.length) {
             setClassifyIndex(classifyIndex + 1);
         } else {
-            // Include the last classified item directly
-            const lastAnswer = { ...shuffledPericopes[classifyIndex], chosenChapter: chapterNum };
-            const allClassified = [...classified, lastAnswer];
+            // Build review list grouped by chapter markers
             const chapters = Array.from(new Set(baselinePericopes.map(p => p.startChapter))).sort((a,b)=>a-b);
-            let reviewList = [];
+            const reviewList = [];
             chapters.forEach(ch => {
                 reviewList.push({ isChapterMarker: true, chapter: ch, title: `Chapter ${ch}` });
-                allClassified
-                    .filter(item => item.chosenChapter === ch)
-                    .forEach(item => reviewList.push(item));
+                next.filter(item => item.chosenChapter === ch).forEach(item => reviewList.push(item));
             });
             setWordBank(reviewList);
             setPhase('review');
         }
+    }
+
+    // Allow undoing last classification before moving to review
+    function undoLast() {
+        if (phase !== 'classify' || classifyIndex === 0) return;
+        setClassified(prev => prev.slice(0, -1));
+        setClassifyIndex(i => Math.max(0, i - 1));
     }
 
     function checkOrder() {
@@ -193,7 +198,7 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
         let correctChapterCount = wordBank.filter(i => !i.isChapterMarker && i.correctChapter === true).length
         let correctOverallCount = wordBank.filter(i => !i.isChapterMarker && i.isCorrect === true).length
         return <div className="felx flex-col w-full">
-            <div className="">{`Score: ${correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter} out of ${submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement)} | ${((correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter) / (submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement))*100).toFixed(2)}%` }</div>
+            <div className="">{`${correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter} of ${submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement)} | ${((correctOverallCount * bonusForPerfectPlacement + correctChapterCount * pointsPerCorrectChapter) / (submission.length * (pointsPerCorrectChapter+bonusForPerfectPlacement))*100).toFixed(2)}%` }</div>
             <div className="font-normal text-sm">{`${correctChapterCount} of ${submission.length} correct chapters | ${pointsPerCorrectChapter} pts each | ${(correctChapterCount/submission.length*100).toFixed(2)}%`}</div>
             <div className="font-normal text-sm">{`${correctOverallCount} of ${submission.length} perfect placement | ${bonusForPerfectPlacement} pts each | ${(correctOverallCount/submission.length*100).toFixed(2)}%`}</div>
         </div>
@@ -230,32 +235,62 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
         window.location.href = url;
     }
 
+    const chapters = Array.from(new Set(baselinePericopes.map(p => p.startChapter))).sort((a,b)=>a-b);
+    const progress = ((classifyIndex) / shuffledPericopes.length) * 100;
+
+    const onKeyReorder = useCallback((e, index) => {
+        if (phase !== 'review') return;
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            moveUp(index);
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            moveDown(index);
+        }
+    }, [phase, moveUp, moveDown]);
+
     return (
         <div className="flex flex-col w-full">
-            <h2>{bookName} <span className="text-sm">{firstChapter}-{lastChapter}</span></h2>
+            <h2 className="text-lg font-semibold tracking-tight">{bookName} <span className="text-md font-normal">{firstChapter}-{lastChapter}</span></h2>
+                
             {phase === 'classify' && (
-                <div className="flex flex-col items-center my-8">
-                    <p className="mb-4">What chapter is this section in?</p>
-                    <div className="text-xl font-bold mb-6">{shuffledPericopes[classifyIndex]?.title}</div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {Array.from(new Set(baselinePericopes.map(p => p.startChapter))).sort((a,b)=>a-b).map(ch => (
-                            <button
-                                key={ch}
-                                className="px-4 py-2 rounded bg-slate-900 text-white border-2 border-accent-500 hover:bg-accent-800"
-                                onClick={() => handleClassifyChapter(ch)}
-                            >
-                                {ch}
-                            </button>
-                        ))}
+                <div className="flex flex-col items-center my-4">
+                    <p className="mb-2 text-sm text-slate-500">Which chapter is the following heading from?</p>
+                    <div className="text-2xl text-center font-bold mb-5 px-4 leading-snug">{shuffledPericopes[classifyIndex]?.title}</div>
+                    <div className="flex flex-wrap justify-center gap-2 mb-3">
+                        {chapters.map(ch => {
+                            const usedCount = classified.filter(c => c.chosenChapter === ch).length;
+                            return (
+                                <button
+                                    key={ch}
+                                    className="relative px-4 py-2 rounded-md bg-slate-900 text-white border border-slate-600 hover:border-blue-500 hover:bg-slate-800 text-sm"
+                                    onClick={() => handleClassifyChapter(ch)}
+                                >
+                                    {ch}
+                                    {usedCount > 0 && <span className="absolute -top-2 -right-1 text-[10px] px-1 w-4 rounded bg-slate-500 text-neutral-900 font-semibold">{usedCount}</span>}
+                                </button>
+                            );
+                        })}
                     </div>
-                    <div className="text-sm text-gray-400">{classifyIndex+1} of {shuffledPericopes.length}</div>
+                    <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                        <span>{classifyIndex+1} / {shuffledPericopes.length}</span>
+                        <button disabled={classifyIndex === 0} onClick={undoLast} className={`px-2 py-1 rounded border text-[11px] ${classifyIndex===0? 'opacity-40 cursor-not-allowed border-slate-700':'border-slate-500 hover:border-blue-500'}`}>Undo</button>
+                    </div>
+                    {phase === 'classify' && (
+                        <div className="w-3/4 h-2 bg-slate-800 rounded overflow-hidden mt-2" aria-label="Progress" role="progressbar" aria-valuenow={classifyIndex} aria-valuemin={0} aria-valuemax={shuffledPericopes.length}>
+                            <div className="h-full bg-accent-500 transition-all" style={{width: `${progress}%`}} />
+                        </div>
+                    )}
                 </div>
             )}
             {phase === 'review' && (
                 <>
-                    <p className="mb-2">Review and reorder the sections so that they are in order. <br/> Most points are awarded for sections being put in the correct chapter. Bonus points for exact right order/global-positioning.</p>
+                    <div className="mb-3 text-sm leading-relaxed bg-slate-900/40 p-3 rounded border border-slate-700">
+                        <p className="m-0"><strong>Reorder:</strong> Drag items or use arrow buttons to arrange sections beneath the proper chapter markers.</p>
+                        <p className="m-0 mt-1 text-xs text-slate-400">Most points: correct chapter. Bonus points: exact global order.</p>
+                    </div>
                     {wordBank &&
-                        <div className="flex flex-col w-full my-4">
+                        <div className="flex flex-col w-full my-4" role="list" aria-label="Reorder sections">
                             {wordBank.map((item, index) => {
                                 if (item.isChapterMarker) {
                                     return (
@@ -276,17 +311,24 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
                                 const canMoveUp = index > 0;
                                 const canMoveDown = index < wordBank.length - 1;
                                 return (
-                                    <div className="flex flex-row w-full mt-1" key={index} >
-                                        <div
-                                            className={`border-2 rounded-xl w-8 h-8 mr-1 my-auto text-center ${canMoveUp ? 'cursor-pointer bg-slate-900 border-slate-400' : 'bg-slate-900 border-slate-700 opacity-40 cursor-not-allowed'}`}
+                                    <div className="flex flex-row w-full mt-1" key={index} role="listitem">
+                                        <button
+                                            type="button"
+                                            aria-label="Move up"
+                                            className={`p-0 border rounded-md w-8 h-8 mr-1 my-auto text-center text-base font-extrabold ${canMoveUp ? 'cursor-pointer bg-slate-800 border-slate-500 hover:border-blue-500' : 'bg-slate-900 border-slate-800 opacity-30 cursor-not-allowed'}`}
                                             onClick={() => canMoveUp && moveUp(index)}
-                                        >^</div>
-                                        <div
-                                            className={`border-2 rounded-xl w-8 h-8 mr-1 my-auto text-center ${canMoveDown ? 'cursor-pointer bg-slate-900 border-slate-400' : 'bg-slate-900 border-slate-700 opacity-40 cursor-not-allowed'}`}
+                                            disabled={!canMoveUp}
+                                        >↑</button>
+                                        <button
+                                            type="button"
+                                            aria-label="Move down"
+                                            className={`p-0 border rounded-md w-8 h-8 mr-1 my-auto text-center text-base font-extrabold ${canMoveDown ? 'cursor-pointer bg-slate-800 border-slate-500 hover:border-blue-500' : 'bg-slate-900 border-slate-800 opacity-30 cursor-not-allowed'}`}
                                             onClick={() => canMoveDown && moveDown(index)}
-                                        >v</div>
+                                            disabled={!canMoveDown}
+                                        >↓</button>
                                         <div
-                                            key={index}
+                                            tabIndex={0}
+                                            onKeyDown={(e)=>onKeyReorder(e,index)}
                                             draggable
                                             onDragStart={(e) => handleDragStart(e, item, index)}
                                             onDragOver={(e) => {
@@ -296,15 +338,17 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
                                             onDrop={() => {
                                                 if (!item.isChapterMarker && !wordBank[index].isChapterMarker) handleDrop(index);
                                             }}
-                                            className={`mx-auto my-0 py-2 px-4 rounded-md border-x-4 border-y-2 ${dragOverIndex === index ? 'border-slate-300 relative top-1 left-1' : 'border-slate-700'} w-10/12 cursor-grab bg-slate-900 ${movedIndex === index ? 'ring-4 ring-green-400 ring-opacity-80 transition-all duration-500' : ''}`}
+                                            className={`mx-auto my-0 py-2 px-4 rounded-md border ${dragOverIndex === index ? 'border-accent-400 ring-2 ring-accent-500/40' : 'border-slate-700'} w-10/12 cursor-grab bg-slate-900 focus:outline-none focus:ring-2 focus:ring-accent-500/70 text-sm ${movedIndex === index ? 'ring-4 ring-green-400 ring-opacity-60 transition-all duration-500' : ''}`}
                                             style={{ opacity: item.isChapterMarker ? 0.5 : 1 }}
+                                            aria-grabbed={draggedItem?.index === index}
+                                            role="option"
                                         >
                                             {item.title}
                                             {item.iam && (
-                                                <span className="mx-4 text-sm text-green-500">I AM</span>
+                                                <span className="ml-3 text-[10px] px-2 py-[2px] rounded bg-green-800 text-green-200 border border-green-600">I AM</span>
                                             )}
                                             {item.sign && (
-                                                <span className="mx-4 text-sm text-yellow-400">sign</span>
+                                                <span className="ml-3 text-[10px] px-2 py-[2px] rounded bg-amber-800 text-amber-200 border border-amber-600">sign</span>
                                             )}
                                         </div>
                                     </div>
@@ -312,12 +356,12 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
                             })}
                         </div>
                     }
-                    <button className="my-4 mx-auto px-4 py-2 font-bold bg-contentBg border-2 border-accent-500 text-white" onClick={checkOrder}>Submit</button>
+                    <button className="my-4 mx-auto px-5 py-2 font-semibold bg-accent-600 hover:bg-accent-500 active:bg-accent-700 rounded text-white shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 transition" onClick={checkOrder}>Submit Answers</button>
                 </>
             )}
             {phase === 'submitted' && (
                 <>
-                    <div className="text-2xl font-bold text-slate-400">{getScoreString()}</div>
+                    <div className="text-2xl font-bold text-slate-400 flex flex-row gap-x-2"><span className="text-sm mb-auto mt-2">Score: </span>{getScoreString()}</div>
                     <div className="flex flex-row w-full">
                         <div className="flex flex-col w-5/12 my-0 mx-auto">
                             <h3> Your Guess </h3>
@@ -354,8 +398,9 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
                                         style={item.isCorrect ? { transition: 'box-shadow 0.5s', borderWidth: 1 } : {}}
                                     >
                                         {item.title}
-                                        { item.correctChapter === false &&
-                                            <span className="text-gray-500 ml-auto mr-0">{'ch' + item.startChapter}</span>
+                                        { item.correctChapter === false 
+                                            ? <span className="text-gray-500 ml-auto mr-0">{'ch' + item.startChapter}</span>
+                                            : <span className="text-transparent ml-auto mr-0">{'ch' + item.startChapter}</span>
                                         }
                                     </div>
                                 );
@@ -375,9 +420,13 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
                                 return (
                                     <div
                                         key={index}
-                                        className={`mx-auto my-0  mt-1 py-2 px-4 rounded-md border-x border-y  border-neutral-900 w-full`}
+                                        className={'mx-auto my-0 py-2 px-4 rounded-md border-x border-y w-full mt-1 flex flex-row border-neutral-700'}
                                     >
                                         {item.title}
+                                        { item.correctChapter === false 
+                                            ? <span className="text-transparent ml-auto mr-0">{'ch' + item.startChapter}</span>
+                                            : <span className="text-transparent ml-auto mr-0">{'ch' + item.startChapter}</span>
+                                        }
                                     </div>
                                 );
                             })}
