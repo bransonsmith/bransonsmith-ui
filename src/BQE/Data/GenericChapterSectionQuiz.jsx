@@ -321,7 +321,7 @@ export default function GenericChapterSectionQuiz({initBookName, initFirstChapte
             {phase === 'classify' && (
                 <div className="flex flex-col items-center my-4">
                     <p className="mb-2 text-sm text-slate-500">Which chapter is the following heading from?</p>
-                    <div className="text-2xl text-center font-bold mb-5 px-4 leading-snug">{shuffledPericopes[classifyIndex]?.title}</div>
+                    <div className="text-2xl text-center font-bold mb-5 px-4 leading-snug min-h-[70px]">{shuffledPericopes[classifyIndex]?.title}</div>
                     <div className="flex flex-wrap justify-center gap-2 mb-3">
                         {chapters.map(ch => {
                             const usedCount = classified.filter(c => c.chosenChapter === ch).length;
