@@ -6,11 +6,10 @@ export default function OtherQuizzesSection({ withDivider = false }) {
         <div className="mt-32 flex flex-col flex-wrap w-full">
             {withDivider && <span className="border-t-2 border-slate-700 w-full my-5" />}
             <h4>Other Quizzes</h4>
-            <div className="my-4 mr-4 flex flex-row flex-wrap w-full gap-x-4 gap-y-4">
+            {/* <div className="my-4 mr-4 flex flex-row flex-wrap w-full gap-x-4 gap-y-4">
                 <a href='/peter'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer bg-gray-800">1 Peter | Big Picture Check</button></a>
                 <a href='/chapquiz/John/1/5'><button className="border-2 border-slate-700 px-4 py-2 cursor-pointer bg-gray-800">John 1-5 | Order Sections</button></a>
-                {/* Future static quiz links can go here */}
-            </div>
+            </div> */}
             <OrderSectionsQuickStart />
         </div>
     );

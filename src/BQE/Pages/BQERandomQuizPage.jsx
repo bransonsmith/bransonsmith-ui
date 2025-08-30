@@ -180,11 +180,11 @@ export default function BQERandomQuizPage(props) {
     return <>
         <Helmet>
             <title>BQE - Bible Quiz Extraordinaire | Branson Smith</title>
-            <meta name="description" content="BQE. Bible Quiz Extraordinaire is Bible Trivia Quiz Game to test how well you know the word! Random Bible Quiz. Random Quiz. BQE" />
+            <meta name="description" content="BQE. Bible Quiz Extraordinaire is Bible Trivia Quiz Game to test how well you know the word! Random Bible Quiz. Classic BQE Quiz. Classic Quiz. Random Quiz. BQE" />
             <link rel="canonical" href={`https://www.bransonsmith.dev/BQE`} />
         </Helmet>
         <h1 className="m-0 text-xs p-0 text-[#555]">BQE Bible Quiz Extraordinaire!</h1>
-        <h2 className="m-0 text-xs p-0 text-[#444]">Random Quiz</h2>
+        <h2 className="m-0 text-xs p-0 text-[#444]">Classic BQE Quiz</h2>
         <div className='bqe-quiz-meta-section'>
             
             { quizState !== QUIZ_STATES.PRE && quizState !== QUIZ_STATES.POS

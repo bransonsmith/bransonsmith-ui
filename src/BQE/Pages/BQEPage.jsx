@@ -38,7 +38,7 @@ export default function BQEPage(props) {
             
             <Helmet>
                 <title>BQE - Bible Quiz Extraordinaire | Branson Smith</title>
-                <meta name="description" content="BQE. Bible Quiz Extraordinaire is Bible Trivia Quiz Game to test how well you know the word! Random Bible Quiz. Random Quiz. BQE" />
+                <meta name="description" content="BQE. Bible Quiz Extraordinaire is Bible Trivia Quiz Game to test how well you know the word! Random Bible Quiz. Random Quiz. Classic Quiz. Classic BQE Quiz. BQE" />
                 <link rel="canonical" href={`https://www.bransonsmith.dev/BQE`} />
             </Helmet>
             <div className="bqe-page">
@@ -48,7 +48,7 @@ export default function BQEPage(props) {
 
                 { scores && scores.length > 0
                 ? <div className='bqe-score-board'>
-                    <div className='bqe-score-board-title'>Random Quiz Leaderboard</div>
+                    <div className='bqe-score-board-title'>Classic BQE Quiz Leaderboard</div>
                     <div className='bqe-score-board-row'>
                         <div className='bqe-score-board-header bsb-i'><div className='bqe-score-board-header-text'></div></div>
                         <div className='bqe-score-board-header bsb-n'><div className='bqe-score-board-header-text'>Name </div></div>
