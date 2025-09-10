@@ -14,6 +14,7 @@ function getColumns(rows) {
 	return [...inDesired, ...extras];
 }
 
+
 // Utility: detect numeric column (treat null/undefined as empty)
 function isNumericColumn(rows, key) {
 	for (const r of rows) {
@@ -30,19 +31,22 @@ function isNumericColumn(rows, key) {
 // Utility: friendly header labels
 function labelFor(key) {
 	if (key === 'name') return 'Team';
-	if (key === 'seriesPct') return 'Series W%';
-	if (key === 'seriesWins') return 'Series W';
-	if (key === 'seriesLosses') return 'Series L';
-	if (key === 'gfpg') return 'G/g';
+	if (key === 'seriesPct') return 'W%';
+	if (key === 'seriesWins') return 'Srs W';
+	if (key === 'seriesLosses') return 'Srs L';
+	if (key === 'gfpg') return 'GF/g';
 	if (key === 'gapg') return 'GA/g';
-	if (key === 'gamePct') return 'Games W%';
+	if (key === 'gamePct') return 'Gs W%';
 	if (key.toLowerCase().endsWith('pct')) return key.replace(/Pct$/i, ' %');
+	if (key === 'games' || key === "series") return null
 	return key.replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase();
 }
 
 // Sortable table component per report
 function SortableReportTable({ rows }) {
+	const [expandedSet, setExpandedSet] = useState(() => new Set());
 	const columns = useMemo(() => getColumns(rows), [rows]);
+	const visibleColumns = useMemo(() => columns.filter(col => labelFor(col) !== null), [columns]);
 	const [sortKey, setSortKey] = useState(() => (columns.includes('seriesPct') ? 'seriesPct' : (columns[0] || null)));
 	const [sortDir, setSortDir] = useState('desc'); // default desc for numbers
 
@@ -93,12 +97,74 @@ function SortableReportTable({ rows }) {
 		}
 	}
 
+	function toggleExpanded(idx) {
+		setExpandedSet(prev => {
+			const next = new Set(prev);
+			if (next.has(idx)) next.delete(idx); else next.add(idx);
+			return next;
+		});
+	}
+
+	// Build per-series groups with computed stats by matching games via seriesId or seriesBaseKey
+	function buildSeriesGroups(row) {
+		const seriesList = Array.isArray(row?.series) ? row.series : [];
+		const games = Array.isArray(row?.games) ? row.games : [];
+		const out = [];
+
+		if (seriesList.length > 0) {
+			for (const s of seriesList) {
+				const sid = s.seriesId ?? s.id ?? null;
+				let sGames = Array.isArray(s.games) && s.games.length > 0
+					? s.games
+					: games.filter(g => (sid != null && g.seriesId === sid) || (s.seriesBaseKey && g.seriesBaseKey === s.seriesBaseKey));
+				sGames = [...sGames].sort((a, b) => (a.gameNumber ?? 0) - (b.gameNumber ?? 0));
+				const wins = sGames.reduce((acc, g) => acc + (typeof g.goalsFor === 'number' && typeof g.goalsAgainst === 'number' ? (g.goalsFor > g.goalsAgainst ? 1 : 0) : (g.win === true ? 1 : 0)), 0);
+				const losses = sGames.reduce((acc, g) => acc + (typeof g.goalsFor === 'number' && typeof g.goalsAgainst === 'number' ? (g.goalsFor < g.goalsAgainst ? 1 : 0) : (g.win === false ? 1 : 0)), 0);
+				out.push({
+					key: sid ?? s.seriesBaseKey ?? `s-${Math.random().toString(36).slice(2)}`,
+					opponent: s.opponent ?? s.opponentName ?? (sGames[0]?.opponent ?? ''),
+					opponentImg: s.opponentImg ?? (sGames[0]?.opponentImg),
+					seriesBaseKey: s.seriesBaseKey ?? (sGames[0]?.seriesBaseKey),
+					gameWins: s.gameWins ?? wins,
+					gameLosses: s.gameLosses ?? losses,
+					games: sGames,
+				});
+			}
+			return out;
+		}
+
+		// Derive series from games if no explicit series list
+		const byKey = new Map();
+		for (const g of games) {
+			const k = g.seriesId ?? g.seriesBaseKey;
+			if (k == null) continue;
+			if (!byKey.has(k)) byKey.set(k, []);
+			byKey.get(k).push(g);
+		}
+		for (const [k, arr] of byKey.entries()) {
+			const sorted = [...arr].sort((a, b) => (a.gameNumber ?? 0) - (b.gameNumber ?? 0));
+			const wins = sorted.reduce((acc, g) => acc + (typeof g.goalsFor === 'number' && typeof g.goalsAgainst === 'number' ? (g.goalsFor > g.goalsAgainst ? 1 : 0) : (g.win === true ? 1 : 0)), 0);
+			const losses = sorted.reduce((acc, g) => acc + (typeof g.goalsFor === 'number' && typeof g.goalsAgainst === 'number' ? (g.goalsFor < g.goalsAgainst ? 1 : 0) : (g.win === false ? 1 : 0)), 0);
+			const first = sorted[0] || {};
+			out.push({
+				key: k,
+				opponent: first.opponent ?? '',
+				opponentImg: first.opponentImg,
+				seriesBaseKey: first.seriesBaseKey,
+				gameWins: wins,
+				gameLosses: losses,
+				games: sorted,
+			});
+		}
+		return out;
+	}
+
 	return (
-			<div className="w-full overflow-x-auto">
-				<table className="w-full text-sm text-left text-neutral-300 border border-slate-700 rounded-md overflow-hidden">
-					<thead className="bg-slate-950 text-neutral-300">
+		<div className="w-full overflow-x-auto">
+			<table className="table-fixed w-full text-xs text-left text-neutral-300 border border-slate-700 rounded-md overflow-hidden">
+				<thead className="bg-slate-950 text-neutral-300">
 					<tr>
-						{columns.map((col) => {
+						{visibleColumns.map((col) => {
 							const active = col === sortKey;
 							const ariaSort = active ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none';
 							return (
@@ -106,7 +172,7 @@ function SortableReportTable({ rows }) {
 									key={col}
 									scope="col"
 									aria-sort={ariaSort}
-										className={`px-3 py-2 border-b border-slate-800 whitespace-nowrap select-none cursor-pointer hover:text-white ${active ? 'text-white' : ''}`}
+									className={`px-2 py-1 border-b border-slate-800 whitespace-nowrap select-none cursor-pointer hover:text-white text-center ${active ? 'text-white' : ''}`}
 									onClick={() => onHeaderClick(col)}
 									title={`Sort by ${labelFor(col)}`}
 								>
@@ -123,25 +189,31 @@ function SortableReportTable({ rows }) {
 				</thead>
 				<tbody>
 					{sortedRows.map((row, idx) => (
-						<tr key={idx} className={idx % 2 === 0 ? 'bg-slate-900' : 'bg-slate-800'}>
-							{columns.map((col) => {
+						<>
+						<tr
+							key={idx}
+							className={idx % 2 === 0 ? 'bg-slate-900' : 'bg-slate-800'}
+							style={{ cursor: (Array.isArray(row.series) && row.series.length) || (Array.isArray(row.games) && row.games.length) ? 'pointer' : undefined }}
+							onClick={() => toggleExpanded(idx)}
+						>
+							{visibleColumns.map((col) => {
 								const val = row?.[col];
 								const isNum = numericMap[col];
-											const isPct = /pct$/i.test(col);
+								const isPct = /pct$/i.test(col);
 								return (
-									<td key={col} className="px-3 py-2 border-t border-slate-700 align-middle">
+									<td key={col} className={`px-2 py-1 border-t border-slate-700 align-middle whitespace-nowrap text-center ${isNum ? 'font-mono tabular-nums' : ''}`}>
 										{col === 'name' ? (
 											(() => {
 												const logo = row?.logoImg;
 												const teamName = row?.name || '';
 												if (logo) {
 													return (
-														<div className="flex items-center gap-2">
+														<div className="flex items-center justify-center gap-2">
 															<img
 																src={`/${logo}`}
 																alt={teamName}
 																title={teamName}
-																className="h-7 w-auto object-contain"
+																className="h-5 w-auto object-contain max-w-[40px]"
 																loading="lazy"
 															/>
 															<span className="sr-only">{teamName}</span>
@@ -168,10 +240,59 @@ function SortableReportTable({ rows }) {
 								);
 							})}
 						</tr>
+						{expandedSet.has(idx) && ((Array.isArray(row.series) && row.series.length) || (Array.isArray(row.games) && row.games.length)) && (
+							<tr key={`detail-${idx}`} className="bg-slate-950">
+								<td colSpan={visibleColumns.length} className="px-2 py-2 border-t border-slate-700">
+									<div className="overflow-x-auto">
+										{buildSeriesGroups(row).map((series, sIdx) => (
+											<table key={series.key ?? sIdx} className="table-fixed w-full mb-3 text-xs border border-slate-800 rounded">
+												<thead>
+													<tr className="bg-slate-900">
+														<th className="px-2 py-1 text-center w-28">Opponent</th>
+														<th className="px-2 py-1 text-center w-40">Series</th>
+														<th className="px-2 py-1 text-center w-10">W</th>
+														<th className="px-2 py-1 text-center w-10">L</th>
+														<th className="px-2 py-1 text-center">Game Scores</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr className="w-full">
+														<td className="px-2 py-1 text-center w-28">
+															{series.opponentImg ? (
+																<img src={`/${series.opponentImg}`} alt={series.opponent} title={series.opponent} className="h-5 w-auto mx-auto object-contain max-w-[40px]" />
+															) : (
+																<span>{series.opponent}</span>
+															)}
+														</td>
+														<td className="px-2 py-1 text-center w-40">{series.seriesBaseKey}</td>
+														<td className="px-2 py-1 text-center w-10">{series.gameWins}</td>
+														<td className="px-2 py-1 text-center w-10">{series.gameLosses}</td>
+														<td className="px-2 py-1 text-center whitespace-nowrap">
+															{(() => {
+																const scores = Array.isArray(series.games) ? series.games.map((g) => {
+																	if (typeof g.goalsFor === 'number' && typeof g.goalsAgainst === 'number') {
+																		return `${g.goalsFor}-${g.goalsAgainst}`;
+																	}
+																	if (g.win === true) return 'W';
+																	if (g.win === false) return 'L';
+																	return '—';
+																}) : [];
+																return scores.length > 0 ? scores.join(', ') : '—';
+															})()}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										))}
+									</div>
+								</td>
+							</tr>
+						)}
+						</>
 					))}
 					{sortedRows.length === 0 && (
 						<tr>
-							<td className="px-3 py-4 text-neutral-500" colSpan={columns.length || 1}>No data</td>
+							<td className="px-2 py-3 text-neutral-500" colSpan={visibleColumns.length || 1}>No data</td>
 						</tr>
 					)}
 				</tbody>
@@ -225,7 +346,7 @@ export default function Rlcs2025LanPage() {
 							</select>
 						</div>
 					</div>
-					<div className="p-3">
+					<div className="p-0">
 						{powerReports.length > 0 ? (
 							<SortableReportTable rows={powerReports[selectedPowerIdx]?.rows || []} />
 						) : (
@@ -252,7 +373,7 @@ export default function Rlcs2025LanPage() {
 							</select>
 						</div>
 					</div>
-					<div className="p-3">
+					<div className="p-0">
 						{lanReports.length > 0 ? (
 							<SortableReportTable rows={lanReports[selectedLanIdx]?.rows || []} />
 						) : (
