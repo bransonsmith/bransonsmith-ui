@@ -35,6 +35,7 @@ import GenericChapterSectionQuizRoute from './BQE/Pages/GenericChapterSectionQui
 import BlindDisplay from './pages/BlindDisplay'
 import FantasyBaseball from './pages/FantasyBaseball'
 import FantasyLuckPage from './components/Baseball/FantasyLuckPage'
+import Rlcs2025LanPage from './pages/Rlcs2025LanPage'
 
 import { Helmet } from 'react-helmet';
 import SecretSantaForm from './SecretSanta/SecretSantaForm';
@@ -68,6 +69,7 @@ export default function App() {
     { target: '/gbballot', label: 'GB Ballot', element: <GbBallotPage />, showInHeader: false, showInFooter: false },
     { target: '/fbb', label: 'Fantasy Baseball', element: <FantasyBaseball />, showInHeader: false, showInFooter: false },
     { target: '/fbbl', label: 'Fantasy Luck', element: <FantasyLuckPage />, showInHeader: false, showInFooter: true },
+    { target: '/rl2025', label: 'RL 2025 Lan Records', element: <Rlcs2025LanPage />, showInHeader: false, showInFooter: false },
     { target: '/privacy', label: 'Privacy Policy', element: <PrivacyPage />, showInHeader: false, showInFooter: true },
     { target: '/terms', label: 'Terms of Service', element: <TermsPage />, showInHeader: false, showInFooter: true },
     { target: '/', label: 'Home', element: <HomePage />, showInHeader: false, showInFooter: false },

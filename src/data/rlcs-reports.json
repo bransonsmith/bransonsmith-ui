@@ -1,0 +1,1056 @@
+{
+  "generatedAt": "2025-09-10T14:42:54.094Z",
+  "reportCount": 12,
+  "reports": [
+    {
+      "label": "Series b/w teams w/ power ranking <= 2",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 2,
+          "seriesLosses": 0,
+          "seriesPct": 100,
+          "gamePct": 70,
+          "gfpg": 1.7,
+          "gapg": 1.2
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 0,
+          "seriesLosses": 2,
+          "seriesPct": 0,
+          "gamePct": 30,
+          "gfpg": 1.2,
+          "gapg": 1.7
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams w/ power ranking <= 4",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 4,
+          "seriesLosses": 0,
+          "seriesPct": 100,
+          "gamePct": 66.66666666666666,
+          "gfpg": 1.7619047619047619,
+          "gapg": 1.2857142857142858
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 4,
+          "seriesLosses": 1,
+          "seriesPct": 80,
+          "gamePct": 68,
+          "gfpg": 2,
+          "gapg": 1.52
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 2,
+          "seriesLosses": 3,
+          "seriesPct": 40,
+          "gamePct": 46.666666666666664,
+          "gfpg": 1.7333333333333334,
+          "gapg": 1.6666666666666667
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 1,
+          "seriesLosses": 7,
+          "seriesPct": 12.5,
+          "gamePct": 33.33333333333333,
+          "gfpg": 1.380952380952381,
+          "gapg": 1.9523809523809523
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams w/ power ranking <= 6",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 6,
+          "seriesLosses": 1,
+          "seriesPct": 85.71428571428571,
+          "gamePct": 67.64705882352942,
+          "gfpg": 1.8235294117647058,
+          "gapg": 1.2647058823529411
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 8,
+          "seriesLosses": 3,
+          "seriesPct": 72.72727272727273,
+          "gamePct": 63.63636363636363,
+          "gfpg": 2.290909090909091,
+          "gapg": 1.509090909090909
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 4,
+          "seriesLosses": 3,
+          "seriesPct": 57.14285714285714,
+          "gamePct": 56.75675675675676,
+          "gfpg": 1.945945945945946,
+          "gapg": 1.7027027027027026
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 4,
+          "seriesLosses": 6,
+          "seriesPct": 40,
+          "gamePct": 41.02564102564102,
+          "gfpg": 1.4871794871794872,
+          "gapg": 2.1538461538461537
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 3,
+          "seriesLosses": 7,
+          "seriesPct": 30,
+          "gamePct": 32.432432432432435,
+          "gfpg": 1.4054054054054055,
+          "gapg": 2.054054054054054
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 2,
+          "seriesLosses": 7,
+          "seriesPct": 22.22222222222222,
+          "gamePct": 36.95652173913043,
+          "gfpg": 1.391304347826087,
+          "gapg": 1.8478260869565217
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams w/ power ranking <= 8",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 7,
+          "seriesLosses": 2,
+          "seriesPct": 77.77777777777779,
+          "gamePct": 65.9090909090909,
+          "gfpg": 1.8636363636363635,
+          "gapg": 1.2272727272727273
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 8,
+          "seriesLosses": 3,
+          "seriesPct": 72.72727272727273,
+          "gamePct": 63.63636363636363,
+          "gfpg": 2.290909090909091,
+          "gapg": 1.509090909090909
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 6,
+          "seriesLosses": 3,
+          "seriesPct": 66.66666666666666,
+          "gamePct": 60,
+          "gfpg": 2.1333333333333333,
+          "gapg": 1.7777777777777777
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 4,
+          "seriesLosses": 6,
+          "seriesPct": 40,
+          "gamePct": 41.02564102564102,
+          "gfpg": 1.4871794871794872,
+          "gapg": 2.1538461538461537
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 4,
+          "seriesLosses": 7,
+          "seriesPct": 36.36363636363637,
+          "gamePct": 35.714285714285715,
+          "gfpg": 1.5476190476190477,
+          "gapg": 2.0952380952380953
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 4,
+          "seriesLosses": 7,
+          "seriesPct": 36.36363636363637,
+          "gamePct": 41.37931034482759,
+          "gfpg": 1.4482758620689655,
+          "gapg": 1.8103448275862069
+        },
+        {
+          "name": "TWISTED MINDS",
+          "logoImg": "logo_TwistedMinds.png",
+          "seriesWins": 1,
+          "seriesLosses": 6,
+          "seriesPct": 14.285714285714285,
+          "gamePct": 37.142857142857146,
+          "gfpg": 1.7142857142857142,
+          "gapg": 2.2
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams w/ power ranking <= 10",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 10,
+          "seriesLosses": 3,
+          "seriesPct": 76.92307692307693,
+          "gamePct": 69.49152542372882,
+          "gfpg": 1.9322033898305084,
+          "gapg": 1.2203389830508475
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 10,
+          "seriesLosses": 4,
+          "seriesPct": 71.42857142857143,
+          "gamePct": 64.0625,
+          "gfpg": 2.328125,
+          "gapg": 1.5625
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 8,
+          "seriesLosses": 5,
+          "seriesPct": 61.53846153846154,
+          "gamePct": 58.46153846153847,
+          "gfpg": 2.169230769230769,
+          "gapg": 1.7384615384615385
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 46.808510638297875,
+          "gfpg": 1.446808510638298,
+          "gapg": 1.8936170212765957
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 5,
+          "seriesLosses": 5,
+          "seriesPct": 50,
+          "gamePct": 45.23809523809524,
+          "gfpg": 1.6904761904761905,
+          "gapg": 1.9047619047619047
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 5,
+          "seriesLosses": 8,
+          "seriesPct": 38.46153846153847,
+          "gamePct": 43.47826086956522,
+          "gfpg": 1.5072463768115942,
+          "gapg": 1.7681159420289856
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 4,
+          "seriesLosses": 8,
+          "seriesPct": 33.33333333333333,
+          "gamePct": 34.78260869565217,
+          "gfpg": 1.5217391304347827,
+          "gapg": 2.0869565217391304
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 3,
+          "seriesLosses": 7,
+          "seriesPct": 30,
+          "gamePct": 37.2093023255814,
+          "gfpg": 1.3953488372093024,
+          "gapg": 1.9767441860465116
+        },
+        {
+          "name": "TWISTED MINDS",
+          "logoImg": "logo_TwistedMinds.png",
+          "seriesWins": 2,
+          "seriesLosses": 7,
+          "seriesPct": 22.22222222222222,
+          "gamePct": 37.77777777777778,
+          "gfpg": 1.7333333333333334,
+          "gapg": 2.1777777777777776
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams w/ power ranking <= 12",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 16,
+          "seriesLosses": 3,
+          "seriesPct": 84.21052631578947,
+          "gamePct": 70.4225352112676,
+          "gfpg": 1.971830985915493,
+          "gapg": 1.1549295774647887
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 13,
+          "seriesLosses": 4,
+          "seriesPct": 76.47058823529412,
+          "gamePct": 66.23376623376623,
+          "gfpg": 2.3506493506493507,
+          "gapg": 1.5194805194805194
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 10,
+          "seriesLosses": 5,
+          "seriesPct": 66.66666666666666,
+          "gamePct": 60.29411764705882,
+          "gfpg": 2.4558823529411766,
+          "gapg": 1.7058823529411764
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 46.808510638297875,
+          "gfpg": 1.446808510638298,
+          "gapg": 1.8936170212765957
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 47.05882352941176,
+          "gfpg": 1.7843137254901962,
+          "gapg": 1.9411764705882353
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 5,
+          "seriesLosses": 8,
+          "seriesPct": 38.46153846153847,
+          "gamePct": 40,
+          "gfpg": 1.56,
+          "gapg": 1.98
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 5,
+          "seriesLosses": 8,
+          "seriesPct": 38.46153846153847,
+          "gamePct": 43.47826086956522,
+          "gfpg": 1.5072463768115942,
+          "gapg": 1.7681159420289856
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 3,
+          "seriesLosses": 7,
+          "seriesPct": 30,
+          "gamePct": 37.2093023255814,
+          "gfpg": 1.3953488372093024,
+          "gapg": 1.9767441860465116
+        },
+        {
+          "name": "SPACESTATION",
+          "logoImg": "logo_SSG.png",
+          "seriesWins": 1,
+          "seriesLosses": 4,
+          "seriesPct": 20,
+          "gamePct": 31.25,
+          "gfpg": 1.8125,
+          "gapg": 3.6875
+        },
+        {
+          "name": "TWISTED MINDS",
+          "logoImg": "logo_TwistedMinds.png",
+          "seriesWins": 2,
+          "seriesLosses": 8,
+          "seriesPct": 20,
+          "gamePct": 36.734693877551024,
+          "gfpg": 1.7551020408163265,
+          "gapg": 2.2244897959183674
+        },
+        {
+          "name": "TEAM SECRET",
+          "logoImg": "logo_TeamSecret.png",
+          "seriesWins": 1,
+          "seriesLosses": 9,
+          "seriesPct": 10,
+          "gamePct": 27.586206896551722,
+          "gfpg": 1.1724137931034482,
+          "gapg": 2.103448275862069
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams that made a top 2 at a LAN",
+      "rows": [
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 8,
+          "seriesLosses": 3,
+          "seriesPct": 72.72727272727273,
+          "gamePct": 68.18181818181817,
+          "gfpg": 2.477272727272727,
+          "gapg": 1.5227272727272727
+        },
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 5,
+          "seriesLosses": 2,
+          "seriesPct": 71.42857142857143,
+          "gamePct": 67.74193548387096,
+          "gfpg": 1.8709677419354838,
+          "gapg": 1.3225806451612903
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 4,
+          "seriesLosses": 5,
+          "seriesPct": 44.44444444444444,
+          "gamePct": 43.75,
+          "gfpg": 1.5,
+          "gapg": 2.09375
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 2,
+          "seriesLosses": 4,
+          "seriesPct": 33.33333333333333,
+          "gamePct": 33.33333333333333,
+          "gfpg": 1.619047619047619,
+          "gapg": 2.142857142857143
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 2,
+          "seriesLosses": 7,
+          "seriesPct": 22.22222222222222,
+          "gamePct": 25,
+          "gfpg": 1.25,
+          "gapg": 2.15625
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams that made a top 4 at a LAN",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 9,
+          "seriesLosses": 2,
+          "seriesPct": 81.81818181818183,
+          "gamePct": 71.42857142857143,
+          "gfpg": 1.9183673469387754,
+          "gapg": 1.2448979591836735
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 10,
+          "seriesLosses": 4,
+          "seriesPct": 71.42857142857143,
+          "gamePct": 64.0625,
+          "gfpg": 2.328125,
+          "gapg": 1.5625
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 6,
+          "seriesLosses": 5,
+          "seriesPct": 54.54545454545454,
+          "gamePct": 56.14035087719298,
+          "gfpg": 2.0526315789473686,
+          "gapg": 1.6842105263157894
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 46.808510638297875,
+          "gfpg": 1.446808510638298,
+          "gapg": 1.8936170212765957
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 5,
+          "seriesLosses": 5,
+          "seriesPct": 50,
+          "gamePct": 45.23809523809524,
+          "gfpg": 1.6904761904761905,
+          "gapg": 1.9047619047619047
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 3,
+          "seriesLosses": 8,
+          "seriesPct": 27.27272727272727,
+          "gamePct": 31.70731707317073,
+          "gfpg": 1.3902439024390243,
+          "gapg": 2.048780487804878
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 3,
+          "seriesLosses": 8,
+          "seriesPct": 27.27272727272727,
+          "gamePct": 40.35087719298245,
+          "gfpg": 1.4736842105263157,
+          "gapg": 1.7894736842105263
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 2,
+          "seriesLosses": 6,
+          "seriesPct": 25,
+          "gamePct": 30.303030303030305,
+          "gfpg": 1.1818181818181819,
+          "gapg": 2.0303030303030303
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams that made a top 6 at a LAN",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 9,
+          "seriesLosses": 2,
+          "seriesPct": 81.81818181818183,
+          "gamePct": 71.42857142857143,
+          "gfpg": 1.9183673469387754,
+          "gapg": 1.2448979591836735
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 10,
+          "seriesLosses": 4,
+          "seriesPct": 71.42857142857143,
+          "gamePct": 64.0625,
+          "gfpg": 2.328125,
+          "gapg": 1.5625
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 6,
+          "seriesLosses": 5,
+          "seriesPct": 54.54545454545454,
+          "gamePct": 56.14035087719298,
+          "gfpg": 2.0526315789473686,
+          "gapg": 1.6842105263157894
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 46.808510638297875,
+          "gfpg": 1.446808510638298,
+          "gapg": 1.8936170212765957
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 5,
+          "seriesLosses": 5,
+          "seriesPct": 50,
+          "gamePct": 45.23809523809524,
+          "gfpg": 1.6904761904761905,
+          "gapg": 1.9047619047619047
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 3,
+          "seriesLosses": 8,
+          "seriesPct": 27.27272727272727,
+          "gamePct": 31.70731707317073,
+          "gfpg": 1.3902439024390243,
+          "gapg": 2.048780487804878
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 3,
+          "seriesLosses": 8,
+          "seriesPct": 27.27272727272727,
+          "gamePct": 40.35087719298245,
+          "gfpg": 1.4736842105263157,
+          "gapg": 1.7894736842105263
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 2,
+          "seriesLosses": 6,
+          "seriesPct": 25,
+          "gamePct": 30.303030303030305,
+          "gfpg": 1.1818181818181819,
+          "gapg": 2.0303030303030303
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams that made a top 8 at a LAN",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 16,
+          "seriesLosses": 3,
+          "seriesPct": 84.21052631578947,
+          "gamePct": 70.4225352112676,
+          "gfpg": 1.971830985915493,
+          "gapg": 1.1549295774647887
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 13,
+          "seriesLosses": 4,
+          "seriesPct": 76.47058823529412,
+          "gamePct": 66.23376623376623,
+          "gfpg": 2.3506493506493507,
+          "gapg": 1.5194805194805194
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 10,
+          "seriesLosses": 5,
+          "seriesPct": 66.66666666666666,
+          "gamePct": 60.29411764705882,
+          "gfpg": 2.4558823529411766,
+          "gapg": 1.7058823529411764
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 46.808510638297875,
+          "gfpg": 1.446808510638298,
+          "gapg": 1.8936170212765957
+        },
+        {
+          "name": "M8 ALPINE",
+          "logoImg": "logo_GentleM8s.png",
+          "seriesWins": 2,
+          "seriesLosses": 2,
+          "seriesPct": 50,
+          "gamePct": 47.368421052631575,
+          "gfpg": 1.8421052631578947,
+          "gapg": 1.7894736842105263
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 6,
+          "seriesLosses": 7,
+          "seriesPct": 46.15384615384615,
+          "gamePct": 45.45454545454545,
+          "gfpg": 1.7818181818181817,
+          "gapg": 1.981818181818182
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 6,
+          "seriesLosses": 8,
+          "seriesPct": 42.857142857142854,
+          "gamePct": 45.94594594594595,
+          "gfpg": 1.5135135135135136,
+          "gapg": 1.7162162162162162
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 5,
+          "seriesLosses": 8,
+          "seriesPct": 38.46153846153847,
+          "gamePct": 40,
+          "gfpg": 1.56,
+          "gapg": 1.98
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 3,
+          "seriesLosses": 7,
+          "seriesPct": 30,
+          "gamePct": 37.2093023255814,
+          "gfpg": 1.3953488372093024,
+          "gapg": 1.9767441860465116
+        },
+        {
+          "name": "TWISTED MINDS",
+          "logoImg": "logo_TwistedMinds.png",
+          "seriesWins": 2,
+          "seriesLosses": 8,
+          "seriesPct": 20,
+          "gamePct": 36.734693877551024,
+          "gfpg": 1.7551020408163265,
+          "gapg": 2.2244897959183674
+        },
+        {
+          "name": "TEAM SECRET",
+          "logoImg": "logo_TeamSecret.png",
+          "seriesWins": 2,
+          "seriesLosses": 9,
+          "seriesPct": 18.181818181818183,
+          "gamePct": 34.285714285714285,
+          "gfpg": 1.3428571428571427,
+          "gapg": 2.0285714285714285
+        },
+        {
+          "name": "SPACESTATION",
+          "logoImg": "logo_SSG.png",
+          "seriesWins": 1,
+          "seriesLosses": 5,
+          "seriesPct": 16.666666666666664,
+          "gamePct": 30,
+          "gfpg": 1.75,
+          "gapg": 3.45
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams that made a top 10 at a LAN",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 16,
+          "seriesLosses": 3,
+          "seriesPct": 84.21052631578947,
+          "gamePct": 70.4225352112676,
+          "gfpg": 1.971830985915493,
+          "gapg": 1.1549295774647887
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 13,
+          "seriesLosses": 4,
+          "seriesPct": 76.47058823529412,
+          "gamePct": 66.23376623376623,
+          "gfpg": 2.3506493506493507,
+          "gapg": 1.5194805194805194
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 10,
+          "seriesLosses": 5,
+          "seriesPct": 66.66666666666666,
+          "gamePct": 60.29411764705882,
+          "gfpg": 2.4558823529411766,
+          "gapg": 1.7058823529411764
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 6,
+          "seriesLosses": 6,
+          "seriesPct": 50,
+          "gamePct": 46.808510638297875,
+          "gfpg": 1.446808510638298,
+          "gapg": 1.8936170212765957
+        },
+        {
+          "name": "M8 ALPINE",
+          "logoImg": "logo_GentleM8s.png",
+          "seriesWins": 2,
+          "seriesLosses": 2,
+          "seriesPct": 50,
+          "gamePct": 47.368421052631575,
+          "gfpg": 1.8421052631578947,
+          "gapg": 1.7894736842105263
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 6,
+          "seriesLosses": 7,
+          "seriesPct": 46.15384615384615,
+          "gamePct": 45.45454545454545,
+          "gfpg": 1.7818181818181817,
+          "gapg": 1.981818181818182
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 6,
+          "seriesLosses": 8,
+          "seriesPct": 42.857142857142854,
+          "gamePct": 45.94594594594595,
+          "gfpg": 1.5135135135135136,
+          "gapg": 1.7162162162162162
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 5,
+          "seriesLosses": 8,
+          "seriesPct": 38.46153846153847,
+          "gamePct": 40,
+          "gfpg": 1.56,
+          "gapg": 1.98
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 3,
+          "seriesLosses": 7,
+          "seriesPct": 30,
+          "gamePct": 37.2093023255814,
+          "gfpg": 1.3953488372093024,
+          "gapg": 1.9767441860465116
+        },
+        {
+          "name": "TWISTED MINDS",
+          "logoImg": "logo_TwistedMinds.png",
+          "seriesWins": 2,
+          "seriesLosses": 8,
+          "seriesPct": 20,
+          "gamePct": 36.734693877551024,
+          "gfpg": 1.7551020408163265,
+          "gapg": 2.2244897959183674
+        },
+        {
+          "name": "TEAM SECRET",
+          "logoImg": "logo_TeamSecret.png",
+          "seriesWins": 2,
+          "seriesLosses": 9,
+          "seriesPct": 18.181818181818183,
+          "gamePct": 34.285714285714285,
+          "gfpg": 1.3428571428571427,
+          "gapg": 2.0285714285714285
+        },
+        {
+          "name": "SPACESTATION",
+          "logoImg": "logo_SSG.png",
+          "seriesWins": 1,
+          "seriesLosses": 5,
+          "seriesPct": 16.666666666666664,
+          "gamePct": 30,
+          "gfpg": 1.75,
+          "gapg": 3.45
+        }
+      ]
+    },
+    {
+      "label": "Series b/w teams that made a top 12 at a LAN",
+      "rows": [
+        {
+          "name": "KARMINE CORP",
+          "logoImg": "logo_KarmineCorp.png",
+          "seriesWins": 16,
+          "seriesLosses": 3,
+          "seriesPct": 84.21052631578947,
+          "gamePct": 70.4225352112676,
+          "gfpg": 1.971830985915493,
+          "gapg": 1.1549295774647887
+        },
+        {
+          "name": "TEAM FALCONS",
+          "logoImg": "logo_TeamFalcons.png",
+          "seriesWins": 14,
+          "seriesLosses": 4,
+          "seriesPct": 77.77777777777779,
+          "gamePct": 67.5,
+          "gfpg": 2.425,
+          "gapg": 1.5
+        },
+        {
+          "name": "TEAM VITALITY",
+          "logoImg": "logo_TeamVitality.png",
+          "seriesWins": 10,
+          "seriesLosses": 5,
+          "seriesPct": 66.66666666666666,
+          "gamePct": 60.29411764705882,
+          "gfpg": 2.4558823529411766,
+          "gapg": 1.7058823529411764
+        },
+        {
+          "name": "M8 ALPINE",
+          "logoImg": "logo_GentleM8s.png",
+          "seriesWins": 3,
+          "seriesLosses": 2,
+          "seriesPct": 60,
+          "gamePct": 52.17391304347826,
+          "gfpg": 2,
+          "gapg": 1.6956521739130435
+        },
+        {
+          "name": "NRG",
+          "logoImg": "logo_NRG.png",
+          "seriesWins": 10,
+          "seriesLosses": 8,
+          "seriesPct": 55.55555555555556,
+          "gamePct": 52.27272727272727,
+          "gfpg": 1.6818181818181819,
+          "gapg": 1.6022727272727273
+        },
+        {
+          "name": "GEEKAY ESPORTS",
+          "logoImg": "logo_GeekayEsports.png",
+          "seriesWins": 7,
+          "seriesLosses": 6,
+          "seriesPct": 53.84615384615385,
+          "gamePct": 49.01960784313725,
+          "gfpg": 1.6470588235294117,
+          "gapg": 1.8627450980392157
+        },
+        {
+          "name": "THE ULTIMATES",
+          "logoImg": "logo_TheUltimates.png",
+          "seriesWins": 8,
+          "seriesLosses": 7,
+          "seriesPct": 53.333333333333336,
+          "gamePct": 48.4375,
+          "gfpg": 1.828125,
+          "gapg": 1.875
+        },
+        {
+          "name": "DIGNITAS",
+          "logoImg": "logo_Dignitas.png",
+          "seriesWins": 7,
+          "seriesLosses": 8,
+          "seriesPct": 46.666666666666664,
+          "gamePct": 45.614035087719294,
+          "gfpg": 1.6491228070175439,
+          "gapg": 1.894736842105263
+        },
+        {
+          "name": "GEN.G ESPORTS",
+          "logoImg": "logo_GenGMobil1Racing.png",
+          "seriesWins": 4,
+          "seriesLosses": 8,
+          "seriesPct": 33.33333333333333,
+          "gamePct": 36.95652173913043,
+          "gfpg": 1.8695652173913044,
+          "gapg": 2.1739130434782608
+        },
+        {
+          "name": "TWISTED MINDS",
+          "logoImg": "logo_TwistedMinds.png",
+          "seriesWins": 4,
+          "seriesLosses": 8,
+          "seriesPct": 33.33333333333333,
+          "gamePct": 43.63636363636363,
+          "gfpg": 1.981818181818182,
+          "gapg": 2.1272727272727274
+        },
+        {
+          "name": "FURIA",
+          "logoImg": "logo_Furia.png",
+          "seriesWins": 3,
+          "seriesLosses": 7,
+          "seriesPct": 30,
+          "gamePct": 37.2093023255814,
+          "gfpg": 1.3953488372093024,
+          "gapg": 1.9767441860465116
+        },
+        {
+          "name": "TEAM SECRET",
+          "logoImg": "logo_TeamSecret.png",
+          "seriesWins": 4,
+          "seriesLosses": 11,
+          "seriesPct": 26.666666666666668,
+          "gamePct": 40.74074074074074,
+          "gfpg": 1.6296296296296295,
+          "gapg": 2.1296296296296298
+        },
+        {
+          "name": "SPACESTATION",
+          "logoImg": "logo_SSG.png",
+          "seriesWins": 2,
+          "seriesLosses": 6,
+          "seriesPct": 25,
+          "gamePct": 34.48275862068966,
+          "gfpg": 1.896551724137931,
+          "gapg": 3.0344827586206895
+        },
+        {
+          "name": "FUT ESPORTS",
+          "logoImg": "logo_FUTEsports.png",
+          "seriesWins": 0,
+          "seriesLosses": 6,
+          "seriesPct": 0,
+          "gamePct": 28.000000000000004,
+          "gfpg": 1.52,
+          "gapg": 3.04
+        },
+        {
+          "name": "LUMINOSITY",
+          "logoImg": "logo_LuminosityGaming.png",
+          "seriesWins": 0,
+          "seriesLosses": 3,
+          "seriesPct": 0,
+          "gamePct": 10,
+          "gfpg": 1.2,
+          "gapg": 3.6
+        }
+      ]
+    }
+  ]
+}
