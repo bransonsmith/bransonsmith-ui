@@ -95,6 +95,18 @@ li {
     background-position: center;
 }
 
+.rl-predict-box {
+    background-image: url('./assets/Bracket-SS.png');
+    background-size: 100%;
+    background-position: left;
+    background-repeat: no-repeat;
+    @apply border-2 rounded-lg border-gray-700;
+}
+.rl-predict-box:hover {
+    background-size: 150%;
+    background-position: center;
+}
+
 .baseball-box {
     background-image: url('./assets/baseball.png');
     background-size: 100%;

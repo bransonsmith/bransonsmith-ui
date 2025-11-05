@@ -4,6 +4,17 @@ export default function ProjectsPage() {
 
     const projects = [
         {
+            name: 'RL Predict',
+            link: 'https://rlpredict.com/',
+            content: <div className="p-0 mr-auto my-0 w-80">
+                        <p className='text-defaultText font-normal text-sm p-0 m-0 mt-0'>
+                            Global site for predicting Rocket League esports match outcomes, and collecting community Player and Team Power Rankings. Built with React + DynamoDb + Lambda, integrated with AWS Cognito.
+                        </p>
+                        <button className="my-5 mx-auto border-2 border-gray-700 bg-contentBg hover:shadow-black hover:shadow-md hover:border-black">RL Predict</button>
+                    </div>,
+            image: <div className="rl-predict-box h-52 w-80 mb-auto shadow-md shadow-black"/>
+        },
+        {
             name: 'Poker Pilot',
             link: 'https://pokerpilot.net/',
             content: <div className="p-0 mr-auto my-0 w-80">
